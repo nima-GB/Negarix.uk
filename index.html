@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEGARIX.UK</title>
+    <title>NEGARIX.UK | Secure Infrastructure</title>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     
     <style>
         :root {
-            --bg-color: #0a0a0a;
+            /* Hard-locked Dark/Neon Theme - No OS Overrides */
+            --bg-color: #080a08;
             --matrix-color: #00ff00; /* Neon Green */
-            --particle-color: rgba(200, 255, 200, 0.6); /* Ghostly contrast */
-            --content-bg: rgba(10, 10, 10, 0.85);
+            --particle-color: rgba(200, 255, 200, 0.4); /* Ghostly depth */
+            --content-bg: rgba(10, 15, 10, 0.85); /* Deep frosted glass */
             --text-color: #00ff00;
-            --accent-glow: 0 0 12px rgba(0, 255, 0, 0.8);
+            --accent-glow: 0 0 12px rgba(0, 255, 0, 0.7);
         }
 
         body, html {
@@ -35,23 +36,25 @@
             background: var(--content-bg);
             padding: 40px;
             border-radius: 8px;
-            border: 1px solid var(--matrix-color);
-            box-shadow: var(--accent-glow);
+            border: 1px solid rgba(0, 255, 0, 0.4);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.15), inset 0 0 20px rgba(0, 255, 0, 0.05);
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             width: 90%; max-width: 480px;
             text-align: center;
         }
 
-        h1 { margin-top: 0; font-size: 2.4rem; text-shadow: var(--accent-glow); letter-spacing: 2px; }
+        h1 { margin-top: 0; font-size: 2.5rem; text-shadow: var(--accent-glow); letter-spacing: 2px; }
         h2 { font-size: 1.1rem; opacity: 0.8; margin-bottom: 25px; }
+        h3 { font-size: 1.1rem; margin-bottom: 20px; letter-spacing: 1px; text-shadow: var(--accent-glow); }
         
         hr {
             border: 0; height: 1px; background: var(--matrix-color);
-            opacity: 0.4; margin: 20px 0; box-shadow: var(--accent-glow);
+            opacity: 0.3; margin: 20px 0; box-shadow: var(--accent-glow);
         }
 
-        form { display: flex; flex-direction: column; gap: 18px; }
-        label { text-align: left; font-size: 0.9rem; font-weight: bold; }
+        form { display: flex; flex-direction: column; gap: 15px; }
+        label { text-align: left; font-size: 0.9rem; font-weight: bold; opacity: 0.9; }
         
         input, textarea {
             background: rgba(0, 20, 0, 0.4);
@@ -61,7 +64,7 @@
             font-family: inherit;
             width: 100%;
             box-sizing: border-box;
-            margin-top: 6px;
+            margin-top: 5px;
             transition: all 0.3s ease;
         }
         
@@ -71,29 +74,34 @@
             background: rgba(0, 40, 0, 0.6);
         }
         
-        textarea { resize: vertical; height: 90px; }
+        textarea { resize: vertical; height: 80px; }
         
         .g-recaptcha {
             margin: 5px auto;
             display: flex;
             justify-content: center;
+            filter: drop-shadow(0 0 5px rgba(0,255,0,0.2));
         }
 
         button {
-            background: var(--matrix-color);
-            color: var(--bg-color);
-            border: none;
+            background: transparent;
+            color: var(--matrix-color);
+            border: 1px solid var(--matrix-color);
             padding: 14px;
             cursor: pointer;
             font-weight: bold;
             font-size: 1.1rem;
             text-transform: uppercase;
-            box-shadow: var(--accent-glow);
+            box-shadow: inset 0 0 10px rgba(0,255,0,0.1);
             transition: all 0.2s ease;
             letter-spacing: 1px;
-            margin-top: 10px;
+            margin-top: 5px;
         }
-        button:hover { opacity: 0.8; transform: translateY(-1px); }
+        button:hover { 
+            background: var(--matrix-color);
+            color: var(--bg-color);
+            box-shadow: var(--accent-glow);
+        }
     </style>
 </head>
 <body>
@@ -103,21 +111,22 @@
 
     <div class="content-container">
         <h1>NEGARIX.UK</h1>
-        <h2>SECURE INFRASTRUCTURE & ARCHITECTURE</h2>
+        <h2>SECURE INFRASTRUCTURE<br>& ARCHITECTURE</h2>
         
         <hr>
+        <h3>INITIATE SECURE TRANSMISSION</h3>
 
         <form action="https://formspree.io/f/xdavzgko" method="POST">
             <label>OPERATOR NAME:
                 <input type="text" name="name" required placeholder="Identity required">
             </label>
             
-            <label>RETURN ADDRESS (EMAIL):
+            <label>CONTACT (EMAIL):
                 <input type="email" name="email" required placeholder="name@domain.com">
             </label>
             
-            <label>TRANSMISSION PAYLOAD:
-                <textarea name="message" required placeholder="Enter encrypted text here..."></textarea>
+            <label>PAYLOAD (MESSAGE):
+                <textarea name="message" required placeholder="Transmit encrypted text..."></textarea>
             </label>
 
             <div class="g-recaptcha" data-sitekey="6LfesBotAAAAAG_Guq1ZKS5977I7_omstqT_YDE8" data-theme="dark"></div>
@@ -173,7 +182,6 @@
                     }
                 }
                 
-                // Wrap around edges to keep network infinite
                 if (this.x < 0) this.x = pCanvas.width;
                 if (this.x > pCanvas.width) this.x = 0;
                 if (this.y < 0) this.y = pCanvas.height;
@@ -196,7 +204,7 @@
                     let distance = dx * dx + dy * dy;
                     
                     if (distance < 12000) {
-                        pCtx.strokeStyle = `rgba(200, 255, 200, ${1 - distance/12000})`;
+                        pCtx.strokeStyle = `rgba(200, 255, 200, ${0.8 - distance/12000})`;
                         pCtx.lineWidth = 0.5;
                         pCtx.beginPath();
                         pCtx.moveTo(particles[a].x, particles[a].y);
@@ -256,7 +264,7 @@
             mCtx.fillStyle = mColor;
             mCtx.font = fontSize + 'px monospace';
 
-            mCtx.fillStyle = 'rgba(10, 10, 10, 0.06)';
+            mCtx.fillStyle = 'rgba(8, 10, 8, 0.08)'; // Darker fade for sharper contrast
             mCtx.fillRect(0,0, mCanvas.width, mCanvas.height);
 
             mCtx.fillStyle = mColor;
