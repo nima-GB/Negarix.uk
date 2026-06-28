@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- ============================================================= -->
+<!--  MÉRIDIAN — Luxury Chauffeur Landing Page                      -->
+<!--                                                                 -->
+<!--  THINGS TO SWAP (search for "SWAP:" to find each one fast):     -->
+<!--   • SWAP: BRAND      → company name (currently "MÉRIDIAN")      -->
+<!--   • SWAP: CONTACT    → phone, email, address                    -->
+<!--   • SWAP: PRICES     → fleet "from £" figures (illustrative)    -->
+<!--   • SWAP: BOOKING    → wire the form to your booking backend     -->
+<!--   • SWAP: PHOTOS     → optional real photography slots           -->
+<!--   • SWAP: SOCIAL     → social profile links                      -->
+<!-- ============================================================= -->
+
+<title>MÉRIDIAN — Private Chauffeur Service</title>
+<meta name="description" content="Professional chauffeurs, immaculate vehicles, and a standard of service for those who travel often. Reserve in moments and arrive composed." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  /* ---------- Tokens ---------- */
+  :root{
+    --ink:        #0B0B0D;
+    --ink-2:      #141417;
+    --ink-3:      #1B1B1F;
+    --bone:       #F4F1EA;
+    --bone-dim:   rgba(244,241,234,0.62);
+    --bone-faint: rgba(244,241,234,0.40);
+    --champagne:  #C8A86A;
+    --champagne-soft: rgba(200,168,106,0.16);
+    --line:       rgba(244,241,234,0.10);
+    --line-soft:  rgba(244,241,234,0.06);
+
+    --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --font-sans:    'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --font-mono:    'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+    --nav-h: 76px;
+    --section-y: clamp(5rem, 9vw, 9rem);
+    --radius: 16px;
+    --radius-sm: 10px;
+    --ease: cubic-bezier(.2,.7,.2,1);
+  }
+
+  /* ---------- Reset / base ---------- */
+  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+  body{
+    font-family:var(--font-sans);
+    background:var(--ink);
+    color:var(--bone);
+    line-height:1.6;
+    font-weight:400;
+    letter-spacing:0.005em;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  body.nav-open{ overflow:hidden; }
+  img,svg{ display:block; max-width:100%; }
+  a{ color:inherit; text-decoration:none; }
+  button{ font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; }
+  ::selection{ background:var(--champagne); color:var(--ink); }
+  :focus-visible{ outline:2px solid var(--champagne); outline-offset:3px; border-radius:4px; }
+
+  /* fine grain overlay across the page */
+  body::after{
+    content:"";
+    position:fixed; inset:0; z-index:9999; pointer-events:none;
+    opacity:0.04; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- Layout helpers ---------- */
+  .wrap{ width:min(1200px, calc(100% - 2.5rem)); margin-inline:auto; }
+  .section{ padding-top:var(--section-y); padding-bottom:var(--section-y); position:relative; }
+  section[id]{ scroll-margin-top:90px; }
+  .hairline{ height:1px; background:var(--line); border:0; }
+
+  /* ---------- Typography helpers ---------- */
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--champagne);
+    display:inline-flex; align-items:center; gap:0.85rem;
+    font-weight:500;
+  }
+  .eyebrow::before{
+    content:""; width:34px; height:1px; background:var(--champagne); opacity:0.55;
+  }
+  .display{
+    font-family:var(--font-display);
+    font-weight:500;
+    line-height:1.04;
+    letter-spacing:-0.02em;
+    font-optical-sizing:auto;
+  }
+  h2.display{ font-size:clamp(2rem, 4.4vw, 3.4rem); }
+  .lead{ color:var(--bone-dim); font-size:clamp(1rem, 1.3vw, 1.15rem); max-width:54ch; }
+  .mono-mini{ font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.18em; color:var(--bone-faint); text-transform:uppercase; }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:0.6rem;
+    font-size:0.92rem; font-weight:500; letter-spacing:0.01em;
+    padding:0.95rem 1.6rem; border-radius:999px;
+    transition:transform .35s var(--ease), background .35s var(--ease), color .35s var(--ease), border-color .35s var(--ease);
+    white-space:nowrap;
+  }
+  .btn svg{ width:16px; height:16px; transition:transform .35s var(--ease); }
+  .btn-primary{ background:var(--bone); color:var(--ink); }
+  .btn-primary:hover{ transform:translateY(-2px); }
+  .btn-primary:hover svg{ transform:translateX(3px); }
+  .btn-ghost{ border:1px solid var(--line); color:var(--bone); }
+  .btn-ghost:hover{ border-color:var(--champagne); color:var(--champagne); }
+  .btn-full{ width:100%; }
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    height:var(--nav-h);
+    transition:background .4s var(--ease), border-color .4s var(--ease), backdrop-filter .4s var(--ease);
+    border-bottom:1px solid transparent;
+  }
+  header.scrolled{
+    background:rgba(11,11,13,0.72);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{ height:100%; display:flex; align-items:center; justify-content:space-between; }
+  .brand{ display:flex; align-items:center; gap:0.5rem; font-family:var(--font-display); font-size:1.35rem; font-weight:500; letter-spacing:0.04em; }
+  .brand .dot{ width:6px; height:6px; border-radius:50%; background:var(--champagne); display:inline-block; transform:translateY(2px); }
+  .nav-links{ display:flex; align-items:center; gap:2.2rem; }
+  .nav-links a{ font-size:0.9rem; color:var(--bone-dim); letter-spacing:0.01em; transition:color .3s var(--ease); position:relative; }
+  .nav-links a:hover{ color:var(--bone); }
+  .nav-cta{ display:flex; align-items:center; gap:1.2rem; }
+  .nav-phone{ font-family:var(--font-mono); font-size:0.82rem; letter-spacing:0.06em; color:var(--bone-dim); transition:color .3s var(--ease); }
+  .nav-phone:hover{ color:var(--champagne); }
+  .menu-toggle{ display:none; width:42px; height:42px; align-items:center; justify-content:center; border:1px solid var(--line); border-radius:999px; }
+  .menu-toggle svg{ width:18px; height:18px; }
+
+  /* mobile menu panel */
+  .mobile-menu{
+    position:fixed; inset:var(--nav-h) 0 0 0; z-index:99;
+    background:rgba(11,11,13,0.97);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border-top:1px solid var(--line);
+    display:flex; flex-direction:column; padding:2rem 1.5rem;
+    transform:translateY(-12px); opacity:0; pointer-events:none;
+    transition:opacity .35s var(--ease), transform .35s var(--ease);
+  }
+  .mobile-menu.open{ opacity:1; transform:none; pointer-events:auto; }
+  .mobile-menu a{ font-family:var(--font-display); font-size:1.6rem; padding:0.9rem 0; border-bottom:1px solid var(--line-soft); color:var(--bone-dim); }
+  .mobile-menu a:last-of-type{ border-bottom:none; }
+  .mobile-menu .btn{ margin-top:1.5rem; }
+
+  /* ---------- Hero ---------- */
+  .hero{ position:relative; min-height:100vh; display:flex; align-items:center; padding-top:calc(var(--nav-h) + 2rem); padding-bottom:4rem; overflow:hidden; }
+  .hero-bg{ position:absolute; inset:0; z-index:0; pointer-events:none; }
+  /* SWAP: PHOTOS — to use a real photo, set a background-image on .hero-bg below the gradients (object-fit cover) and keep these overlays for legibility */
+  .hero-bg::before{
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(120% 90% at 78% 18%, rgba(200,168,106,0.16) 0%, rgba(200,168,106,0.05) 28%, transparent 55%),
+      radial-gradient(90% 70% at 12% 95%, rgba(60,66,84,0.30) 0%, transparent 55%),
+      linear-gradient(180deg, #0E0E12 0%, var(--ink) 60%, #08080A 100%);
+  }
+  .hero-bg::after{ /* vignette */
+    content:""; position:absolute; inset:0;
+    background:radial-gradient(120% 120% at 50% 40%, transparent 50%, rgba(0,0,0,0.55) 100%);
+  }
+  .hero-sweep{ position:absolute; top:-30%; left:-20%; width:80%; height:160%; z-index:0; pointer-events:none;
+    background:radial-gradient(closest-side, rgba(200,168,106,0.10), transparent 70%);
+    filter:blur(20px);
+    animation:sweep 16s var(--ease) infinite alternate;
+  }
+  @keyframes sweep{ from{ transform:translateX(-10%) translateY(-4%);} to{ transform:translateX(120%) translateY(6%);} }
+
+  /* faint meridian lines */
+  .hero-grid{ position:absolute; inset:0; z-index:0; pointer-events:none; opacity:0.5;
+    background-image:linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size:max(120px, 11vw) 100%;
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent);
+            mask-image:linear-gradient(90deg, transparent, #000 30%, #000 70%, transparent);
+  }
+
+  .hero-inner{ position:relative; z-index:2; width:100%; display:grid; grid-template-columns:1.05fr 0.95fr; gap:clamp(2rem, 5vw, 5rem); align-items:center; }
+  .hero-copy{ max-width:36rem; }
+  .hero h1{ font-family:var(--font-display); font-weight:500; font-size:clamp(2.8rem, 7vw, 5.6rem); line-height:1.0; letter-spacing:-0.03em; margin:1.6rem 0 1.4rem; }
+  .hero h1 .em{ font-style:italic; color:var(--champagne); }
+  .hero p.lead{ margin-bottom:2.2rem; }
+  .hero-actions{ display:flex; gap:1rem; flex-wrap:wrap; }
+  .hero-meta{ margin-top:2.6rem; display:flex; gap:2rem; flex-wrap:wrap; align-items:center; }
+  .hero-meta .mono-mini{ display:flex; align-items:center; gap:0.55rem; }
+  .hero-meta .mono-mini b{ color:var(--bone); font-weight:500; font-family:var(--font-mono); }
+
+  /* hero reveal sequencing */
+  .seq{ opacity:0; transform:translateY(18px); animation:rise .9s var(--ease) forwards; }
+  .seq-1{ animation-delay:.10s; }
+  .seq-2{ animation-delay:.22s; }
+  .seq-3{ animation-delay:.34s; }
+  .seq-4{ animation-delay:.46s; }
+  .seq-5{ animation-delay:.60s; }
+  @keyframes rise{ to{ opacity:1; transform:none; } }
+
+  /* ---------- Booking instrument ---------- */
+  .booker{
+    position:relative; background:linear-gradient(180deg, rgba(26,26,30,0.92), rgba(18,18,21,0.92));
+    border:1px solid var(--line); border-radius:var(--radius);
+    padding:1.6rem 1.6rem 1.4rem;
+    box-shadow:0 30px 70px -30px rgba(0,0,0,0.8), 0 0 0 1px rgba(200,168,106,0.04) inset;
+    backdrop-filter:blur(6px);
+  }
+  .booker::before{ content:""; position:absolute; left:1.6rem; right:1.6rem; top:0; height:1px; background:linear-gradient(90deg, transparent, var(--champagne), transparent); opacity:0.5; }
+  .booker-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:1.3rem; }
+  .booker-tabs{ display:inline-flex; gap:0.3rem; background:var(--ink); border:1px solid var(--line); border-radius:999px; padding:0.25rem; }
+  .booker-tabs button{ font-size:0.82rem; padding:0.45rem 0.95rem; border-radius:999px; color:var(--bone-dim); transition:color .3s var(--ease), background .3s var(--ease); }
+  .booker-tabs button.active{ background:var(--ink-3); color:var(--bone); }
+  .field{ display:flex; flex-direction:column; gap:0.4rem; margin-bottom:0.85rem; }
+  .field label{ font-family:var(--font-mono); font-size:0.64rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--bone-faint); }
+  .field-input{ display:flex; align-items:center; gap:0.7rem; background:var(--ink); border:1px solid var(--line); border-radius:var(--radius-sm); padding:0.8rem 0.9rem; transition:border-color .3s var(--ease), background .3s var(--ease); }
+  .field-input:focus-within{ border-color:var(--champagne); background:#0E0E11; }
+  .field-input svg{ width:16px; height:16px; color:var(--bone-faint); flex:none; }
+  .field-input input, .field-input select{ background:none; border:none; color:var(--bone); font-size:0.95rem; width:100%; font-family:var(--font-sans); }
+  .field-input input::placeholder{ color:var(--bone-faint); }
+  .field-input input:focus, .field-input select:focus{ outline:none; }
+  .field-input select{ cursor:pointer; appearance:none; }
+  .field-input input[type="date"], .field-input input[type="time"]{ color-scheme:dark; }
+  .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:0.85rem; }
+  .booker .btn{ margin-top:0.4rem; }
+  .booker-foot{ margin-top:0.9rem; font-family:var(--font-mono); font-size:0.66rem; letter-spacing:0.04em; color:var(--bone-faint); text-align:center; }
+  .booker-status{ margin-top:0.85rem; font-size:0.82rem; color:var(--champagne); text-align:center; min-height:1.1rem; opacity:0; transition:opacity .3s var(--ease); }
+  .booker-status.show{ opacity:1; }
+  .hidden{ display:none !important; }
+
+  /* ---------- Stats band ---------- */
+  .stats{ border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .stats .wrap{ display:grid; grid-template-columns:repeat(4,1fr); }
+  .stat{ padding:clamp(2.2rem,4vw,3.2rem) 1.5rem; text-align:center; border-right:1px solid var(--line); }
+  .stat:last-child{ border-right:none; }
+  .stat-num{ font-family:var(--font-display); font-size:clamp(2.2rem,3.4vw,3rem); font-weight:500; letter-spacing:-0.02em; display:block; font-variant-numeric:tabular-nums; }
+  .stat-label{ margin-top:0.5rem; font-size:0.82rem; color:var(--bone-dim); letter-spacing:0.02em; }
+
+  /* ---------- Section header block ---------- */
+  .sec-head{ max-width:60rem; }
+  .sec-head h2{ margin:1.1rem 0 0; }
+  .sec-head p.lead{ margin-top:1.1rem; }
+  .sec-head.center{ margin-inline:auto; text-align:center; }
+  .sec-head.center .eyebrow{ justify-content:center; }
+  .sec-head.split{ display:flex; justify-content:space-between; align-items:flex-end; gap:2rem; flex-wrap:wrap; }
+
+  /* ---------- Services ---------- */
+  .services-grid{ margin-top:clamp(2.5rem,5vw,4rem); display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+  .service{ background:var(--ink); padding:2.2rem 1.9rem 2.4rem; transition:background .4s var(--ease); position:relative; }
+  .service:hover{ background:var(--ink-2); }
+  .service-ic{ width:40px; height:40px; color:var(--champagne); margin-bottom:1.4rem; }
+  .service-ic svg{ width:100%; height:100%; stroke-width:1.2; }
+  .service h3{ font-family:var(--font-display); font-size:1.32rem; font-weight:500; letter-spacing:-0.01em; margin-bottom:0.6rem; }
+  .service p{ color:var(--bone-dim); font-size:0.94rem; }
+  .service-idx{ position:absolute; top:1.6rem; right:1.7rem; font-family:var(--font-mono); font-size:0.68rem; color:var(--bone-faint); letter-spacing:0.1em; }
+
+  /* ---------- Fleet ---------- */
+  .fleet-grid{ margin-top:clamp(2.5rem,5vw,4rem); display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; }
+  .car{ border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--ink-2); transition:transform .4s var(--ease), border-color .4s var(--ease); }
+  .car:hover{ transform:translateY(-4px); border-color:rgba(200,168,106,0.35); }
+  /* SWAP: PHOTOS — replace .car-vis block with an <img> of the vehicle (object-fit:cover; height:200px) */
+  .car-vis{ position:relative; height:190px; display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(120% 120% at 50% 20%, rgba(200,168,106,0.10), transparent 60%), linear-gradient(160deg, #17171B, #0E0E11);
+    border-bottom:1px solid var(--line); overflow:hidden; }
+  .car-vis svg.carline{ width:72%; max-width:230px; height:auto; color:var(--bone); opacity:0.85; stroke-width:1.4; }
+  .car-vis .code{ position:absolute; top:1rem; left:1.1rem; font-family:var(--font-mono); font-size:0.66rem; letter-spacing:0.16em; color:var(--bone-faint); }
+  .car-body{ padding:1.5rem 1.5rem 1.7rem; }
+  .car-body h3{ font-family:var(--font-display); font-size:1.45rem; font-weight:500; margin-bottom:0.35rem; }
+  .car-models{ color:var(--bone-dim); font-size:0.88rem; margin-bottom:1.2rem; min-height:2.4em; }
+  .car-specs{ display:flex; gap:1.4rem; padding-top:1.1rem; border-top:1px solid var(--line); margin-bottom:1.3rem; }
+  .spec{ display:flex; align-items:center; gap:0.5rem; font-size:0.84rem; color:var(--bone-dim); }
+  .spec svg{ width:16px; height:16px; color:var(--champagne); }
+  .car-foot{ display:flex; align-items:baseline; justify-content:space-between; }
+  .car-price{ font-family:var(--font-display); font-size:1.3rem; font-weight:500; }
+  .car-price span{ font-family:var(--font-mono); font-size:0.62rem; letter-spacing:0.12em; color:var(--bone-faint); text-transform:uppercase; display:block; }
+  .car-link{ font-family:var(--font-mono); font-size:0.74rem; letter-spacing:0.1em; color:var(--champagne); display:inline-flex; align-items:center; gap:0.4rem; }
+  .fleet-note{ margin-top:1.8rem; }
+
+  /* ---------- Experience / standard ---------- */
+  .standard{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:clamp(2.5rem,5vw,5rem); align-items:center; }
+  .standard-vis{ position:relative; aspect-ratio:4/5; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+    background:radial-gradient(120% 80% at 30% 10%, rgba(200,168,106,0.14), transparent 55%), linear-gradient(160deg, #16161A, #0B0B0D 70%); }
+  /* SWAP: PHOTOS — drop a chauffeur/interior photo here as a covering <img>; keep the corner labels for the motif */
+  .standard-vis .coord{ position:absolute; font-family:var(--font-mono); font-size:0.66rem; letter-spacing:0.14em; color:var(--bone-faint); }
+  .standard-vis .coord.tl{ top:1.2rem; left:1.3rem; }
+  .standard-vis .coord.br{ bottom:1.2rem; right:1.3rem; }
+  .standard-vis .big{ position:absolute; left:1.4rem; bottom:1.4rem; right:1.4rem; font-family:var(--font-display); font-size:clamp(1.6rem,2.6vw,2.4rem); line-height:1.1; color:var(--bone); }
+  .standard-vis .ring{ position:absolute; top:50%; left:50%; width:55%; aspect-ratio:1; transform:translate(-50%,-55%); border:1px solid var(--line); border-radius:50%; }
+  .standard-vis .ring::after{ content:""; position:absolute; inset:14%; border:1px solid var(--line-soft); border-radius:50%; }
+  .standard-list{ list-style:none; }
+  .standard-list li{ padding:1.4rem 0; border-bottom:1px solid var(--line); display:flex; gap:1.1rem; }
+  .standard-list li:first-child{ padding-top:0; }
+  .standard-list li:last-child{ border-bottom:none; }
+  .std-ic{ flex:none; width:30px; height:30px; color:var(--champagne); margin-top:2px; }
+  .std-ic svg{ width:100%; height:100%; stroke-width:1.3; }
+  .standard-list h4{ font-size:1.05rem; font-weight:600; margin-bottom:0.25rem; letter-spacing:0.005em; }
+  .standard-list p{ color:var(--bone-dim); font-size:0.92rem; }
+
+  /* ---------- Corporate band ---------- */
+  .corporate{ position:relative; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+    background:radial-gradient(120% 140% at 85% 0%, rgba(200,168,106,0.12), transparent 50%), linear-gradient(160deg, #131316, #0C0C0F);
+    padding:clamp(2.6rem,5vw,4.4rem); }
+  .corporate-grid{ display:grid; grid-template-columns:1.2fr 0.8fr; gap:clamp(2rem,4vw,4rem); align-items:center; }
+  .corporate h2{ margin:1rem 0 1.2rem; }
+  .corporate p{ color:var(--bone-dim); max-width:46ch; }
+  .corp-actions{ display:flex; gap:1rem; flex-wrap:wrap; margin-top:2rem; }
+  .corp-points{ list-style:none; display:grid; gap:0.9rem; }
+  .corp-points li{ display:flex; align-items:center; gap:0.8rem; font-size:0.95rem; color:var(--bone); }
+  .corp-points svg{ width:18px; height:18px; color:var(--champagne); flex:none; }
+
+  /* ---------- Testimonials ---------- */
+  .quotes{ margin-top:clamp(2.5rem,5vw,4rem); display:grid; grid-template-columns:repeat(3,1fr); gap:1.4rem; }
+  .quote{ border:1px solid var(--line); border-radius:var(--radius); padding:2rem 1.9rem; background:var(--ink-2); display:flex; flex-direction:column; }
+  .quote .mark{ font-family:var(--font-display); font-size:3rem; line-height:0.6; color:var(--champagne); opacity:0.5; height:1.4rem; }
+  .quote p{ font-family:var(--font-display); font-size:1.18rem; line-height:1.45; font-weight:400; margin:0.6rem 0 1.6rem; flex:1; }
+  .quote .who{ font-size:0.84rem; color:var(--bone-dim); border-top:1px solid var(--line); padding-top:1.1rem; }
+  .quote .who b{ color:var(--bone); font-weight:500; display:block; }
+
+  /* ---------- Final CTA ---------- */
+  .final{ text-align:center; position:relative; overflow:hidden; }
+  .final-glow{ position:absolute; inset:0; z-index:0; pointer-events:none;
+    background:radial-gradient(60% 60% at 50% 0%, rgba(200,168,106,0.12), transparent 60%); }
+  .final .wrap{ position:relative; z-index:1; }
+  .final h2{ margin:1.2rem auto 1.4rem; max-width:18ch; }
+  .final .lead{ margin:0 auto 2.4rem; }
+  .final-actions{ display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+
+  /* ---------- Footer ---------- */
+  footer{ border-top:1px solid var(--line); padding-top:clamp(3.5rem,6vw,5rem); padding-bottom:2.5rem; }
+  .foot-grid{ display:grid; grid-template-columns:1.5fr 1fr 1fr 1fr; gap:2.5rem; padding-bottom:3rem; border-bottom:1px solid var(--line); }
+  .foot-brand .brand{ margin-bottom:1.1rem; }
+  .foot-brand p{ color:var(--bone-dim); font-size:0.9rem; max-width:30ch; margin-bottom:1.3rem; }
+  .foot-coord{ font-family:var(--font-mono); font-size:0.68rem; letter-spacing:0.12em; color:var(--bone-faint); }
+  .foot-col h5{ font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--bone-faint); margin-bottom:1.2rem; }
+  .foot-col a{ display:block; color:var(--bone-dim); font-size:0.9rem; padding:0.35rem 0; transition:color .3s var(--ease); }
+  .foot-col a:hover{ color:var(--bone); }
+  .foot-bottom{ display:flex; align-items:center; justify-content:space-between; gap:1.5rem; flex-wrap:wrap; padding-top:2rem; }
+  .foot-legal{ font-size:0.8rem; color:var(--bone-faint); display:flex; gap:1.3rem; flex-wrap:wrap; align-items:center; }
+  .foot-legal a:hover{ color:var(--bone-dim); }
+  .foot-social{ display:flex; gap:0.8rem; }
+  .foot-social a{ width:38px; height:38px; border:1px solid var(--line); border-radius:999px; display:flex; align-items:center; justify-content:center; color:var(--bone-dim); transition:color .3s var(--ease), border-color .3s var(--ease); }
+  .foot-social a:hover{ color:var(--champagne); border-color:var(--champagne); }
+  .foot-social svg{ width:16px; height:16px; }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{ opacity:0; transform:translateY(20px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
+  .reveal.in{ opacity:1; transform:none; }
+  .services-grid.in .service,
+  .fleet-grid.in .car,
+  .quotes.in .quote{ animation:rise .7s var(--ease) backwards; }
+  .services-grid.in .service:nth-child(2){ animation-delay:.08s; }
+  .services-grid.in .service:nth-child(3){ animation-delay:.16s; }
+  .services-grid.in .service:nth-child(4){ animation-delay:.24s; }
+  .services-grid.in .service:nth-child(5){ animation-delay:.32s; }
+  .services-grid.in .service:nth-child(6){ animation-delay:.40s; }
+  .fleet-grid.in .car:nth-child(2){ animation-delay:.12s; }
+  .fleet-grid.in .car:nth-child(3){ animation-delay:.24s; }
+  .quotes.in .quote:nth-child(2){ animation-delay:.12s; }
+  .quotes.in .quote:nth-child(3){ animation-delay:.24s; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:980px){
+    .hero-inner{ grid-template-columns:1fr; gap:3rem; }
+    .booker{ max-width:520px; }
+    .standard{ grid-template-columns:1fr; }
+    .standard-vis{ max-width:440px; }
+    .corporate-grid{ grid-template-columns:1fr; }
+    .foot-grid{ grid-template-columns:1fr 1fr; gap:2rem; }
+    .foot-brand{ grid-column:1 / -1; }
+  }
+  @media (max-width:820px){
+    .nav-links, .nav-phone{ display:none; }
+    .menu-toggle{ display:flex; }
+    .services-grid{ grid-template-columns:1fr 1fr; }
+    .fleet-grid{ grid-template-columns:1fr; max-width:460px; }
+    .quotes{ grid-template-columns:1fr; max-width:480px; }
+    .stats .wrap{ grid-template-columns:1fr 1fr; }
+    .stat:nth-child(2){ border-right:none; }
+    .stat:nth-child(1), .stat:nth-child(2){ border-bottom:1px solid var(--line); }
+  }
+  @media (max-width:560px){
+    .services-grid{ grid-template-columns:1fr; }
+    .field-row{ grid-template-columns:1fr; }
+    .sec-head.split{ align-items:flex-start; }
+    .foot-bottom{ flex-direction:column; align-items:flex-start; }
+    .hero-meta{ gap:1.2rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *, *::before, *::after{ animation:none !important; transition:none !important; }
+    .reveal{ opacity:1 !important; transform:none !important; }
+    .seq{ opacity:1 !important; transform:none !important; }
+    .hero-sweep{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header id="top">
+  <div class="wrap nav-inner">
+    <!-- SWAP: BRAND -->
+    <a href="#top" class="brand" aria-label="MÉRIDIAN home">MÉRIDIAN<span class="dot"></span></a>
+
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#fleet">Fleet</a>
+      <a href="#standard">The standard</a>
+      <a href="#corporate">Business</a>
+    </nav>
+
+    <div class="nav-cta">
+      <!-- SWAP: CONTACT -->
+      <a class="nav-phone" href="tel:+442000000000">+44 (0)20 0000 0000</a>
+      <a class="btn btn-primary" href="#book">Reserve <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <button class="menu-toggle" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <svg id="menuIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16M4 12h16M4 17h16" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services">Services</a>
+  <a href="#fleet">Fleet</a>
+  <a href="#standard">The standard</a>
+  <a href="#corporate">Business</a>
+  <a class="btn btn-primary btn-full" href="#book">Reserve a chauffeur</a>
+</div>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="book">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-sweep"></div>
+
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <span class="eyebrow seq seq-1">Private Chauffeur Service</span>
+        <h1 class="seq seq-2">The art of <span class="em">arriving</span> well.</h1>
+        <p class="lead seq seq-3">Professional chauffeurs, immaculate vehicles, and a standard of service reserved for those who travel often and expect more. Reserve in moments. Arrive composed.</p>
+        <div class="hero-actions seq seq-4">
+          <a class="btn btn-primary" href="#book">Reserve a chauffeur <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="btn btn-ghost" href="#fleet">View the fleet</a>
+        </div>
+        <div class="hero-meta seq seq-5">
+          <span class="mono-mini"><b>190+</b> cities</span>
+          <span class="mono-mini"><b>24/7</b> dispatch</span>
+          <span class="mono-mini"><b>4.9</b> client rating</span>
+        </div>
+      </div>
+
+      <!-- Booking instrument -->
+      <div class="booker seq seq-4" role="form" aria-label="Reserve a chauffeur">
+        <div class="booker-head">
+          <div class="booker-tabs" role="tablist">
+            <button class="active" id="tabTransfer" role="tab" aria-selected="true" data-mode="transfer">Transfer</button>
+            <button id="tabHourly" role="tab" aria-selected="false" data-mode="hourly">By the hour</button>
+          </div>
+          <span class="mono-mini">Reservations</span>
+        </div>
+
+        <div class="field">
+          <label for="pickup">Pickup</label>
+          <div class="field-input">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="10" r="3" stroke-width="1.5"/><path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11Z" stroke-width="1.5"/></svg>
+            <input id="pickup" type="text" placeholder="Address, airport or hotel" autocomplete="off" />
+          </div>
+        </div>
+
+        <!-- Destination (transfer mode) -->
+        <div class="field" id="fieldDest">
+          <label for="dest">Destination</label>
+          <div class="field-input">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 21V4l13 5-13 5" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            <input id="dest" type="text" placeholder="Where to?" autocomplete="off" />
+          </div>
+        </div>
+
+        <!-- Duration (hourly mode) -->
+        <div class="field hidden" id="fieldDuration">
+          <label for="duration">Duration</label>
+          <div class="field-input">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8" stroke-width="1.5"/><path d="M12 8v4l3 2" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <select id="duration">
+              <option>3 hours (minimum)</option>
+              <option>4 hours</option>
+              <option>6 hours</option>
+              <option>8 hours</option>
+              <option>Full day</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="date">Date</label>
+            <div class="field-input">
+              <input id="date" type="date" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="time">Time</label>
+            <div class="field-input">
+              <input id="time" type="time" />
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="pax">Passengers</label>
+          <div class="field-input">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3.2" stroke-width="1.5"/><path d="M5 20c0-3.3 3.1-6 7-6s7 2.7 7 6" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <select id="pax">
+              <option>1 passenger</option>
+              <option>2 passengers</option>
+              <option>3 passengers</option>
+              <option>4 passengers</option>
+              <option>5+ passengers</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- SWAP: BOOKING — replace this button's handler / POST destination in the script below -->
+        <button class="btn btn-primary btn-full" id="bookBtn">See prices &amp; reserve <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <p class="booker-status" id="bookStatus" role="status" aria-live="polite"></p>
+        <p class="booker-foot">Fixed fares, no surge. Free cancellation up to 1 hour before pickup.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <section class="stats" aria-label="At a glance">
+    <div class="wrap">
+      <div class="stat reveal"><span class="stat-num" data-count="190" data-suffix="+">0</span><span class="stat-label">Cities served</span></div>
+      <div class="stat reveal"><span class="stat-num">24/7</span><span class="stat-label">Live human support</span></div>
+      <div class="stat reveal"><span class="stat-num" data-count="4.9" data-decimals="1" data-suffix=" / 5">0</span><span class="stat-label">Average client rating</span></div>
+      <div class="stat reveal"><span class="stat-num" data-count="100" data-suffix="%">0</span><span class="stat-label">Vetted, licensed chauffeurs</span></div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES ============ -->
+  <section class="section" id="services">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">What we offer</span>
+        <h2 class="display">Considered service for every occasion.</h2>
+        <p class="lead">One operator for the airport run, the board meeting, the wedding, and the late flight home. Booked the same way, held to the same standard.</p>
+      </div>
+
+      <div class="services-grid reveal">
+        <article class="service">
+          <span class="service-idx">A1</span>
+          <div class="service-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V18l-2 1.5V21l3.5-1 3.5 1v-1.5L13 18v-4.5l8 2.5Z" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
+          <h3>Airport Transfers</h3>
+          <p>Flights tracked in real time. Your chauffeur is waiting, with complimentary wait time built in.</p>
+        </article>
+
+        <article class="service">
+          <span class="service-idx">A2</span>
+          <div class="service-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="7" width="18" height="13" rx="1.5" stroke-width="1.2"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 12h18" stroke-width="1.2"/></svg></div>
+          <h3>Corporate &amp; Business</h3>
+          <p>Punctual, discreet travel for executives and teams, with central billing available on request.</p>
+        </article>
+
+        <article class="service">
+          <span class="service-idx">A3</span>
+          <div class="service-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9" stroke-width="1.2"/><path d="M12 7v5l3.5 2" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <h3>Chauffeur by the Hour</h3>
+          <p>A car and chauffeur at your disposal for meetings, viewings, or a full day across the city.</p>
+        </article>
+
+        <article class="service">
+          <span class="service-idx">A4</span>
+          <div class="service-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3l2.2 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.8-.5L12 3Z" stroke-width="1.2" stroke-linejoin="round"/></svg></div>
+          <h3>Events &amp; Occasions</h3>
+          <p>Weddings, premieres, and private events, arranged with care and absolute discretion.</p>
+        </article>
+
+        <article class="service">
+          <span class="service-idx">A5</span>
+          <div class="service-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="6" cy="6" r="2.2" stroke-width="1.2"/><circle cx="18" cy="18" r="2.2" stroke-width="1.2"/><path d="M8.2 6H15a3 3 0 0 1 0 6H9a3 3 0 0 0 0 6h6.8" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <h3>City to City</h3>
+          <p>Comfortable intercity journeys with a single, fixed fare agreed before you travel.</p>
+        </article>
+
+        <article class="service">
+          <span class="service-idx">A6</span>
+          <div class="service-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z" stroke-width="1.2" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <h3>Roadshows &amp; VIP</h3>
+          <p>Multi-stop itineraries and close-protection coordination, planned to the minute.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FLEET ============ -->
+  <section class="section" id="fleet">
+    <div class="wrap">
+      <div class="sec-head split reveal">
+        <div>
+          <span class="eyebrow">The fleet</span>
+          <h2 class="display">A fleet maintained to a single standard.</h2>
+        </div>
+        <p class="lead">Late-model vehicles, professionally valeted and serviced on schedule. Choose the class; the standard never changes.</p>
+      </div>
+
+      <div class="fleet-grid reveal">
+        <!-- SWAP: PRICES — figures below are illustrative -->
+        <article class="car">
+          <div class="car-vis">
+            <span class="code">CLS-01</span>
+            <svg class="carline" viewBox="0 0 240 96" fill="none" stroke="currentColor" aria-hidden="true">
+              <path d="M16 66c0-8 4-12 14-13l30-4c10-10 22-15 38-15h36c18 0 30 6 42 16l30 5c10 1 14 5 14 13" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M70 35c10-7 20-10 32-10h28c12 0 22 4 30 11" stroke-width="1.1" opacity="0.55"/>
+              <line x1="16" y1="66" x2="224" y2="66" stroke-width="1.4"/>
+              <circle cx="66" cy="70" r="13" stroke-width="1.4"/><circle cx="66" cy="70" r="5" stroke-width="1.2" opacity="0.6"/>
+              <circle cx="178" cy="70" r="13" stroke-width="1.4"/><circle cx="178" cy="70" r="5" stroke-width="1.2" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="car-body">
+            <h3>Business Class</h3>
+            <p class="car-models">Mercedes-Benz E-Class, BMW 5 Series, or equivalent.</p>
+            <div class="car-specs">
+              <span class="spec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3" stroke-width="1.5"/><path d="M6 19c0-2.8 2.7-5 6-5s6 2.2 6 5" stroke-width="1.5" stroke-linecap="round"/></svg>3 guests</span>
+              <span class="spec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="8" width="14" height="11" rx="1.5" stroke-width="1.5"/><path d="M9 8V6.5A1.5 1.5 0 0 1 10.5 5h3A1.5 1.5 0 0 1 15 6.5V8" stroke-width="1.5"/></svg>2 cases</span>
+            </div>
+            <div class="car-foot">
+              <div class="car-price"><span>from</span>£55</div>
+              <a class="car-link" href="#book">Reserve →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="car">
+          <div class="car-vis">
+            <span class="code">CLS-02</span>
+            <svg class="carline" viewBox="0 0 240 96" fill="none" stroke="currentColor" aria-hidden="true">
+              <path d="M14 66c0-9 5-13 15-14l28-4c11-12 24-16 40-16h34c19 0 32 6 44 17l30 5c10 1 15 5 15 12" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M66 34c11-8 22-11 34-11h26c13 0 24 5 32 12" stroke-width="1.1" opacity="0.55"/>
+              <line x1="14" y1="66" x2="224" y2="66" stroke-width="1.4"/>
+              <circle cx="64" cy="70" r="13" stroke-width="1.4"/><circle cx="64" cy="70" r="5" stroke-width="1.2" opacity="0.6"/>
+              <circle cx="180" cy="70" r="13" stroke-width="1.4"/><circle cx="180" cy="70" r="5" stroke-width="1.2" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="car-body">
+            <h3>First Class</h3>
+            <p class="car-models">Mercedes-Benz S-Class, BMW 7 Series, or equivalent.</p>
+            <div class="car-specs">
+              <span class="spec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3" stroke-width="1.5"/><path d="M6 19c0-2.8 2.7-5 6-5s6 2.2 6 5" stroke-width="1.5" stroke-linecap="round"/></svg>3 guests</span>
+              <span class="spec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="8" width="14" height="11" rx="1.5" stroke-width="1.5"/><path d="M9 8V6.5A1.5 1.5 0 0 1 10.5 5h3A1.5 1.5 0 0 1 15 6.5V8" stroke-width="1.5"/></svg>2 cases</span>
+            </div>
+            <div class="car-foot">
+              <div class="car-price"><span>from</span>£95</div>
+              <a class="car-link" href="#book">Reserve →</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="car">
+          <div class="car-vis">
+            <span class="code">CLS-03</span>
+            <svg class="carline" viewBox="0 0 240 96" fill="none" stroke="currentColor" aria-hidden="true">
+              <path d="M14 66V40c0-7 4-10 12-11l16-2 8-9c3-3 7-5 12-5h78c8 0 14 3 18 9l8 12 12 2c10 1 14 5 14 13v6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="62" y1="13" x2="62" y2="34" stroke-width="1" opacity="0.5"/>
+              <line x1="112" y1="13" x2="112" y2="34" stroke-width="1" opacity="0.5"/>
+              <line x1="14" y1="66" x2="224" y2="66" stroke-width="1.4"/>
+              <circle cx="62" cy="70" r="13" stroke-width="1.4"/><circle cx="62" cy="70" r="5" stroke-width="1.2" opacity="0.6"/>
+              <circle cx="182" cy="70" r="13" stroke-width="1.4"/><circle cx="182" cy="70" r="5" stroke-width="1.2" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="car-body">
+            <h3>Business Van</h3>
+            <p class="car-models">Mercedes-Benz V-Class, or equivalent.</p>
+            <div class="car-specs">
+              <span class="spec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3" stroke-width="1.5"/><path d="M6 19c0-2.8 2.7-5 6-5s6 2.2 6 5" stroke-width="1.5" stroke-linecap="round"/></svg>up to 7</span>
+              <span class="spec"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="8" width="14" height="11" rx="1.5" stroke-width="1.5"/><path d="M9 8V6.5A1.5 1.5 0 0 1 10.5 5h3A1.5 1.5 0 0 1 15 6.5V8" stroke-width="1.5"/></svg>6 cases</span>
+            </div>
+            <div class="car-foot">
+              <div class="car-price"><span>from</span>£85</div>
+              <a class="car-link" href="#book">Reserve →</a>
+            </div>
+          </div>
+        </article>
+      </div>
+      <p class="lead fleet-note reveal mono-mini" style="text-transform:none; letter-spacing:0.02em;">Indicative fares shown. Final price is fixed and confirmed at the time of booking.</p>
+    </div>
+  </section>
+
+  <!-- ============ THE STANDARD ============ -->
+  <section class="section" id="standard">
+    <div class="wrap standard">
+      <div class="standard-vis reveal" aria-hidden="true">
+        <span class="coord tl">51.2362° N</span>
+        <span class="coord br">000.5704° W</span>
+        <div class="ring"></div>
+        <div class="big">Punctual.<br/>Discreet.<br/>Immaculate.</div>
+      </div>
+
+      <div class="reveal">
+        <span class="eyebrow">The standard</span>
+        <h2 class="display" style="margin:1.1rem 0 2.2rem;">Nothing left to chance.</h2>
+        <ul class="standard-list">
+          <li>
+            <div class="std-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3.5" stroke-width="1.4"/><path d="M5 20c0-3.5 3.1-6 7-6s7 2.5 7 6" stroke-width="1.4" stroke-linecap="round"/><path d="M16 5l1.5 1.5L21 3" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div><h4>Professionally vetted chauffeurs</h4><p>Background checked, trained, and held to a strict code of conduct.</p></div>
+          </li>
+          <li>
+            <div class="std-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 12l9-7 9 7-9 5-9-5Z" stroke-width="1.4" stroke-linejoin="round"/><path d="M12 17v4" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+            <div><h4>Real-time flight tracking</h4><p>We adjust to delays and never charge you for the wait.</p></div>
+          </li>
+          <li>
+            <div class="std-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9" stroke-width="1.4"/><path d="M12 7v5l3.5 2" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+            <div><h4>Fixed, transparent fares</h4><p>Confirmed before you travel. No surge pricing, ever.</p></div>
+          </li>
+          <li>
+            <div class="std-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3l2.2 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.8-.5L12 3Z" stroke-width="1.4" stroke-linejoin="round"/></svg></div>
+            <div><h4>Fully licensed and insured</h4><p>Operating to private-hire regulations, with comprehensive cover.</p></div>
+          </li>
+          <li>
+            <div class="std-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z" stroke-width="1.4"/><path d="M8.5 13c.8 1.4 2 2.2 3.5 2.2s2.7-.8 3.5-2.2" stroke-width="1.4" stroke-linecap="round"/></svg></div>
+            <div><h4>Support, around the clock</h4><p>Real people on call, 24 hours a day, wherever you are.</p></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CORPORATE ============ -->
+  <section class="section" id="corporate">
+    <div class="wrap">
+      <div class="corporate reveal">
+        <div class="corporate-grid">
+          <div>
+            <span class="eyebrow">For business</span>
+            <h2 class="display">Travel programmes, managed end to end.</h2>
+            <p>Set up a corporate account for centralised billing, duty-of-care reporting, dedicated account management, and priority dispatch for your people, in any city we serve.</p>
+            <div class="corp-actions">
+              <!-- SWAP: CONTACT / link -->
+              <a class="btn btn-primary" href="mailto:corporate@meridian.example">Talk to our corporate team <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              <a class="btn btn-ghost" href="#">Capabilities deck</a>
+            </div>
+          </div>
+          <ul class="corp-points">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12l4 4 10-10" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Consolidated monthly invoicing</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12l4 4 10-10" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Spend &amp; journey reporting</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12l4 4 10-10" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Named account manager</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12l4 4 10-10" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Priority dispatch worldwide</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12l4 4 10-10" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>GDPR-compliant data handling</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head center reveal">
+        <span class="eyebrow">In their words</span>
+        <h2 class="display">Trusted by those who travel often.</h2>
+      </div>
+      <div class="quotes reveal">
+        <figure class="quote">
+          <div class="mark">&ldquo;</div>
+          <blockquote><p>Faultless, every time. The cars are immaculate and the chauffeurs are genuinely professional.</p></blockquote>
+          <figcaption class="who"><b>A. Whitlock</b>Managing Director</figcaption>
+        </figure>
+        <figure class="quote">
+          <div class="mark">&ldquo;</div>
+          <blockquote><p>We moved our entire executive travel programme across and have not looked back since.</p></blockquote>
+          <figcaption class="who"><b>Head of Procurement</b>FTSE-listed group</figcaption>
+        </figure>
+        <figure class="quote">
+          <div class="mark">&ldquo;</div>
+          <blockquote><p>They tracked a delayed flight at midnight and were waiting the moment I landed. That is the difference.</p></blockquote>
+          <figcaption class="who"><b>R. Adeyemi</b>Frequent traveller</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="section final">
+    <div class="final-glow"></div>
+    <div class="wrap">
+      <span class="eyebrow reveal" style="justify-content:center; display:inline-flex;">Ready when you are</span>
+      <h2 class="display reveal">Reserve your chauffeur.</h2>
+      <p class="lead reveal">A few details is all it takes. Confirmation in moments, a fixed fare, and a chauffeur who will be there before you are.</p>
+      <div class="final-actions reveal">
+        <a class="btn btn-primary" href="#book">Reserve now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <!-- SWAP: CONTACT -->
+        <a class="btn btn-ghost" href="tel:+442000000000">Call 24/7 · +44 (0)20 0000 0000</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <!-- SWAP: BRAND -->
+        <a href="#top" class="brand">MÉRIDIAN<span class="dot"></span></a>
+        <p>Private chauffeur service for those who travel often and expect more.</p>
+        <span class="foot-coord">EST. MMXXVI · LICENSED PHV OPERATOR</span>
+      </div>
+
+      <div class="foot-col">
+        <h5>Services</h5>
+        <a href="#services">Airport transfers</a>
+        <a href="#services">Corporate travel</a>
+        <a href="#services">By the hour</a>
+        <a href="#services">Events</a>
+        <a href="#services">City to city</a>
+      </div>
+
+      <div class="foot-col">
+        <h5>Company</h5>
+        <a href="#standard">The standard</a>
+        <a href="#">Our chauffeurs</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+      </div>
+
+      <div class="foot-col">
+        <h5>Contact</h5>
+        <!-- SWAP: CONTACT -->
+        <a href="tel:+442000000000">+44 (0)20 0000 0000</a>
+        <a href="mailto:hello@meridian.example">hello@meridian.example</a>
+        <a href="#">London · United Kingdom</a>
+        <a href="#corporate">Corporate accounts</a>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <div class="foot-legal">
+        <span>&copy; <span id="year">2026</span> MÉRIDIAN. All rights reserved.</span>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+      <!-- SWAP: SOCIAL -->
+      <div class="foot-social">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="5" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="3" stroke-width="1.5"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 13v4" stroke-width="1.5" stroke-linecap="round"/></svg></a>
+        <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4l16 16M20 4L4 20" stroke-width="1.6" stroke-linecap="round"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Year */
+  var y = document.getElementById('year');
+  if (y) y.textContent = new Date().getFullYear();
+
+  /* Header scrolled state */
+  var header = document.getElementById('top');
+  function onScroll(){
+    if (window.scrollY > 24) header.classList.add('scrolled');
+    else header.classList.remove('scrolled');
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  /* Mobile menu */
+  var menuBtn = document.getElementById('menuBtn');
+  var menu = document.getElementById('mobileMenu');
+  var menuIcon = document.getElementById('menuIcon');
+  function setMenu(open){
+    menu.classList.toggle('open', open);
+    document.body.classList.toggle('nav-open', open);
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menuIcon.innerHTML = open
+      ? '<path d="M6 6l12 12M18 6L6 18" stroke-width="1.6" stroke-linecap="round"/>'
+      : '<path d="M4 7h16M4 12h16M4 17h16" stroke-width="1.6" stroke-linecap="round"/>';
+  }
+  if (menuBtn && menu){
+    menuBtn.addEventListener('click', function(){ setMenu(!menu.classList.contains('open')); });
+    menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
+  }
+
+  /* Booking tabs */
+  var tabT = document.getElementById('tabTransfer');
+  var tabH = document.getElementById('tabHourly');
+  var fieldDest = document.getElementById('fieldDest');
+  var fieldDur = document.getElementById('fieldDuration');
+  function setMode(mode){
+    var transfer = mode === 'transfer';
+    tabT.classList.toggle('active', transfer);
+    tabH.classList.toggle('active', !transfer);
+    tabT.setAttribute('aria-selected', transfer ? 'true':'false');
+    tabH.setAttribute('aria-selected', !transfer ? 'true':'false');
+    fieldDest.classList.toggle('hidden', !transfer);
+    fieldDur.classList.toggle('hidden', transfer);
+  }
+  if (tabT && tabH){
+    tabT.addEventListener('click', function(){ setMode('transfer'); });
+    tabH.addEventListener('click', function(){ setMode('hourly'); });
+  }
+
+  /* Booking submit — front-end demo only.
+     SWAP: BOOKING — replace the body of this handler with a POST to your
+     reservations endpoint / quote engine, e.g. fetch('/api/quote', {...}). */
+  var bookBtn = document.getElementById('bookBtn');
+  var bookStatus = document.getElementById('bookStatus');
+  if (bookBtn){
+    bookBtn.addEventListener('click', function(){
+      var pickup = document.getElementById('pickup');
+      var dest = document.getElementById('dest');
+      var hourly = tabH.classList.contains('active');
+      if (!pickup.value.trim()){
+        showStatus('Please enter a pickup location.', false);
+        pickup.focus();
+        return;
+      }
+      if (!hourly && !dest.value.trim()){
+        showStatus('Please enter a destination.', false);
+        dest.focus();
+        return;
+      }
+      showStatus('Thank you. A reservations specialist will confirm your fare shortly.', true);
+    });
+  }
+  function showStatus(msg, ok){
+    if (!bookStatus) return;
+    bookStatus.textContent = msg;
+    bookStatus.style.color = ok ? 'var(--champagne)' : '#E0A0A0';
+    bookStatus.classList.add('show');
+  }
+
+  /* Scroll reveal */
+  var revealEls = document.querySelectorAll('.reveal');
+  if (reduce || !('IntersectionObserver' in window)){
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold:0.12, rootMargin:'0px 0px -8% 0px' });
+    revealEls.forEach(function(el){ io.observe(el); });
+  }
+
+  /* Stat count-up */
+  var nums = document.querySelectorAll('.stat-num[data-count]');
+  function animateNum(el){
+    var target = parseFloat(el.getAttribute('data-count'));
+    var dec = parseInt(el.getAttribute('data-decimals') || '0', 10);
+    var suffix = el.getAttribute('data-suffix') || '';
+    if (reduce){ el.textContent = target.toFixed(dec) + suffix; return; }
+    var start = null, dur = 1400;
+    function step(ts){
+      if (start === null) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = (target * eased).toFixed(dec) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = target.toFixed(dec) + suffix;
+    }
+    requestAnimationFrame(step);
+  }
+  if (nums.length){
+    if (reduce || !('IntersectionObserver' in window)){
+      nums.forEach(animateNum);
+    } else {
+      var io2 = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting){ animateNum(e.target); io2.unobserve(e.target); }
+        });
+      }, { threshold:0.6 });
+      nums.forEach(function(el){ io2.observe(el); });
+    }
+  }
+})();
+</script>
+</body>
+</html>
