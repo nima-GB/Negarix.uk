@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MÉRIDIAN</title>
 
+    <!-- 
+      PRODUCTION CSP NOTE: 
+      For maximum security, extract the <style> and <script> tags into separate 
+      files (style.css, app.js) and remove 'unsafe-inline' from the CSP below.
+    -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'self';
         script-src 'self' 'unsafe-inline' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/;
@@ -118,6 +123,8 @@
             display: block;
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
+            /* Prevent CSS from overriding scaling logic */
+            pointer-events: none;
         }
         #particleCanvas { z-index: 1; opacity: 0.7; }
         #matrixCanvas   { z-index: 2; opacity: 0.55; }
@@ -135,7 +142,6 @@
             opacity: 1;
             transition: opacity 0.8s ease;
         }
-        /* JS adds .booting immediately to hide during boot, then .visible to fade in */
         #app.booting { opacity: 0; }
         #app.visible { opacity: 1; }
 
@@ -162,7 +168,6 @@
             position: relative;
         }
 
-        /* status bar strip */
         .status-bar {
             display: flex;
             align-items: center;
@@ -183,7 +188,6 @@
         .status-bar span { flex: 1; }
         .status-time { font-variant-numeric: tabular-nums; }
 
-        /* glitch title */
         .site-title {
             font-size: clamp(2rem, 7vw, 3rem);
             font-weight: 700;
@@ -220,7 +224,6 @@
             margin-top: 8px;
         }
 
-        /* corner decoration */
         .corner { position: absolute; width: 14px; height: 14px; }
         .corner.tl { top: 10px; left: 10px; border-top: 1px solid var(--green-dim); border-left: 1px solid var(--green-dim); }
         .corner.tr { top: 10px; right: 10px; border-top: 1px solid var(--green-dim); border-right: 1px solid var(--green-dim); }
@@ -249,7 +252,6 @@
 
         /* ── FORM ───────────────────────────────────────────── */
         .form { display: flex; flex-direction: column; gap: 18px; }
-
         .field { display: flex; flex-direction: column; gap: 6px; }
 
         .field-label {
@@ -292,7 +294,6 @@
             width: 100%;
         }
 
-        /* decryption scramble on focus */
         .field-input:focus {
             border-color: var(--border-hot);
             background: rgba(0, 28, 6, 0.7);
@@ -304,7 +305,6 @@
             color: var(--green);
         }
 
-        /* scan line that sweeps on focus */
         .field-scan {
             position: absolute;
             left: 0; right: 0;
@@ -323,7 +323,6 @@
             line-height: 1.6;
         }
 
-        /* ── CHAR COUNTER ───────────────────────────────────── */
         .char-counter {
             font-size: 0.6rem;
             color: var(--text-muted);
@@ -403,16 +402,13 @@
             box-shadow: var(--glow-md);
             outline: none;
         }
-
         .submit-btn span { position: relative; z-index: 1; }
-
         .submit-btn:disabled {
             opacity: 0.45;
             cursor: not-allowed;
             pointer-events: none;
         }
 
-        /* progress bar inside button */
         .btn-progress {
             position: absolute;
             bottom: 0; left: 0;
@@ -455,12 +451,10 @@
             0%, 100% { opacity: 1; }
             50%       { opacity: 0; }
         }
-
         @keyframes pulse-dot {
             0%, 100% { box-shadow: 0 0 4px 1px rgba(0,255,65,0.6); }
             50%       { box-shadow: 0 0 10px 3px rgba(0,255,65,0.9); }
         }
-
         @keyframes glitch-top {
             0%,89%,100% { opacity: 0; transform: translate(0); }
             90%          { opacity: 0.7; transform: translate(-3px, -1px); }
@@ -473,15 +467,9 @@
             93%          { opacity: 0.6; transform: translate(-2px, 0); }
             95%          { opacity: 0; }
         }
-
         @keyframes scan-sweep {
             0%   { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to   { opacity: 1; transform: translateY(0); }
         }
 
         /* ── REDUCED MOTION ─────────────────────────────────── */
@@ -533,7 +521,7 @@
             </div>
 
             <h1 class="site-title" data-text="MÉRIDIAN">MÉRIDIAN</h1>
-            <p class="site-sub">MÉRIDIAN </p>
+            <p class="site-sub">MÉRIDIAN</p>
         </header>
 
         <div class="card-body">
@@ -543,10 +531,10 @@
                   action="https://formspree.io/f/xdavzgko"
                   method="POST" novalidate>
 
-                <!-- Honeypot -->
+                <!-- Honeypot (Fix: autocomplete="nope" prevents password managers from auto-filling) -->
                 <label class="hp-field" aria-hidden="true">
                     Leave empty
-                    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off">
+                    <input type="text" name="_gotcha" tabindex="-1" autocomplete="nope">
                 </label>
 
                 <!-- Name -->
@@ -624,6 +612,12 @@
     <script>
     'use strict';
 
+    // Global Constants
+    const TWO_PI = Math.PI * 2;
+    
+    // Performance: Device Pixel Ratio capping to prevent Retina displays from dropping frames
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
     /* ═══════════════════════════════════════════════════════════
        BOOT SEQUENCE
     ═══════════════════════════════════════════════════════════ */
@@ -650,10 +644,8 @@
         const bootEl    = document.getElementById('boot');
         const appEl     = document.getElementById('app');
 
-        // Hide app immediately so boot plays cleanly
         appEl.classList.add('booting');
 
-        // Reduced motion: skip boot
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             bootEl.classList.add('hidden');
             appEl.classList.remove('booting');
@@ -673,18 +665,14 @@
             const baseDelay = i === 0 ? 200 : totalDelay + (item.delay || 90) + (Math.random() * 60);
             totalDelay = baseDelay;
 
-            setTimeout(() => {
-                span.classList.add('visible');
-            }, baseDelay);
+            setTimeout(() => { span.classList.add('visible'); }, baseDelay);
         });
 
-        // Add blinking cursor at end
         const cursorSpan = document.createElement('span');
         cursorSpan.className = 'line visible';
         cursorSpan.innerHTML = '&gt; <span id="boot-cursor"></span>';
         container.appendChild(cursorSpan);
 
-        // Hide boot, show app
         setTimeout(() => {
             bootEl.classList.add('hidden');
             appEl.classList.remove('booting');
@@ -758,7 +746,6 @@
                 return;
             }
 
-            // Send
             submitBtn.disabled = true;
             submitBtn.classList.add('loading');
             btnLabel.textContent = 'Transmitting...';
@@ -804,18 +791,31 @@
         const PARTICLE_COL  = 'rgba(0, 255, 65, 0.45)';
         const MATRIX_COL    = rootStyles.getPropertyValue('--green').trim() || '#00ff41';
 
-        // ── shared mouse state ──────────────────────────────────
+        // ── shared mouse state (Passive listeners for performance) ──
         const mouse = { x: null, y: null };
-        window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-        window.addEventListener('mouseout',  () => { mouse.x = null;     mouse.y = null; });
+        window.addEventListener('mousemove', e => { 
+            mouse.x = e.clientX; 
+            mouse.y = e.clientY; 
+        }, { passive: true });
+        window.addEventListener('mouseout', () => { 
+            mouse.x = null; 
+            mouse.y = null; 
+        }, { passive: true });
 
         // ── debounced resize ────────────────────────────────────
         let resizeTimer;
+        let logicalWidth = window.innerWidth;
+        let logicalHeight = window.innerHeight;
+
         function onResize(cbs) {
             window.addEventListener('resize', () => {
                 clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(() => cbs.forEach(f => f()), 200);
-            });
+                resizeTimer = setTimeout(() => {
+                    logicalWidth = window.innerWidth;
+                    logicalHeight = window.innerHeight;
+                    cbs.forEach(f => f());
+                }, 200);
+            }, { passive: true });
         }
 
         /* ── ENGINE 1: Particle field ──────────────────────────── */
@@ -824,8 +824,11 @@
         let particles = [];
 
         function sizePCanvas() {
-            pCanvas.width  = window.innerWidth;
-            pCanvas.height = window.innerHeight;
+            pCanvas.width  = logicalWidth * dpr;
+            pCanvas.height = logicalHeight * dpr;
+            pCanvas.style.width = logicalWidth + 'px';
+            pCanvas.style.height = logicalHeight + 'px';
+            pCtx.scale(dpr, dpr);
         }
         sizePCanvas();
 
@@ -835,12 +838,12 @@
         class Particle {
             constructor() { this.reset(true); }
             reset(init) {
-                this.x = Math.random() * pCanvas.width;
-                this.y = init ? Math.random() * pCanvas.height : -5;
+                this.x = Math.random() * logicalWidth;
+                this.y = init ? Math.random() * logicalHeight : -5;
                 this.r = Math.random() * 1.8 + 0.4;
                 this.vx = (Math.random() - 0.5) * 0.35;
                 this.vy = (Math.random() - 0.5) * 0.35;
-                this.phase = Math.random() * Math.PI * 2;
+                this.phase = Math.random() * TWO_PI;
                 this.speed = Math.random() * 0.3 + 0.1;
             }
             update(t) {
@@ -857,37 +860,41 @@
                     }
                 }
 
-                if (this.x < -5)              this.x = pCanvas.width + 5;
-                if (this.x > pCanvas.width+5)  this.x = -5;
-                if (this.y < -5)               this.y = pCanvas.height + 5;
-                if (this.y > pCanvas.height+5) this.y = -5;
+                if (this.x < -5)               this.x = logicalWidth + 5;
+                if (this.x > logicalWidth+5)   this.x = -5;
+                if (this.y < -5)               this.y = logicalHeight + 5;
+                if (this.y > logicalHeight+5)  this.y = -5;
             }
         }
 
         function buildParticles() {
-            const small  = window.innerWidth < 768;
+            const small  = logicalWidth < 768;
             const max    = small ? 55 : 140;
-            const count  = Math.min(Math.floor(pCanvas.width * pCanvas.height / (small ? 22000 : 11000)), max);
+            const count  = Math.min(Math.floor(logicalWidth * logicalHeight / (small ? 22000 : 11000)), max);
             particles = Array.from({ length: count }, () => new Particle());
         }
 
-        // Batch all connections into ONE path per frame
         function drawConnections() {
             const grid = new Map();
             for (const p of particles) {
-                const key = Math.floor(p.x / CELL_SIZE) + ',' + Math.floor(p.y / CELL_SIZE);
+                // FIX: Zero-allocation integer keys instead of creating thousands of strings per second.
+                // Offsetting by 100 ensures negative coordinates (offscreen wrap) don't break the math.
+                const cx = Math.floor(p.x / CELL_SIZE) + 100;
+                const cy = Math.floor(p.y / CELL_SIZE) + 100;
+                const key = cx * 1000 + cy;
+                
                 if (!grid.has(key)) grid.set(key, []);
                 grid.get(key).push(p);
             }
 
-            // collect unique pairs first, draw in one pass per alpha bucket
             const buckets = new Map();
             for (const p of particles) {
-                const cx = Math.floor(p.x / CELL_SIZE);
-                const cy = Math.floor(p.y / CELL_SIZE);
+                const cx = Math.floor(p.x / CELL_SIZE) + 100;
+                const cy = Math.floor(p.y / CELL_SIZE) + 100;
+                
                 for (let ox = -1; ox <= 1; ox++) {
                     for (let oy = -1; oy <= 1; oy++) {
-                        const nb = grid.get((cx+ox) + ',' + (cy+oy));
+                        const nb = grid.get((cx + ox) * 1000 + (cy + oy));
                         if (!nb) continue;
                         for (const q of nb) {
                             if (q === p) continue;
@@ -916,15 +923,14 @@
         }
 
         function tickParticles(t) {
-            pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+            pCtx.clearRect(0, 0, logicalWidth, logicalHeight);
 
-            // draw all particle dots in one fill path
             pCtx.beginPath();
             pCtx.fillStyle = PARTICLE_COL;
             for (const p of particles) {
                 p.update(t);
                 pCtx.moveTo(p.x + p.r, p.y);
-                pCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                pCtx.arc(p.x, p.y, p.r, 0, TWO_PI);
             }
             pCtx.fill();
 
@@ -936,7 +942,7 @@
                 g.addColorStop(1, 'rgba(0,255,65,0)');
                 pCtx.fillStyle = g;
                 pCtx.beginPath();
-                pCtx.arc(mouse.x, mouse.y, 130, 0, Math.PI * 2);
+                pCtx.arc(mouse.x, mouse.y, 130, 0, TWO_PI);
                 pCtx.fill();
             }
         }
@@ -949,19 +955,26 @@
         let cols      = [];
 
         function sizeMCanvas() {
-            mCanvas.width  = window.innerWidth;
-            mCanvas.height = window.innerHeight;
-            cols = Array.from({ length: Math.floor(mCanvas.width / FS) },
-                              () => Math.random() * mCanvas.height);
+            mCanvas.width  = logicalWidth * dpr;
+            mCanvas.height = logicalHeight * dpr;
+            mCanvas.style.width = logicalWidth + 'px';
+            mCanvas.style.height = logicalHeight + 'px';
+            mCtx.scale(dpr, dpr);
+            cols = Array.from({ length: Math.floor(logicalWidth / FS) }, () => Math.random() * logicalHeight);
         }
         sizeMCanvas();
 
         function tickMatrix(t) {
             const pulse = Math.abs(Math.sin(t * 0.4));
+            
+            // FIX: Remove shadowBlur entirely before drawing the giant background rect
+            mCtx.shadowBlur  = 0;
+            mCtx.fillStyle   = 'rgba(5,7,5,0.09)';
+            mCtx.fillRect(0, 0, logicalWidth, logicalHeight);
+            
+            // Re-apply shadowBlur ONLY for the text
             mCtx.shadowBlur  = 3 + pulse * 6;
             mCtx.shadowColor = MATRIX_COL;
-            mCtx.fillStyle   = 'rgba(5,7,5,0.09)';
-            mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
             mCtx.font      = FS + 'px monospace';
             mCtx.fillStyle = MATRIX_COL;
 
@@ -982,7 +995,7 @@
                 }
                 mCtx.fillText(ch, wx, y);
 
-                cols[i] = (y > mCanvas.height && Math.random() > 0.975) ? 0 : y + speed;
+                cols[i] = (y > logicalHeight && Math.random() > 0.975) ? 0 : y + speed;
             }
         }
 
