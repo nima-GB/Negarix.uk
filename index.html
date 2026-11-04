@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en-GB" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title>MÉRIDIAN · Global Artificial General Intelligence & Sovereign Compute</title>
+    <title>MÉRIDIAN · Sovereign Artificial General Intelligence &amp; Compute Fabric</title>
 
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'none';
@@ -20,125 +20,103 @@
     ">
 
     <style>
-        /* -- HIGH-CONTRAST DAYLIGHT TACTICAL TOKENS ----------- */
-        :root {
-            --bg:            #f2f6f3;
-            --surface:       rgba(255, 255, 255, 0.95);
-            --surface-solid: #ffffff;
-            --surface-tint:  #eaf5ee;
-            --surface-dark:  #0b1a10;
-            --accent:        #007a2f;
-            --accent-hover:  #005c23;
-            --accent-bright: #00a843;
-            --accent-soft:   rgba(0, 122, 47, 0.08);
-            --google-blue:   #1a73e8;
-            --google-soft:   rgba(26, 115, 232, 0.08);
-            --text:          #0b1c11;
-            --text-muted:    #45604e;
-            --border:        rgba(0, 102, 38, 0.22);
-            --border-hot:    #007a2f;
-            --shadow-sm:     0 2px 8px rgba(0, 102, 38, 0.07);
-            --shadow-md:     0 10px 28px rgba(0, 102, 38, 0.13);
-            --shadow-lg:     0 20px 50px rgba(11, 28, 17, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
-            --font-mono:     'Courier New', Courier, monospace;
-            --transition:    0.2s ease;
-            --max-w:         1220px;
+        /* -- DUAL-THEME TACTICAL TOKENS (DEFAULT: DAYLIGHT) --- */
+        :root, [data-theme="light"] {
+            --bg:             #eef3f0;
+            --bg-grid:        rgba(0, 90, 34, 0.045);
+            --surface:        rgba(255, 255, 255, 0.94);
+            --surface-solid:  #ffffff;
+            --surface-alt:    #f6faf7;
+            --surface-tint:   #e6f4ec;
+            --terminal-bg:    #09140d;
+            --terminal-text:  #b8ffd0;
+            --accent:         #007a2f;
+            --accent-hover:   #005a22;
+            --accent-bright:  #00b848;
+            --accent-soft:    rgba(0, 122, 47, 0.09);
+            --cyan-tech:      #006680;
+            --google-blue:    #1a73e8;
+            --google-soft:    rgba(26, 115, 232, 0.09);
+            --text:           #0a1c10;
+            --text-muted:     #44614d;
+            --border:         rgba(0, 102, 38, 0.22);
+            --border-hot:     #007a2f;
+            --shadow-sm:      0 2px 10px rgba(0, 80, 30, 0.07);
+            --shadow-md:      0 12px 30px rgba(0, 80, 30, 0.13);
+            --shadow-lg:      0 24px 60px rgba(10, 28, 16, 0.09), 0 1px 3px rgba(0, 0, 0, 0.05);
+            --globe-node:     #007a2f;
+            --globe-mesh:     rgba(0, 122, 47, 0.24);
+            --globe-core:     rgba(0, 168, 67, 0.08);
+            --font-mono:      'Courier New', Courier, monospace;
+            --transition:     0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --max-w:          1260px;
         }
 
-        /* -- RESET -------------------------------------------- */
+        [data-theme="dark"] {
+            --bg:             #040906;
+            --bg-grid:        rgba(0, 255, 65, 0.04);
+            --surface:        rgba(7, 17, 10, 0.92);
+            --surface-solid:  #08140b;
+            --surface-alt:    #0b1c10;
+            --surface-tint:   rgba(0, 255, 65, 0.1);
+            --terminal-bg:    #030804;
+            --terminal-text:  #00ff41;
+            --accent:         #00e63b;
+            --accent-hover:   #33ff66;
+            --accent-bright:  #00ff41;
+            --accent-soft:    rgba(0, 255, 65, 0.1);
+            --cyan-tech:      #00e5ff;
+            --google-blue:    #5c9dff;
+            --google-soft:    rgba(92, 157, 255, 0.12);
+            --text:           #e2fbee;
+            --text-muted:     #7ca889;
+            --border:         rgba(0, 255, 65, 0.24);
+            --border-hot:     #00ff41;
+            --shadow-sm:      0 0 12px rgba(0, 255, 65, 0.15);
+            --shadow-md:      0 0 25px rgba(0, 255, 65, 0.25);
+            --shadow-lg:      0 24px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 255, 65, 0.1);
+            --globe-node:     #00ff41;
+            --globe-mesh:     rgba(0, 255, 65, 0.28);
+            --globe-core:     rgba(0, 255, 65, 0.08);
+        }
+
+        /* -- RESET & BASE ------------------------------------- */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
         html, body {
             width: 100%; min-height: 100%;
-            background: var(--bg);
+            background-color: var(--bg);
+            background-image:
+                linear-gradient(to right, var(--bg-grid) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--bg-grid) 1px, transparent 1px);
+            background-size: 40px 40px;
             color: var(--text);
             font-family: var(--font-mono);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         a { color: inherit; text-decoration: none; }
         ul { list-style: none; }
+        button { font-family: var(--font-mono); }
 
-        /* -- BOOT SCREEN -------------------------------------- */
-        #boot {
-            position: fixed; inset: 0;
-            background: var(--bg);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            padding: clamp(24px, 8vw, 80px);
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-            cursor: pointer;
-        }
-        #boot.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-        #boot-lines {
-            font-size: clamp(0.75rem, 1.5vw, 0.92rem);
-            line-height: 1.9;
-            color: var(--text);
-            max-width: 680px;
-            width: 100%;
-            font-weight: 600;
-        }
-        #boot-lines .line { display: block; opacity: 0; }
-        #boot-lines .line.visible { opacity: 1; }
-        #boot-lines .ok   { color: var(--accent); }
-        #boot-lines .dim  { color: var(--text-muted); font-weight: 400; }
-        #boot-cursor {
-            display: inline-block;
-            width: 9px; height: 1.1em;
-            background: var(--accent);
-            margin-left: 4px;
-            vertical-align: text-bottom;
-            animation: blink 0.75s step-end infinite;
-        }
-        .boot-skip {
-            margin-top: 24px;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            letter-spacing: 0.14em;
-            font-weight: 700;
-        }
-
-        /* -- BACKGROUND OVERLAYS & CANVASES ------------------- */
-        #scanlines {
-            position: fixed; inset: 0;
-            pointer-events: none;
-            z-index: 900;
-            background: repeating-linear-gradient(
-                to bottom,
-                transparent 0px,
-                transparent 3px,
-                rgba(0, 60, 20, 0.015) 3px,
-                rgba(0, 60, 20, 0.015) 4px
-            );
-        }
-        #vignette {
-            position: fixed; inset: 0;
-            pointer-events: none;
-            z-index: 899;
-            background: radial-gradient(ellipse at center,
-                transparent 62%,
-                rgba(175, 198, 184, 0.28) 100%
-            );
-        }
-        canvas {
+        /* -- BACKGROUND CANVASES ------------------------------ */
+        canvas.bg-canvas {
             display: block;
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
             pointer-events: none;
         }
-        #particleCanvas { z-index: 1; opacity: 0.48; }
-        #matrixCanvas   { z-index: 2; opacity: 0.24; }
+        #particleCanvas { z-index: 1; opacity: 0.45; }
+        #matrixCanvas   { z-index: 2; opacity: 0.20; }
 
-        /* -- TOP TELEMETRY RIBBON ----------------------------- */
+        /* -- TOP LIVE TELEMETRY & DIAGNOSTIC RIBBON ----------- */
         .telemetry-ribbon {
             position: relative;
             z-index: 101;
-            background: var(--surface-dark);
-            color: #d8f3e0;
+            background: #061109;
+            color: #d0f5dc;
             font-size: 0.68rem;
             border-bottom: 1px solid var(--border);
             padding: 8px 24px;
@@ -150,22 +128,30 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 14px;
         }
         .ribbon-group {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 18px;
             flex-wrap: wrap;
         }
         .ribbon-stat {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 6px;
         }
         .ribbon-stat strong {
-            color: #4cd97b;
+            color: #00ff66;
             font-weight: 700;
+        }
+        .ribbon-pill {
+            padding: 2px 7px;
+            background: rgba(0, 255, 102, 0.14);
+            border: 1px solid rgba(0, 255, 102, 0.4);
+            color: #00ff66;
+            font-weight: 700;
+            border-radius: 2px;
         }
 
         /* -- STICKY NAVIGATION BAR ---------------------------- */
@@ -174,19 +160,19 @@
             top: 0;
             z-index: 100;
             width: 100%;
-            background: rgba(242, 246, 243, 0.92);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            background: var(--surface);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border);
         }
         .nav-inner {
             max-width: var(--max-w);
             margin: 0 auto;
-            padding: 15px 24px;
+            padding: 14px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
+            gap: 16px;
         }
         .brand {
             display: flex;
@@ -194,48 +180,55 @@
             gap: 12px;
         }
         .status-dot {
-            width: 8px; height: 8px;
+            width: 9px; height: 9px;
             border-radius: 50%;
             background: var(--accent-bright);
-            box-shadow: 0 0 8px rgba(0, 168, 67, 0.6);
-            animation: pulse-dot 2.5s ease-in-out infinite;
+            box-shadow: 0 0 10px var(--accent-bright);
+            animation: pulse-dot 2.2s ease-in-out infinite;
             flex-shrink: 0;
         }
         .brand-name {
-            font-size: 1.2rem;
+            font-size: 1.22rem;
             font-weight: 700;
             letter-spacing: 0.16em;
             color: var(--text);
         }
         .brand-tag {
             font-size: 0.62rem;
-            padding: 2px 7px;
+            padding: 2px 8px;
             background: var(--accent-soft);
             border: 1px solid var(--border);
             color: var(--accent);
             font-weight: 700;
-            letter-spacing: 0.1em;
         }
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 24px;
+            gap: 22px;
             font-size: 0.74rem;
             font-weight: 700;
-            letter-spacing: 0.1em;
             color: var(--text-muted);
         }
         .nav-links a:hover { color: var(--accent); }
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
         }
-        .nav-clock {
-            font-size: 0.7rem;
+        .theme-toggle {
+            background: var(--surface-alt);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            font-size: 0.68rem;
             font-weight: 700;
-            color: var(--text-muted);
-            font-variant-numeric: tabular-nums;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+        .theme-toggle:hover {
+            border-color: var(--border-hot);
+            color: var(--accent);
         }
         .btn-nav {
             background: var(--accent);
@@ -243,12 +236,13 @@
             padding: 9px 16px;
             font-size: 0.72rem;
             font-weight: 700;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.1em;
             border-radius: 2px;
             border: 1px solid var(--accent);
             transition: var(--transition);
             white-space: nowrap;
         }
+        [data-theme="dark"] .btn-nav { color: #040906; }
         .btn-nav:hover {
             background: var(--accent-hover);
             box-shadow: var(--shadow-sm);
@@ -260,34 +254,33 @@
             z-index: 10;
             max-width: var(--max-w);
             margin: 0 auto;
-            padding: 40px 24px 88px;
+            padding: 36px 24px 90px;
             display: flex;
             flex-direction: column;
-            gap: 76px;
+            gap: 72px;
         }
 
-        /* -- SHARED DECORATIVE CORNERS ------------------------ */
         .corner { position: absolute; width: 15px; height: 15px; pointer-events: none; }
         .corner.tl { top: 10px; left: 10px; border-top: 2px solid var(--accent); border-left: 2px solid var(--accent); }
         .corner.tr { top: 10px; right: 10px; border-top: 2px solid var(--accent); border-right: 2px solid var(--accent); }
         .corner.bl { bottom: 10px; left: 10px; border-bottom: 2px solid var(--accent); border-left: 2px solid var(--accent); }
         .corner.br { bottom: 10px; right: 10px; border-bottom: 2px solid var(--accent); border-right: 2px solid var(--accent); }
 
-        /* -- HERO SPLIT CONSOLE ------------------------------- */
+        /* -- HERO COMMAND DECK WITH 3D NEURAL GLOBE ----------- */
         .hero-card {
             position: relative;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 4px;
-            padding: clamp(28px, 5vw, 56px);
+            padding: clamp(28px, 4.5vw, 52px);
             box-shadow: var(--shadow-lg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
         }
         .hero-grid {
             display: grid;
-            grid-template-columns: 1.25fr 0.95fr;
-            gap: 40px;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 36px;
             align-items: center;
         }
         .telemetry-badge {
@@ -300,37 +293,37 @@
             font-size: 0.68rem;
             font-weight: 700;
             color: var(--accent);
-            letter-spacing: 0.14em;
-            margin-bottom: 20px;
+            letter-spacing: 0.12em;
+            margin-bottom: 18px;
         }
         .hero-title {
-            font-size: clamp(1.85rem, 4.2vw, 2.95rem);
+            font-size: clamp(1.9rem, 4vw, 3.05rem);
             font-weight: 700;
-            letter-spacing: 0.03em;
-            line-height: 1.18;
+            line-height: 1.16;
             color: var(--text);
+            letter-spacing: -0.01em;
         }
         .hero-lead {
             margin-top: 18px;
-            font-size: 0.95rem;
+            font-size: 0.94rem;
             color: var(--text-muted);
             font-weight: 600;
             line-height: 1.75;
         }
         .hero-actions {
-            margin-top: 30px;
+            margin-top: 28px;
             display: flex;
             flex-wrap: wrap;
-            gap: 14px;
+            gap: 12px;
         }
         .btn-primary {
             background: var(--accent);
             color: #ffffff;
             border: 1px solid var(--accent);
-            padding: 14px 24px;
+            padding: 13px 22px;
             font-size: 0.78rem;
             font-weight: 700;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.12em;
             border-radius: 2px;
             transition: var(--transition);
             display: inline-flex;
@@ -338,6 +331,7 @@
             gap: 10px;
             cursor: pointer;
         }
+        [data-theme="dark"] .btn-primary { color: #040906; }
         .btn-primary:hover {
             background: var(--accent-hover);
             box-shadow: var(--shadow-md);
@@ -347,10 +341,10 @@
             background: var(--surface-solid);
             color: var(--text);
             border: 1px solid var(--border-hot);
-            padding: 14px 24px;
+            padding: 13px 22px;
             font-size: 0.78rem;
             font-weight: 700;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.12em;
             border-radius: 2px;
             transition: var(--transition);
             cursor: pointer;
@@ -360,113 +354,115 @@
             box-shadow: var(--shadow-sm);
         }
 
-        /* -- LIVE AGI INFERENCE MONITOR (RIGHT HERO) ---------- */
-        .agi-monitor {
-            background: #f8fbf9;
+        /* -- 3D GEODESIC NEURAL GLOBE DECK -------------------- */
+        .globe-deck {
+            background: var(--surface-alt);
             border: 1px solid var(--border);
-            border-radius: 3px;
-            padding: 22px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            box-shadow: inset 0 0 24px rgba(0, 122, 47, 0.03);
-        }
-        .monitor-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--accent);
-            letter-spacing: 0.12em;
-        }
-        .layer-bars {
+            border-radius: 4px;
+            padding: 18px;
             display: flex;
             flex-direction: column;
             gap: 12px;
+            position: relative;
         }
-        .layer-row {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .layer-label {
+        .globe-header {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             font-size: 0.68rem;
             font-weight: 700;
-            color: var(--text);
+            color: var(--accent);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
         }
-        .layer-track {
+        .globe-wrap {
+            position: relative;
             width: 100%;
-            height: 7px;
-            background: rgba(0, 122, 47, 0.1);
-            border-radius: 2px;
+            height: 290px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
         }
-        .layer-fill {
+        #globeCanvas {
+            width: 100%;
             height: 100%;
-            background: var(--accent);
-            transition: width 0.6s ease;
+            display: block;
+            cursor: crosshair;
         }
-        .layer-fill.google { background: var(--google-blue); }
-        .monitor-log {
-            background: var(--surface-solid);
-            border: 1px solid var(--border);
-            padding: 12px;
-            font-size: 0.68rem;
+        .globe-hud-overlay {
+            position: absolute;
+            bottom: 8px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.64rem;
+            font-weight: 700;
             color: var(--text-muted);
-            font-weight: 600;
-            line-height: 1.65;
-            height: 112px;
-            overflow: hidden;
+            pointer-events: none;
         }
-        .monitor-log span { display: block; }
-        .monitor-log .hl { color: var(--accent); font-weight: 700; }
+        .globe-footer {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            border-top: 1px solid var(--border);
+            padding-top: 10px;
+            font-size: 0.66rem;
+        }
+        .g-mini {
+            background: var(--surface-solid);
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+        }
+        .g-mini span { display: block; color: var(--text-muted); font-size: 0.6rem; }
+        .g-mini strong { color: var(--accent); font-size: 0.78rem; }
 
-        /* -- HERO METRICS BAR --------------------------------- */
-        .hero-metrics {
-            margin-top: 40px;
-            padding-top: 26px;
+        /* -- LIVE CLIENT DIAGNOSTIC BAR ----------------------- */
+        .diag-strip {
+            margin-top: 34px;
+            padding-top: 24px;
             border-top: 1px solid var(--border);
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 16px;
         }
-        .metric-item {
-            padding: 12px 16px;
-            background: rgba(0, 122, 47, 0.03);
+        .diag-box {
+            background: var(--surface-alt);
+            border: 1px solid var(--border);
             border-left: 3px solid var(--accent);
+            padding: 12px 16px;
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            gap: 4px;
         }
-        .metric-val {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text);
-            letter-spacing: 0.05em;
-        }
-        .metric-lbl {
-            font-size: 0.68rem;
+        .diag-lbl {
+            font-size: 0.64rem;
             font-weight: 700;
             color: var(--text-muted);
-            letter-spacing: 0.1em;
+        }
+        .diag-val {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .diag-sub {
+            font-size: 0.64rem;
+            color: var(--accent);
+            font-weight: 700;
         }
 
         /* -- SECTION HEADERS ---------------------------------- */
         .section-header {
-            margin-bottom: 28px;
+            margin-bottom: 24px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
         .section-tag {
             font-size: 0.7rem;
             font-weight: 700;
-            letter-spacing: 0.22em;
+            letter-spacing: 0.18em;
             color: var(--accent);
             display: flex;
             align-items: center;
@@ -479,15 +475,175 @@
             background: linear-gradient(to right, var(--border), transparent);
         }
         .section-title {
-            font-size: clamp(1.45rem, 3vw, 2rem);
+            font-size: clamp(1.4rem, 2.8vw, 1.95rem);
             font-weight: 700;
             color: var(--text);
         }
         .section-desc {
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             color: var(--text-muted);
-            max-width: 780px;
+            max-width: 800px;
             font-weight: 600;
+        }
+
+        /* -- INTERACTIVE COMMAND-LINE SANDBOX (LIVE DIG) ------ */
+        .cli-window {
+            background: var(--terminal-bg);
+            color: var(--terminal-text);
+            border: 1px solid var(--border-hot);
+            border-radius: 4px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        .cli-topbar {
+            background: rgba(0, 255, 65, 0.08);
+            border-bottom: 1px solid rgba(0, 255, 65, 0.25);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+        .cli-presets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(0, 255, 65, 0.18);
+            align-items: center;
+        }
+        .cli-presets span {
+            font-size: 0.68rem;
+            color: #82b392;
+            margin-right: 4px;
+        }
+        .cli-btn {
+            background: rgba(0, 255, 65, 0.1);
+            color: #4dff88;
+            border: 1px solid rgba(0, 255, 65, 0.35);
+            padding: 4px 10px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+        .cli-btn:hover {
+            background: #00ff66;
+            color: #041007;
+        }
+        .cli-output {
+            padding: 20px;
+            height: 250px;
+            overflow-y: auto;
+            font-size: 0.78rem;
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .cli-line { white-space: pre-wrap; word-break: break-word; }
+        .cli-line.cmd { color: #ffffff; font-weight: 700; }
+        .cli-line.ok  { color: #00ff66; }
+        .cli-line.info { color: #7ce0ff; }
+        .cli-line.muted { color: #7da68a; }
+        .cli-input-row {
+            display: flex;
+            align-items: center;
+            border-top: 1px solid rgba(0, 255, 65, 0.25);
+            background: rgba(0, 0, 0, 0.4);
+            padding: 10px 20px;
+            gap: 10px;
+        }
+        .cli-prompt {
+            color: #00ff66;
+            font-weight: 700;
+            font-size: 0.82rem;
+            user-select: none;
+        }
+        .cli-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-family: var(--font-mono);
+            font-size: 0.84rem;
+            font-weight: 700;
+            outline: none;
+        }
+
+        /* -- INTERACTIVE AGI BENCHMARK SUITE ------------------ */
+        .bench-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: clamp(24px, 4vw, 38px);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .bench-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--border);
+        }
+        .bench-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 20px;
+        }
+        .bench-card {
+            background: var(--surface-alt);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 3px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .bench-card h3 {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .bench-bar-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .b-row {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            font-size: 0.68rem;
+            font-weight: 700;
+        }
+        .b-label {
+            display: flex;
+            justify-content: space-between;
+        }
+        .b-track {
+            height: 8px;
+            background: rgba(0, 122, 47, 0.12);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .b-fill {
+            height: 100%;
+            background: var(--accent);
+        }
+        .b-fill.baseline {
+            background: var(--text-muted);
+            opacity: 0.55;
         }
 
         /* -- GOOGLE ECOSYSTEM & GROUNDING TERMINAL ------------ */
@@ -495,46 +651,36 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 4px;
-            padding: clamp(24px, 4vw, 40px);
+            padding: clamp(24px, 4vw, 38px);
             box-shadow: var(--shadow-lg);
             display: flex;
             flex-direction: column;
-            gap: 32px;
-        }
-        .google-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding-bottom: 24px;
-            border-bottom: 1px solid var(--border);
+            gap: 28px;
         }
         .google-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 6px 14px;
+            padding: 5px 12px;
             background: var(--google-soft);
-            border: 1px solid rgba(26, 115, 232, 0.3);
+            border: 1px solid rgba(26, 115, 232, 0.35);
             color: var(--google-blue);
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             font-weight: 700;
-            letter-spacing: 0.12em;
             border-radius: 2px;
         }
         .grounding-box {
-            background: #f7faf8;
+            background: var(--surface-alt);
             border: 1px solid var(--border);
-            padding: 24px;
+            padding: 22px;
             border-radius: 3px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
         }
         .grounding-form {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
         }
         .grounding-input-wrap {
@@ -551,36 +697,31 @@
             border: 1px solid rgba(26, 115, 232, 0.35);
             border-right: none;
             color: var(--google-blue);
-            font-size: 0.76rem;
+            font-size: 0.75rem;
             font-weight: 700;
-            user-select: none;
         }
         .grounding-input {
             flex: 1;
-            padding: 12px 14px;
+            padding: 11px 14px;
             border: 1px solid var(--border);
             background: var(--surface-solid);
             font-family: var(--font-mono);
-            font-size: 0.88rem;
+            font-size: 0.86rem;
             font-weight: 600;
             color: var(--text);
             outline: none;
-        }
-        .grounding-input:focus {
-            border-color: var(--google-blue);
         }
         .grounding-chips {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             align-items: center;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
         }
         .chip-btn {
             background: var(--surface-solid);
             border: 1px solid var(--border);
             padding: 5px 10px;
-            font-family: var(--font-mono);
             font-size: 0.68rem;
             font-weight: 700;
             color: var(--text-muted);
@@ -590,13 +731,11 @@
         .chip-btn:hover {
             border-color: var(--google-blue);
             color: var(--google-blue);
-            background: var(--google-soft);
         }
-
         .google-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
+            gap: 18px;
         }
         .g-card {
             background: var(--surface-solid);
@@ -605,38 +744,23 @@
             border-top: 3px solid var(--google-blue);
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
-        .g-card h3 {
-            font-size: 0.92rem;
-            font-weight: 700;
-            color: var(--text);
-        }
-        .g-card p {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-weight: 600;
-            line-height: 1.6;
-            flex: 1;
-        }
-        .g-meta {
-            font-size: 0.66rem;
-            font-weight: 700;
-            color: var(--google-blue);
-            letter-spacing: 0.1em;
-        }
+        .g-card h3 { font-size: 0.92rem; font-weight: 700; color: var(--text); }
+        .g-card p { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; flex: 1; }
+        .g-meta { font-size: 0.64rem; font-weight: 700; color: var(--google-blue); }
 
         /* -- CAPABILITIES 6-CARD MATRIX ----------------------- */
         .grid-3 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-            gap: 24px;
+            gap: 22px;
         }
         .tactical-card {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 4px;
-            padding: 28px;
+            padding: 26px;
             box-shadow: var(--shadow-lg);
             display: flex;
             flex-direction: column;
@@ -653,46 +777,34 @@
             align-items: center;
         }
         .card-index {
-            font-size: 0.68rem;
+            font-size: 0.66rem;
             font-weight: 700;
             color: var(--accent);
-            letter-spacing: 0.15em;
             background: var(--accent-soft);
-            padding: 4px 10px;
+            padding: 3px 9px;
             border: 1px solid var(--border);
         }
-        .card-Clearance {
-            font-size: 0.65rem;
+        .card-clearance {
+            font-size: 0.64rem;
             font-weight: 700;
             color: var(--text-muted);
         }
-        .card-title {
-            font-size: 1.05rem;
+        .card-title { font-size: 1.04rem; font-weight: 700; color: var(--text); }
+        .card-desc { font-size: 0.83rem; color: var(--text-muted); font-weight: 600; flex: 1; }
+        .card-specs {
+            margin-top: 6px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border);
+            font-size: 0.7rem;
             font-weight: 700;
             color: var(--text);
-            margin-top: 4px;
-        }
-        .card-desc {
-            font-size: 0.84rem;
-            color: var(--text-muted);
-            font-weight: 600;
-            line-height: 1.68;
-            flex: 1;
-        }
-        .card-specs {
-            margin-top: 8px;
-            padding-top: 12px;
-            border-top: 1px dashed var(--border);
             display: flex;
             flex-direction: column;
-            gap: 4px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            color: var(--text);
+            gap: 3px;
         }
         .card-specs span { color: var(--accent); }
 
-        /* -- INTERACTIVE GLOBAL NODE TOPOLOGY ----------------- */
+        /* -- INTERACTIVE GLOBAL COMPUTE NODES ----------------- */
         .topology-box {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -704,12 +816,11 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             border-bottom: 1px solid var(--border);
-            background: #f6faf7;
+            background: var(--surface-alt);
         }
         .node-tab {
-            padding: 16px 20px;
-            font-family: var(--font-mono);
-            font-size: 0.76rem;
+            padding: 15px 18px;
+            font-size: 0.74rem;
             font-weight: 700;
             color: var(--text-muted);
             background: transparent;
@@ -717,191 +828,51 @@
             border-right: 1px solid var(--border);
             cursor: pointer;
             text-align: left;
-            transition: var(--transition);
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
         }
-        .node-tab:last-child { border-right: none; }
-        .node-tab:hover { background: var(--surface-tint); color: var(--text); }
         .node-tab.active {
             background: var(--surface-solid);
             color: var(--accent);
             box-shadow: inset 0 3px 0 var(--accent);
         }
-        .node-tab small {
-            font-size: 0.64rem;
-            color: var(--text-muted);
-        }
         .node-details {
-            padding: 32px;
+            padding: 30px;
             display: grid;
             grid-template-columns: 1.2fr 1fr;
-            gap: 32px;
+            gap: 28px;
             align-items: center;
         }
-        .node-info h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 10px;
-        }
-        .node-info p {
-            font-size: 0.86rem;
-            color: var(--text-muted);
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
+        .node-info h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; }
+        .node-info p { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; margin-bottom: 18px; }
         .node-stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 14px;
+            gap: 12px;
         }
         .n-stat {
-            padding: 14px;
-            background: #f7faf8;
+            padding: 13px;
+            background: var(--surface-alt);
             border: 1px solid var(--border);
         }
-        .n-stat-lbl {
-            font-size: 0.65rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            display: block;
-        }
-        .n-stat-val {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-top: 4px;
-            display: block;
-        }
+        .n-stat-lbl { font-size: 0.63rem; font-weight: 700; color: var(--text-muted); display: block; }
+        .n-stat-val { font-size: 0.94rem; font-weight: 700; color: var(--accent); margin-top: 3px; display: block; }
 
-        /* -- TECHNICAL SPECIFICATION TABLE -------------------- */
-        .spec-panel {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
-        }
-        .spec-header {
-            padding: 18px 28px;
-            background: var(--accent-soft);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        .spec-header span {
-            font-size: 0.74rem;
-            font-weight: 700;
-            letter-spacing: 0.14em;
-            color: var(--accent);
-        }
-        .badge-verified {
-            padding: 4px 10px;
-            background: var(--surface-tint);
-            border: 1px solid var(--border-hot);
-            color: var(--accent);
-            font-size: 0.66rem;
-            font-weight: 700;
-        }
-        .spec-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .spec-table tr { border-bottom: 1px solid var(--border); }
-        .spec-table tr:last-child { border-bottom: none; }
-        .spec-table th, .spec-table td {
-            padding: 16px 24px;
-            text-align: left;
-            font-size: 0.82rem;
-        }
-        .spec-table th {
-            background: rgba(0, 122, 47, 0.04);
-            color: var(--text);
-            font-weight: 700;
-        }
-        .spec-table td {
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-        .spec-table td strong { color: var(--text); }
-
-        /* -- GOVERNANCE ACCORDION ----------------------------- */
-        .faq-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        details.faq-item {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 3px;
-            padding: 18px 24px;
-            box-shadow: var(--shadow-sm);
-        }
-        details.faq-item[open] {
-            border-color: var(--border-hot);
-        }
-        details.faq-item summary {
-            font-size: 0.92rem;
-            font-weight: 700;
-            color: var(--text);
-            cursor: pointer;
-            list-style: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        details.faq-item summary::-webkit-details-marker { display: none; }
-        details.faq-item summary::after {
-            content: '+';
-            color: var(--accent);
-            font-size: 1.2rem;
-            font-weight: 700;
-        }
-        details.faq-item[open] summary::after { content: '−'; }
-        .faq-body {
-            margin-top: 14px;
-            padding-top: 14px;
-            border-top: 1px solid var(--border);
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            font-weight: 600;
-            line-height: 1.7;
-        }
-
-        /* -- CTA TERMINAL BANNER ------------------------------ */
+        /* -- CTA BANNER & FOOTER ------------------------------ */
         .cta-banner {
             background: var(--surface);
             border: 2px solid var(--border-hot);
             border-radius: 4px;
-            padding: clamp(28px, 5vw, 48px);
+            padding: clamp(26px, 4.5vw, 44px);
             box-shadow: var(--shadow-lg);
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 28px;
+            gap: 24px;
             position: relative;
         }
-        .cta-content { max-width: 640px; }
-        .cta-title {
-            font-size: clamp(1.35rem, 2.5vw, 1.8rem);
-            font-weight: 700;
-            color: var(--text);
-        }
-        .cta-sub {
-            margin-top: 8px;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-
-        /* -- FOOTER ------------------------------------------- */
         .site-footer {
             border-top: 1px solid var(--border);
             background: var(--surface);
@@ -911,86 +882,111 @@
         .footer-inner {
             max-width: var(--max-w);
             margin: 0 auto;
-            padding: 32px 24px;
+            padding: 28px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 20px;
-        }
-        .footer-meta {
+            gap: 18px;
             font-size: 0.7rem;
             font-weight: 700;
             color: var(--text-muted);
-            letter-spacing: 0.1em;
         }
-        .footer-links {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            color: var(--text-muted);
-        }
+        .footer-links { display: flex; gap: 20px; }
         .footer-links a:hover { color: var(--accent); }
-        .enc-badge {
+
+        /* -- LIVE BENCHMARK MODAL ----------------------------- */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 12, 7, 0.78);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--accent);
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
         }
-        .enc-badge svg { width: 12px; height: 12px; }
+        .modal-backdrop.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-card {
+            width: 100%;
+            max-width: 680px;
+            background: var(--surface-solid);
+            border: 2px solid var(--border-hot);
+            border-radius: 4px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        .modal-head {
+            padding: 16px 24px;
+            background: var(--accent-soft);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-head h3 { font-size: 0.92rem; color: var(--accent); }
+        .modal-close {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 4px 10px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .modal-body {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .modal-log {
+            background: #061109;
+            color: #b8ffd0;
+            padding: 16px;
+            height: 210px;
+            overflow-y: auto;
+            font-size: 0.75rem;
+            line-height: 1.65;
+            border: 1px solid var(--border);
+        }
 
-        /* -- ANIMATIONS & RESPONSIVE -------------------------- */
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         @keyframes pulse-dot {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 168, 67, 0.5); }
-            50%      { box-shadow: 0 0 0 5px rgba(0, 168, 67, 0); }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 184, 72, 0.55); }
+            50%      { box-shadow: 0 0 0 6px rgba(0, 184, 72, 0); }
         }
         @media (prefers-reduced-motion: reduce) {
-            #particleCanvas, #matrixCanvas, #scanlines { display: none; }
-            *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
-            #boot { display: none !important; }
+            #particleCanvas, #matrixCanvas { display: none; }
         }
-        @media (max-width: 920px) {
+        @media (max-width: 960px) {
             .hero-grid, .node-details { grid-template-columns: 1fr; }
             .nav-links { display: none; }
-        }
-        @media (max-width: 640px) {
-            .spec-table th, .spec-table td { padding: 12px 14px; font-size: 0.75rem; }
-            .ribbon-group { gap: 10px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Subtle grid & vignette -->
-    <div id="scanlines" aria-hidden="true"></div>
-    <div id="vignette"  aria-hidden="true"></div>
-
     <!-- Background canvases -->
-    <canvas id="particleCanvas" aria-hidden="true"></canvas>
-    <canvas id="matrixCanvas"   aria-hidden="true"></canvas>
-
-    <!-- Skippable boot sequence -->
-    <div id="boot" role="status" aria-label="System initialising">
-        <div id="boot-lines"></div>
-        <div class="boot-skip">[Click or press any key to enter AGI Command Hub]</div>
-    </div>
+    <canvas id="particleCanvas" class="bg-canvas" aria-hidden="true"></canvas>
+    <canvas id="matrixCanvas"   class="bg-canvas" aria-hidden="true"></canvas>
 
     <!-- Top Live Global Telemetry Ribbon -->
     <div class="telemetry-ribbon" role="region" aria-label="Global AGI Telemetry">
         <div class="ribbon-inner">
             <div class="ribbon-group">
-                <span class="ribbon-stat">GRID STATE: <strong>SYNCHRONISED</strong></span>
-                <span class="ribbon-stat">COMPUTE CAPACITY: <strong id="telFlops">142.8 ExaFLOPS</strong></span>
-                <span class="ribbon-stat">GOOGLE CLOUD TPU FABRIC: <strong>TRILLIUM v6e ACTIVE</strong></span>
+                <span class="ribbon-pill">AGI CORE v5.2 ONLINE</span>
+                <span class="ribbon-stat">COMPUTE FABRIC: <strong id="telFlops">148.6 ExaFLOPS</strong></span>
+                <span class="ribbon-stat">GOOGLE TPU MESH: <strong>TRILLIUM v6e PODS</strong></span>
             </div>
             <div class="ribbon-group">
-                <span class="ribbon-stat">POST-QUANTUM KEM: <strong>ML-KEM-1024</strong></span>
-                <span class="ribbon-stat">TOKEN VELOCITY: <strong id="telTokens">1.84M tok/s</strong></span>
+                <span class="ribbon-stat">TRANSPORT: <strong id="liveProto">TLS 1.3 / H3</strong></span>
+                <span class="ribbon-stat">CLOCK: <strong id="liveClock">SYNCHRONISING...</strong></span>
             </div>
         </div>
     </div>
@@ -1001,20 +997,22 @@
             <a href="index.html" class="brand">
                 <div class="status-dot" aria-hidden="true"></div>
                 <span class="brand-name">MÉRIDIAN</span>
-                <span class="brand-tag">AGI CORE v5.0</span>
+                <span class="brand-tag">SOVEREIGN AGI</span>
             </a>
 
             <nav class="nav-links" aria-label="Primary Navigation">
+                <a href="#terminal-section">Live CLI</a>
+                <a href="#benchmarks">Benchmarks</a>
                 <a href="#google-ecosystem">Google Federation</a>
-                <a href="#capabilities">AGI Architecture</a>
+                <a href="#capabilities">Architecture</a>
                 <a href="#nodes">Global Nodes</a>
-                <a href="#benchmarks">Specifications</a>
-                <a href="#governance">Alignment</a>
                 <a href="contact.html">Comms Relay</a>
             </nav>
 
             <div class="nav-right">
-                <span class="nav-clock" id="liveClock" aria-live="off"></span>
+                <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch colour theme">
+                    MODE: DAYLIGHT
+                </button>
                 <a href="contact.html" class="btn-nav">Secure Channel →</a>
             </div>
         </div>
@@ -1023,7 +1021,7 @@
     <!-- Main Content -->
     <main id="app" role="main">
 
-        <!-- Hero Section -->
+        <!-- Hero Section with Interactive 3D Geodesic Neural Globe -->
         <section class="hero-card" aria-labelledby="hero-heading">
             <div class="corner tl"></div>
             <div class="corner tr"></div>
@@ -1033,299 +1031,374 @@
             <div class="hero-grid">
                 <div>
                     <div class="telemetry-badge">
-                        <span>SOVEREIGN ARTIFICIAL GENERAL INTELLIGENCE INFRASTRUCTURE</span>
+                        <span>SOVEREIGN ARTIFICIAL GENERAL INTELLIGENCE &amp; HYPERSCALE COMPUTE</span>
                     </div>
 
-                    <h1 class="hero-title" id="hero-heading">Global General Intelligence &amp; Autonomous Reasoning Systems</h1>
+                    <h1 class="hero-title" id="hero-heading">Autonomous General Intelligence Engineered for Verifiable Certainty</h1>
                     <p class="hero-lead">
-                        MÉRIDIAN researches, engineers, and deploys frontier Artificial General Intelligence architectures. By uniting mechanistic interpretability, multi-horizon world models, and federated Google Cloud hyperscale compute, we deliver verifiable cognitive infrastructure for sovereign and enterprise operations.
+                        MÉRIDIAN architects frontier cognitive systems combining System-2 deliberative tree search, mechanistic interpretability, and federated Google Cloud TPU supercomputing. Designed for sovereign operations that demand mathematical proof and zero-trust containment.
                     </p>
 
                     <div class="hero-actions">
                         <a href="contact.html" class="btn-primary">
-                            <span>Initiate Secure Handshake</span>
+                            <span>Open Encrypted Channel</span>
                             <span aria-hidden="true">→</span>
                         </a>
-                        <a href="#google-ecosystem" class="btn-secondary">Explore Google Integration</a>
+                        <button type="button" id="openModalBtn" class="btn-secondary">
+                            Run Live AGI Verification Suite ⚡
+                        </button>
                     </div>
                 </div>
 
-                <!-- Live AGI Inference & Telemetry Monitor -->
-                <aside class="agi-monitor" aria-label="Live AGI Neural Telemetry">
-                    <div class="monitor-header">
-                        <span>NEURAL TOPOLOGY MONITOR</span>
-                        <span id="inferenceCycle">CYCLE #884920</span>
+                <!-- 3D Rotating Neural Sphere & Orbital Telemetry -->
+                <aside class="globe-deck" aria-label="Interactive 3D Planetary Neural Grid">
+                    <div class="globe-header">
+                        <span>3D PLANETARY NEURAL TOPOLOGY</span>
+                        <span id="globeCoord">LAT 51.23° N · LON 0.57° W</span>
                     </div>
 
-                    <div class="layer-bars">
-                        <div class="layer-row">
-                            <div class="layer-label">
-                                <span>System-2 Tree Search &amp; World Modelling</span>
-                                <span id="valL1">94.2%</span>
-                            </div>
-                            <div class="layer-track"><div class="layer-fill" id="barL1" style="width: 94.2%"></div></div>
-                        </div>
-
-                        <div class="layer-row">
-                            <div class="layer-label">
-                                <span>Google Vertex AI &amp; TPU Pod Interconnect</span>
-                                <span id="valL2">98.7%</span>
-                            </div>
-                            <div class="layer-track"><div class="layer-fill google" id="barL2" style="width: 98.7%"></div></div>
-                        </div>
-
-                        <div class="layer-row">
-                            <div class="layer-label">
-                                <span>Constitutional Safety &amp; Formal Verification</span>
-                                <span id="valL3">100.0%</span>
-                            </div>
-                            <div class="layer-track"><div class="layer-fill" id="barL3" style="width: 100%"></div></div>
-                        </div>
-
-                        <div class="layer-row">
-                            <div class="layer-label">
-                                <span>Episodic Long-Horizon Context (10M Tokens)</span>
-                                <span id="valL4">81.5%</span>
-                            </div>
-                            <div class="layer-track"><div class="layer-fill" id="barL4" style="width: 81.5%"></div></div>
+                    <div class="globe-wrap">
+                        <canvas id="globeCanvas"></canvas>
+                        <div class="globe-hud-overlay">
+                            <span>OPTICAL INTERCONNECT: LOCKED</span>
+                            <span id="activeArcs">ACTIVE ARCS: 64</span>
                         </div>
                     </div>
 
-                    <div class="monitor-log" id="telemetryLog" aria-live="off">
-                        <span>[OK] Synchronised with Google Cloud TPU v6e optical mesh</span>
-                        <span>[OK] Constitutional verifier confirmed zero policy drift</span>
-                        <span>[OK] Epistemic grounding index updated via live corpus</span>
-                        <span class="hl">&gt; Awaiting operator directive on UK-South primary node...</span>
+                    <div class="globe-footer">
+                        <div class="g-mini">
+                            <span>REASONING DEPTH</span>
+                            <strong>64,000 STEPS</strong>
+                        </div>
+                        <div class="g-mini">
+                            <span>CONTEXT WINDOW</span>
+                            <strong>10M TOKENS</strong>
+                        </div>
+                        <div class="g-mini">
+                            <span>SAFETY VERIFIER</span>
+                            <strong>LEAN-4 PROOF</strong>
+                        </div>
                     </div>
                 </aside>
             </div>
 
-            <div class="hero-metrics">
-                <div class="metric-item">
-                    <span class="metric-val">10,000,000+</span>
-                    <span class="metric-lbl">Active Context Window (Tokens)</span>
+            <!-- Live Client-Side Security & Environment Diagnostic Strip -->
+            <div class="diag-strip" aria-label="Live Client Connection Diagnostics">
+                <div class="diag-box">
+                    <span class="diag-lbl">CLIENT SECURITY CONTEXT</span>
+                    <span class="diag-val" id="diagContext">VERIFYING...</span>
+                    <span class="diag-sub">Strict CSP Level-3 Enforced</span>
                 </div>
-                <div class="metric-item">
-                    <span class="metric-val">99.999%</span>
-                    <span class="metric-lbl">Sovereign Compute Uptime</span>
+                <div class="diag-box">
+                    <span class="diag-lbl">NEGOTIATED TRANSPORT</span>
+                    <span class="diag-val" id="diagProtocol">TLS 1.3 / HTTP</span>
+                    <span class="diag-sub">Post-Quantum Hybrid Ready</span>
                 </div>
-                <div class="metric-item">
-                    <span class="metric-val">12.4 ms</span>
-                    <span class="metric-lbl">First-Token Optical Latency</span>
+                <div class="diag-box">
+                    <span class="diag-lbl">CLIENT COMPUTE THREADS</span>
+                    <span class="diag-val" id="diagCores">DETECTING...</span>
+                    <span class="diag-sub">60fps Spatial Hash Engine</span>
                 </div>
-                <div class="metric-item">
-                    <span class="metric-val">FIPS 203/204</span>
-                    <span class="metric-lbl">Post-Quantum Lattice Security</span>
+                <div class="diag-box">
+                    <span class="diag-lbl">PRIMARY SOVEREIGN ENCLAVE</span>
+                    <span class="diag-val">UK-SOUTH (SURREY)</span>
+                    <span class="diag-sub">Zero Data Retention Active</span>
                 </div>
             </div>
         </section>
 
-        <!-- Section 01: Google Ecosystem & Knowledge Grounding Terminal -->
+        <!-- Section 01: Interactive Command-Line & Live Dig Sandbox -->
+        <section id="terminal-section" aria-labelledby="cli-heading">
+            <div class="section-header">
+                <div class="section-tag">01 // Interactive Telemetry &amp; Network Verification</div>
+                <h2 class="section-title" id="cli-heading">MÉRIDIAN Sovereign Command-Line Interface</h2>
+                <p class="section-desc">
+                    Execute real-time architectural queries, inspect simulated DNS and post-quantum posture for <strong>negarix.uk</strong>, or probe federated Google Cloud TPU cluster status directly below.
+                </p>
+            </div>
+
+            <div class="cli-window">
+                <div class="cli-topbar">
+                    <span>TERMINAL // root@meridian-uk-south:~ (ASH-SHIELD v5.2)</span>
+                    <span>ENCRYPTION: ML-KEM-1024 · SESSION ISOLATED</span>
+                </div>
+
+                <div class="cli-presets">
+                    <span>Quick execute:</span>
+                    <button type="button" class="cli-btn" data-cmd="dig negarix.uk">dig negarix.uk</button>
+                    <button type="button" class="cli-btn" data-cmd="pqc-audit">pqc-audit</button>
+                    <button type="button" class="cli-btn" data-cmd="tpu-status">tpu-status</button>
+                    <button type="button" class="cli-btn" data-cmd="agi-bench">agi-bench</button>
+                    <button type="button" class="cli-btn" data-cmd="clear">clear</button>
+                </div>
+
+                <div class="cli-output" id="cliOutput" role="log" aria-live="polite">
+                    <div class="cli-line ok">MÉRIDIAN Sovereign Kernel v5.2.0 initialised. Zero-trust sandbox active.</div>
+                    <div class="cli-line muted">Type a command below or select a preset above (try: 'dig negarix.uk', 'pqc-audit', 'tpu-status', 'help').</div>
+                </div>
+
+                <form id="cliForm" class="cli-input-row" autocomplete="off">
+                    <span class="cli-prompt">operator@negarix.uk:~$</span>
+                    <input type="text" id="cliInput" class="cli-input"
+                           placeholder="Enter command (e.g. dig negarix.uk, pqc-audit, help)..."
+                           spellcheck="false" aria-label="Terminal command input">
+                </form>
+            </div>
+        </section>
+
+        <!-- Section 02: Frontier AGI Benchmark & Evaluation Matrix -->
+        <section id="benchmarks" aria-labelledby="bench-heading">
+            <div class="section-header">
+                <div class="section-tag">02 // Empirical Evaluation</div>
+                <h2 class="section-title" id="bench-heading">Frontier AGI Benchmark Performance</h2>
+                <p class="section-desc">
+                    Verified evaluation metrics comparing MÉRIDIAN Core v5.2 (with System-2 deliberative tree search and Lean-4 formal verification) against standard single-pass frontier models.
+                </p>
+            </div>
+
+            <div class="bench-container">
+                <div class="bench-top">
+                    <div>
+                        <h3 style="font-size:1.1rem; font-weight:700;">Multi-Domain Cognitive Evaluation Suite</h3>
+                        <p style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">
+                            Evaluated under zero-contamination sovereign enclave conditions.
+                        </p>
+                    </div>
+                    <button type="button" id="openModalBtn2" class="btn-primary">
+                        Execute Live Proof Simulation ⚡
+                    </button>
+                </div>
+
+                <div class="bench-grid">
+                    <div class="bench-card">
+                        <h3>Formal Mathematics &amp; Lean-4 Theorem Proving</h3>
+                        <div class="bench-bar-group">
+                            <div class="b-row">
+                                <div class="b-label"><span>MÉRIDIAN AGI v5.2 (System-2)</span><span style="color:var(--accent)">96.8%</span></div>
+                                <div class="b-track"><div class="b-fill" style="width:96.8%"></div></div>
+                            </div>
+                            <div class="b-row">
+                                <div class="b-label"><span>Standard Frontier Baseline</span><span>71.4%</span></div>
+                                <div class="b-track"><div class="b-fill baseline" style="width:71.4%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bench-card">
+                        <h3>Autonomous Systems Engineering (SWE-Verified)</h3>
+                        <div class="bench-bar-group">
+                            <div class="b-row">
+                                <div class="b-label"><span>MÉRIDIAN AGI v5.2 (Multi-Agent)</span><span style="color:var(--accent)">94.2%</span></div>
+                                <div class="b-track"><div class="b-fill" style="width:94.2%"></div></div>
+                            </div>
+                            <div class="b-row">
+                                <div class="b-label"><span>Standard Frontier Baseline</span><span>64.8%</span></div>
+                                <div class="b-track"><div class="b-fill baseline" style="width:64.8%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bench-card">
+                        <h3>10M-Token Episodic Recall &amp; Synthesis</h3>
+                        <div class="bench-bar-group">
+                            <div class="b-row">
+                                <div class="b-label"><span>MÉRIDIAN AGI v5.2</span><span style="color:var(--accent)">99.9%</span></div>
+                                <div class="b-track"><div class="b-fill" style="width:99.9%"></div></div>
+                            </div>
+                            <div class="b-row">
+                                <div class="b-label"><span>Standard Frontier Baseline</span><span>78.2%</span></div>
+                                <div class="b-track"><div class="b-fill baseline" style="width:78.2%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bench-card">
+                        <h3>Hallucination Suppression (Google Grounded)</h3>
+                        <div class="bench-bar-group">
+                            <div class="b-row">
+                                <div class="b-label"><span>MÉRIDIAN Constitutional Verifier</span><span style="color:var(--accent)">99.4%</span></div>
+                                <div class="b-track"><div class="b-fill" style="width:99.4%"></div></div>
+                            </div>
+                            <div class="b-row">
+                                <div class="b-label"><span>Ungrounded LLM Baseline</span><span>68.0%</span></div>
+                                <div class="b-track"><div class="b-fill baseline" style="width:68.0%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 03: Google Cloud, DeepMind & Epistemic Grounding -->
         <section id="google-ecosystem" aria-labelledby="google-heading">
             <div class="section-header">
-                <div class="section-tag">01 // Hyperscale Federation &amp; Live Grounding</div>
-                <h2 class="section-title" id="google-heading">Google Cloud, DeepMind Research &amp; Knowledge Integration</h2>
+                <div class="section-tag">03 // Hyperscale Federation &amp; Live Grounding</div>
+                <h2 class="section-title" id="google-heading">Google Cloud TPU Fabric &amp; Knowledge Integration</h2>
                 <p class="section-desc">
-                    MÉRIDIAN operates a federated compute and epistemic verification pipeline built atop Google Cloud infrastructure, combining sovereign encryption with real-time factual grounding.
+                    MÉRIDIAN pairs sovereign cryptographic enclaves with Google Cloud Trillium TPU pods and live Google Search and Scholar epistemic verification.
                 </p>
             </div>
 
             <div class="google-panel">
-                <div class="google-top">
-                    <div>
-                        <span class="google-badge">GOOGLE ECOSYSTEM INTERCONNECT · ACTIVE</span>
-                        <h3 style="margin-top:12px; font-size:1.2rem;">Interactive Epistemic Grounding &amp; Research Terminal</h3>
-                        <p style="font-size:0.84rem; color:var(--text-muted); font-weight:600; margin-top:4px;">
-                            Query the global technical index or verify AGI literature directly through Google Search and Google Scholar grounding endpoints.
-                        </p>
-                    </div>
+                <div>
+                    <span class="google-badge">GOOGLE CLOUD &amp; RESEARCH INTERCONNECT · ACTIVE</span>
+                    <h3 style="margin-top:10px; font-size:1.18rem;">Interactive Epistemic Grounding Terminal</h3>
                 </div>
 
-                <!-- Interactive Google Grounding Search Box -->
                 <div class="grounding-box">
                     <form id="googleGroundingForm" class="grounding-form" action="https://www.google.com/search" method="GET" target="_blank" rel="noopener noreferrer">
                         <div class="grounding-input-wrap">
                             <span class="grounding-prefix">GOOGLE://</span>
                             <input type="text" id="groundingQuery" name="q" class="grounding-input"
-                                   placeholder="Enter AGI architecture, DeepMind paper, or cloud specification query..."
+                                   placeholder="Query AGI architecture, DeepMind interpretability, or cloud specifications..."
                                    required>
                         </div>
-                        <button type="submit" class="btn-primary" style="background:var(--google-blue); border-color:var(--google-blue);">
-                            Run Grounded Search ↗
+                        <button type="submit" class="btn-primary" style="background:var(--google-blue); border-color:var(--google-blue); color:#fff;">
+                            Grounded Search ↗
                         </button>
                         <button type="button" id="scholarBtn" class="btn-secondary">
-                            Query Google Scholar ↗
+                            Google Scholar ↗
                         </button>
                     </form>
 
                     <div class="grounding-chips">
-                        <strong style="color:var(--text); margin-right:4px;">Quick research presets:</strong>
-                        <button type="button" class="chip-btn" data-query="Google DeepMind mechanistic interpretability transformer circuits">Mechanistic Interpretability</button>
-                        <button type="button" class="chip-btn" data-query="Google Cloud TPU Trillium v6e exascale AI architecture">Google TPU Trillium Architecture</button>
-                        <button type="button" class="chip-btn" data-query="Vertex AI enterprise zero trust confidential computing">Vertex AI Confidential Compute</button>
-                        <button type="button" class="chip-btn" data-query="NIST FIPS 203 ML-KEM post quantum cryptography standards">Post-Quantum Cryptography</button>
+                        <strong>Presets:</strong>
+                        <button type="button" class="chip-btn" data-query="Google DeepMind mechanistic interpretability sparse autoencoders">Mechanistic Interpretability</button>
+                        <button type="button" class="chip-btn" data-query="Google Cloud TPU Trillium v6e optical interconnect architecture">Google TPU v6e Architecture</button>
+                        <button type="button" class="chip-btn" data-query="Google Confidential Computing AMD SEV-SNP Intel TDX">Confidential Compute Enclaves</button>
+                        <button type="button" class="chip-btn" data-query="NIST FIPS 203 ML-KEM post quantum cryptography">FIPS 203 Post-Quantum KEM</button>
                     </div>
                 </div>
 
-                <!-- 4-Card Google Integration Matrix -->
                 <div class="google-grid">
                     <article class="g-card">
-                        <span class="g-meta">COMPUTE FABRIC</span>
-                        <h3>Google Cloud TPU Pods</h3>
-                        <p>
-                            High-bandwidth optical ICI (Inter-Chip Interconnect) scaling across liquid-cooled TPU pods for distributed multi-trillion parameter training and low-latency inference.
-                        </p>
+                        <span class="g-meta">EXASCALE FABRIC</span>
+                        <h3>Google Cloud TPU v6e Pods</h3>
+                        <p>Optical inter-chip interconnects delivering massive distributed bandwidth for multi-trillion parameter deliberative inference.</p>
                     </article>
-
                     <article class="g-card">
-                        <span class="g-meta">MODEL ORCHESTRATION</span>
-                        <h3>Gemini &amp; Vertex AI Federation</h3>
-                        <p>
-                            Seamless routing between custom sovereign frontier weights and Google Vertex AI enterprise models with strict zero-data-retention guarantees.
-                        </p>
+                        <span class="g-meta">MODEL FEDERATION</span>
+                        <h3>Vertex AI &amp; Gemini Routing</h3>
+                        <p>Dynamic orchestration between sovereign frontier weights and Google enterprise models under strict zero-retention policies.</p>
                     </article>
-
                     <article class="g-card">
-                        <span class="g-meta">CONFIDENTIAL EXECUTION</span>
-                        <h3>GKE Confidential VMs</h3>
-                        <p>
-                            Hardware-enforced memory encryption (AMD SEV-SNP &amp; Intel TDX) on Google Kubernetes Engine ensuring model weights and prompts remain encrypted in RAM.
-                        </p>
+                        <span class="g-meta">HARDWARE ATTESTATION</span>
+                        <h3>Confidential GKE Nodes</h3>
+                        <p>Real-time RAM encryption via AMD SEV-SNP and Intel TDX so model weights and operator prompts never exist in plaintext.</p>
                     </article>
-
                     <article class="g-card">
-                        <span class="g-meta">EPISTEMIC VERIFICATION</span>
-                        <h3>Real-Time Search Grounding</h3>
-                        <p>
-                            Eliminates model hallucination by cross-checking autonomous chain-of-thought steps against live Google Search indices and peer-reviewed scientific corpora.
-                        </p>
+                        <span class="g-meta">FACTUAL CONSENSUS</span>
+                        <h3>Live Search Grounding</h3>
+                        <p>Cross-checks internal reasoning chains against live Google indices and peer-reviewed literature before emitting responses.</p>
                     </article>
                 </div>
             </div>
         </section>
 
-        <!-- Section 02: Six-Pillar AGI Capabilities Matrix -->
+        <!-- Section 04: Six-Pillar AGI Architecture -->
         <section id="capabilities" aria-labelledby="cap-heading">
             <div class="section-header">
-                <div class="section-tag">02 // Core Cognitive Architecture</div>
+                <div class="section-tag">04 // Core Cognitive Architecture</div>
                 <h2 class="section-title" id="cap-heading">Six Pillars of Sovereign General Intelligence</h2>
-                <p class="section-desc">
-                    Moving beyond static next-token prediction into autonomous, self-verifying cognitive systems capable of multi-step scientific, legal, and engineering execution.
-                </p>
             </div>
 
             <div class="grid-3">
                 <article class="tactical-card">
                     <div class="card-top">
                         <span class="card-index">AGI-MOD 01</span>
-                        <span class="card-Clearance">TIER-1 CORE</span>
+                        <span class="card-clearance">TIER-1 CORE</span>
                     </div>
-                    <h3 class="card-title">System-2 Deliberative Reasoning</h3>
-                    <p class="card-desc">
-                        Combines Monte Carlo Tree Search (MCTS) with reinforcement learning over internal thought trajectories, allowing the system to simulate, critique, and backtrack before emitting high-consequence outputs.
-                    </p>
+                    <h3 class="card-title">System-2 Deliberative Tree Search</h3>
+                    <p class="card-desc">Integrates Monte Carlo Tree Search with formal verification to explore, critique, and prune thousands of reasoning paths prior to output synthesis.</p>
                     <div class="card-specs">
-                        <div>Verification: <span>Formal Proof &amp; Lean-4 Synthesis</span></div>
-                        <div>Horizon: <span>10,000+ Sequential Action Steps</span></div>
+                        <div>Verifier: <span>Lean-4 &amp; SMT Solver Synthesis</span></div>
+                        <div>Depth: <span>64,000+ Internal Reasoning Tokens</span></div>
                     </div>
                 </article>
 
                 <article class="tactical-card">
                     <div class="card-top">
                         <span class="card-index">AGI-MOD 02</span>
-                        <span class="card-Clearance">TIER-1 CORE</span>
+                        <span class="card-clearance">TIER-1 CORE</span>
                     </div>
-                    <h3 class="card-title">Spatiotemporal World Models</h3>
-                    <p class="card-desc">
-                        Learns unified physical and causal representations across text, code, mathematics, and real-time sensor streams to predict complex state transitions in dynamic environments.
-                    </p>
+                    <h3 class="card-title">Spatiotemporal World Modelling</h3>
+                    <p class="card-desc">Builds causal internal simulations across code, physics, and financial or legal state spaces to forecast multi-step operational consequences.</p>
                     <div class="card-specs">
-                        <div>Modalities: <span>Text · Code · Video · Telemetry</span></div>
-                        <div>State Memory: <span>Persistent Episodic Vector Graph</span></div>
+                        <div>Modalities: <span>Text · Code · Math · Telemetry</span></div>
+                        <div>Memory: <span>Persistent Episodic Vector Graph</span></div>
                     </div>
                 </article>
 
                 <article class="tactical-card">
                     <div class="card-top">
                         <span class="card-index">AGI-MOD 03</span>
-                        <span class="card-Clearance">SAFETY CRITICAL</span>
+                        <span class="card-clearance">SAFETY CRITICAL</span>
                     </div>
                     <h3 class="card-title">Mechanistic Interpretability</h3>
-                    <p class="card-desc">
-                        Decomposes dense neural activations into millions of human-understandable monosemantic features using Sparse Autoencoders (SAEs), providing real-time auditability of internal model intent.
-                    </p>
+                    <p class="card-desc">Uses Sparse Autoencoders to map internal neural activations to human-auditable concepts, preventing deceptive alignment or policy drift.</p>
                     <div class="card-specs">
-                        <div>Inspection: <span>Real-Time Activation Clamping</span></div>
-                        <div>Audit Trail: <span>Cryptographically Signed Logs</span></div>
+                        <div>Control: <span>Real-Time Feature Clamping</span></div>
+                        <div>Audit: <span>Cryptographically Signed Traces</span></div>
                     </div>
                 </article>
 
                 <article class="tactical-card">
                     <div class="card-top">
                         <span class="card-index">AGI-MOD 04</span>
-                        <span class="card-Clearance">FEDERATED</span>
+                        <span class="card-clearance">FEDERATED</span>
                     </div>
                     <h3 class="card-title">Autonomous Multi-Agent Swarms</h3>
-                    <p class="card-desc">
-                        Coordinates specialised sub-agents (Architect, Security Auditor, Mathematical Verifier, and Compliance Officer) inside isolated sandboxes with strict capability boundaries.
-                    </p>
+                    <p class="card-desc">Orchestrates isolated specialist agents (Architect, Security Auditor, Formal Verifier) inside hardware-sandboxed microVMs.</p>
                     <div class="card-specs">
-                        <div>Containment: <span>WebAssembly &amp; gVisor MicroVMs</span></div>
-                        <div>Consensus: <span>Byzantine Fault-Tolerant Voting</span></div>
+                        <div>Isolation: <span>gVisor &amp; WebAssembly Enclaves</span></div>
+                        <div>Consensus: <span>Byzantine Fault-Tolerant Quorum</span></div>
                     </div>
                 </article>
 
                 <article class="tactical-card">
                     <div class="card-top">
                         <span class="card-index">AGI-MOD 05</span>
-                        <span class="card-Clearance">CRYPTOGRAPHIC</span>
+                        <span class="card-clearance">CRYPTOGRAPHIC</span>
                     </div>
-                    <h3 class="card-title">Post-Quantum Zero-Trust Security</h3>
-                    <p class="card-desc">
-                        Protects all model weights, inference prompts, and telemetry channels against future quantum decryption using NIST-standardised lattice cryptography and strict Content Security Policies.
-                    </p>
+                    <h3 class="card-title">Post-Quantum Lattice Defence</h3>
+                    <p class="card-desc">Secures all inference channels and weight repositories with NIST FIPS 203/204 hybrid key encapsulation and strict browser isolation.</p>
                     <div class="card-specs">
                         <div>Key Exchange: <span>X25519MLKEM768 Hybrid</span></div>
-                        <div>Transport: <span>TLS 1.3 · Strict HSTS Preload</span></div>
+                        <div>Policy: <span>Default-Deny CSP Level 3</span></div>
                     </div>
                 </article>
 
                 <article class="tactical-card">
                     <div class="card-top">
                         <span class="card-index">AGI-MOD 06</span>
-                        <span class="card-Clearance">SOVEREIGN</span>
+                        <span class="card-clearance">SOVEREIGN</span>
                     </div>
-                    <h3 class="card-title">Air-Gapped &amp; Sovereign Deployment</h3>
-                    <p class="card-desc">
-                        Deploys across dedicated UK and European sovereign cloud enclaves or on-premise hardware clusters with zero external telemetry leakage and full statutory compliance.
-                    </p>
+                    <h3 class="card-title">UK &amp; European Sovereign Enclaves</h3>
+                    <p class="card-desc">Operates within dedicated UK-South and Swiss data residencies with zero model training on client payloads and full statutory compliance.</p>
                     <div class="card-specs">
-                        <div>Jurisdiction: <span>UK GDPR · NCSC Aligned</span></div>
-                        <div>Data Policy: <span>Zero Training on Client Payloads</span></div>
+                        <div>Compliance: <span>UK GDPR · NCSC Aligned</span></div>
+                        <div>Retention: <span>Zero Persistent Disk Storage</span></div>
                     </div>
                 </article>
             </div>
         </section>
 
-        <!-- Section 03: Interactive Global Compute Node Topology -->
+        <!-- Section 05: Interactive Global Compute Node Switcher -->
         <section id="nodes" aria-labelledby="nodes-heading">
             <div class="section-header">
-                <div class="section-tag">03 // Planetary Compute Fabric</div>
-                <h2 class="section-title" id="nodes-heading">Interactive Global Node Telemetry</h2>
-                <p class="section-desc">
-                    Select an operational cluster below to inspect real-time hardware allocation, Google Cloud interconnect latency, and carbon-free energy performance.
-                </p>
+                <div class="section-tag">05 // Planetary Compute Fabric</div>
+                <h2 class="section-title" id="nodes-heading">Global Sovereign Node Telemetry</h2>
             </div>
 
             <div class="topology-box">
-                <div class="node-tabs" role="tablist" aria-label="Global Compute Nodes">
+                <div class="node-tabs" role="tablist">
                     <button type="button" class="node-tab active" data-node="uk" role="tab" aria-selected="true">
                         <span>01 · UK-SOUTH (PRIMARY)</span>
                         <small>London / Surrey Sovereign Core</small>
                     </button>
                     <button type="button" class="node-tab" data-node="ch" role="tab" aria-selected="false">
                         <span>02 · EU-CENTRAL</span>
-                        <small>Zurich Quantum &amp; Research Hub</small>
+                        <small>Zurich Quantum &amp; Alignment Hub</small>
                     </button>
                     <button type="button" class="node-tab" data-node="us" role="tab" aria-selected="false">
                         <span>03 · US-EAST</span>
@@ -1337,12 +1410,12 @@
                     </button>
                 </div>
 
-                <div class="node-details" id="nodePanel">
+                <div class="node-details">
                     <div class="node-info">
                         <div class="telemetry-badge" id="nodeStatusBadge">STATUS: ONLINE · PRIMARY SOVEREIGN ENCLAVE</div>
                         <h3 id="nodeTitle">UK-South Sovereign Compute Core (London / Surrey)</h3>
                         <p id="nodeDesc">
-                            Serves as the primary command and governance enclave for UK operations. Directly peered with Google Cloud europe-west2 via dedicated sub-millisecond dark fibre, enforcing strict UK data residency and NCSC cryptographic standards.
+                            Primary command and governance enclave for UK operations. Directly peered with Google Cloud europe-west2 via dedicated sub-millisecond optical fibre, enforcing strict UK data residency and NCSC cryptographic standards.
                         </p>
                         <a href="contact.html" class="btn-primary">Request Node Allocation →</a>
                     </div>
@@ -1353,11 +1426,11 @@
                             <span class="n-stat-val" id="nodeHw">64x TPU v6e + H200 Enclave</span>
                         </div>
                         <div class="n-stat">
-                            <span class="n-stat-lbl">ROUND-TRIP LATENCY</span>
-                            <span class="n-stat-val" id="nodeLat">1.8 ms (Optical Direct)</span>
+                            <span class="n-stat-lbl">OPTICAL LATENCY</span>
+                            <span class="n-stat-val" id="nodeLat">1.8 ms (Direct Peering)</span>
                         </div>
                         <div class="n-stat">
-                            <span class="n-stat-lbl">CARBON-FREE ENERGY (CFE)</span>
+                            <span class="n-stat-lbl">CARBON-FREE ENERGY</span>
                             <span class="n-stat-val" id="nodeCfe">94.6% Verified Clean Grid</span>
                         </div>
                         <div class="n-stat">
@@ -1369,138 +1442,59 @@
             </div>
         </section>
 
-        <!-- Section 04: Technical Specification & Benchmark Matrix -->
-        <section id="benchmarks" aria-labelledby="spec-heading">
-            <div class="section-header">
-                <div class="section-tag">04 // Empirical Verification</div>
-                <h2 class="section-title" id="spec-heading">AGI Architecture &amp; Security Specification Matrix</h2>
-            </div>
-
-            <div class="spec-panel">
-                <div class="spec-header">
-                    <span>MÉRIDIAN CORE v5.0 SPECIFICATION &amp; EVALUATION REPORT</span>
-                    <span class="badge-verified">ASVS L3 &amp; NCSC VERIFIED ✓</span>
-                </div>
-                <table class="spec-table">
-                    <thead>
-                        <tr>
-                            <th>Subsystem / Domain</th>
-                            <th>MÉRIDIAN Core Specification</th>
-                            <th>Google Ecosystem Integration</th>
-                            <th>Verification Standard</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Cognitive Reasoning Engine</strong></td>
-                            <td>Hybrid Transformer + State-Space World Model with System-2 MCTS</td>
-                            <td>Federated routing with Gemini Enterprise &amp; Vertex AI</td>
-                            <td>96.4% Math/Formal Logic Synthesis</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Active Context Horizon</strong></td>
-                            <td>10,000,000 tokens native + infinite episodic vector recall</td>
-                            <td>BigQuery Vector &amp; Vertex AI Matching Engine</td>
-                            <td>100% Needle-in-Haystack Retrieval</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Compute Interconnect</strong></td>
-                            <td>3.2 Tbps optical mesh with deterministic collective communications</td>
-                            <td>Google Cloud TPU v5p / Trillium v6e Pod slices</td>
-                            <td>99.999% High-Availability SLA</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Memory &amp; Enclave Security</strong></td>
-                            <td>Zero-retention RAM execution with hardware attestation</td>
-                            <td>Google Confidential Computing (AMD SEV-SNP / Intel TDX)</td>
-                            <td>Cryptographic Remote Attestation</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Web &amp; Application Defence</strong></td>
-                            <td>Default-deny Content Security Policy, zero external script bloat</td>
-                            <td>Google reCAPTCHA v2 Enterprise + Timing Traps</td>
-                            <td>OWASP ASVS Level 3 Compliant</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- Section 05: Governance & Alignment Accordion -->
-        <section id="governance" aria-labelledby="gov-heading">
-            <div class="section-header">
-                <div class="section-tag">05 // Constitutional Governance &amp; Safety</div>
-                <h2 class="section-title" id="gov-heading">Alignment, Containment &amp; Regulatory Compliance</h2>
-            </div>
-
-            <div class="faq-list">
-                <details class="faq-item" open>
-                    <summary>01. How does MÉRIDIAN prevent autonomous capability overhang and hallucination?</summary>
-                    <div class="faq-body">
-                        Every reasoning step generated by the core model is parsed by an independent, smaller Constitutional Verifier network and grounded against live Google Search and scholarly indices. Claims lacking verifiable citations or formal mathematical proof are flagged or pruned prior to output synthesis.
-                    </div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>02. How is client data isolated when leveraging Google Cloud infrastructure?</summary>
-                    <div class="faq-body">
-                        All workloads execute inside Confidential VMs encrypted with customer-managed encryption keys (CMEK). Under our strict enterprise governance protocol, zero client prompts, weights, or payloads are ever logged to disk or used to train foundation models.
-                    </div>
-                </details>
-
-                <details class="faq-item">
-                    <summary>03. What post-quantum cryptographic protections are active on this domain?</summary>
-                    <div class="faq-body">
-                        Transport layers negotiate hybrid post-quantum key exchange alongside TLS 1.3 and AES-256-GCM. At the browser layer, strict Content Security Policies lock down script execution, frame embedding, and cross-origin data exfiltration.
-                    </div>
-                </details>
-            </div>
-        </section>
-
-        <!-- Bottom Call to Action -->
+        <!-- Call to Action -->
         <section class="cta-banner" aria-labelledby="cta-heading">
             <div class="corner tl"></div>
             <div class="corner tr"></div>
             <div class="corner bl"></div>
             <div class="corner br"></div>
 
-            <div class="cta-content">
-                <h2 class="cta-title" id="cta-heading">Ready to Initialise a Sovereign AGI Engagement?</h2>
-                <p class="cta-sub">
-                    Connect with our engineering and advisory directorate via our encrypted transmission terminal.
+            <div>
+                <h2 style="font-size:clamp(1.3rem, 2.5vw, 1.75rem); font-weight:700;" id="cta-heading">Ready to Initialise a Sovereign Engagement?</h2>
+                <p style="font-size:0.88rem; color:var(--text-muted); font-weight:600; margin-top:6px;">
+                    Route your transmission through our hardened, reCAPTCHA-verified communications relay.
                 </p>
             </div>
 
             <a href="contact.html" class="btn-primary">
-                <span>Launch Secure Contact Terminal</span>
+                <span>Launch Contact Terminal</span>
                 <span aria-hidden="true">→</span>
             </a>
         </section>
 
     </main>
 
+    <!-- Live AGI Verification Modal -->
+    <div class="modal-backdrop" id="verifyModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-card">
+            <div class="modal-head">
+                <h3 id="modalTitle">MÉRIDIAN LIVE FORMAL VERIFICATION &amp; BENCHMARK SUITE</h3>
+                <button type="button" class="modal-close" id="closeModalBtn">ESC / CLOSE ✕</button>
+            </div>
+            <div class="modal-body">
+                <p style="font-size:0.8rem; color:var(--text-muted); font-weight:600;">
+                    Executing zero-knowledge formal proof synthesis and hardware enclave attestation across UK-South and Google Cloud TPU v6e nodes:
+                </p>
+                <div class="modal-log" id="modalLog"></div>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span id="modalStatus" style="font-size:0.75rem; font-weight:700; color:var(--accent);">STATUS: INITIALISING...</span>
+                    <button type="button" id="rerunModalBtn" class="btn-secondary" style="padding:8px 14px; font-size:0.72rem;">Re-run Verification</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-inner">
-            <div class="footer-meta">
-                MÉRIDIAN AGI SYSTEMS &copy; <span id="footerYear"></span> · UK-SOUTH SOVEREIGN NODE
-            </div>
-
+            <div>MÉRIDIAN AGI SYSTEMS &copy; <span id="footerYear"></span> · UK-SOUTH SOVEREIGN NODE</div>
             <div class="footer-links">
+                <a href="#terminal-section">Live CLI</a>
+                <a href="#benchmarks">Benchmarks</a>
                 <a href="#google-ecosystem">Google Federation</a>
-                <a href="#capabilities">Capabilities</a>
-                <a href="#nodes">Global Nodes</a>
-                <a href="#benchmarks">Specifications</a>
                 <a href="contact.html">Secure Contact</a>
             </div>
-
-            <div class="enc-badge">
-                <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                    <rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/>
-                    <path d="M4 5V3.5a2 2 0 0 1 4 0V5" stroke="currentColor" stroke-width="1.3"/>
-                </svg>
-                TLS 1.3 · ML-KEM-1024 · AES-256
-            </div>
+            <div style="color:var(--accent);">TLS 1.3 · ML-KEM-1024 · AES-256</div>
         </div>
     </footer>
 
@@ -1511,152 +1505,368 @@
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     /* ===========================================================
-       BOOT SEQUENCE (RUNS ONCE PER SESSION)
+       1. THEME SWITCHER (DAYLIGHT LAB / QUANTUM DARK)
     =========================================================== */
     (function () {
-        const LINES = [
-            { text: 'MÉRIDIAN GLOBAL AGI KERNEL v5.0.0 - INITIALISING',   cls: '' },
-            { text: 'Mounting sovereign cognitive architectures...',      cls: 'dim', delay: 90 },
-            { text: '  [✓] System-2 deliberative reasoning engine   OK',  cls: 'ok' },
-            { text: '  [✓] Google Cloud TPU v6e optical mesh        SYNC',cls: 'ok' },
-            { text: '  [✓] Vertex AI & epistemic search grounding   OK',  cls: 'ok' },
-            { text: '  [✓] Mechanistic interpretability clamping    OK',  cls: 'ok' },
-            { text: '  [✓] Post-quantum ML-KEM-1024 transport       LOCKED', cls: 'ok' },
-            { text: '================================================',   cls: 'dim' },
-            { text: 'AGI COMMAND HUB ONLINE. ACCESS GRANTED.',            cls: 'ok' },
-        ];
+        const htmlEl = document.documentElement;
+        const btn    = document.getElementById('themeToggle');
 
-        const container = document.getElementById('boot-lines');
-        const bootEl    = document.getElementById('boot');
-        let bootDone    = false;
-
-        function finishBoot() {
-            if (bootDone) return;
-            bootDone = true;
-            bootEl.classList.add('hidden');
-            try { sessionStorage.setItem('meridian_booted', '1'); } catch (e) {}
+        function applyTheme(theme) {
+            htmlEl.setAttribute('data-theme', theme);
+            btn.textContent = theme === 'dark' ? 'MODE: QUANTUM DARK' : 'MODE: DAYLIGHT';
+            try { localStorage.setItem('meridian_theme', theme); } catch (e) {}
         }
 
-        let alreadyBooted = false;
-        try { alreadyBooted = sessionStorage.getItem('meridian_booted') === '1'; } catch (e) {}
+        let saved = 'light';
+        try { saved = localStorage.getItem('meridian_theme') || 'light'; } catch (e) {}
+        applyTheme(saved);
 
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || alreadyBooted) {
-            finishBoot();
-            return;
-        }
-
-        bootEl.addEventListener('click', finishBoot, { once: true });
-        window.addEventListener('keydown', finishBoot, { once: true });
-
-        let totalDelay = 0;
-        LINES.forEach((item, i) => {
-            const span = document.createElement('span');
-            span.className = 'line' + (item.cls ? ' ' + item.cls : '');
-            span.textContent = item.text;
-            container.appendChild(span);
-
-            const baseDelay = i === 0 ? 80 : totalDelay + (item.delay || 50) + (Math.random() * 25);
-            totalDelay = baseDelay;
-            setTimeout(() => { if (!bootDone) span.classList.add('visible'); }, baseDelay);
+        btn.addEventListener('click', () => {
+            const current = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            applyTheme(current);
         });
-
-        const cursorSpan = document.createElement('span');
-        cursorSpan.className = 'line visible';
-        cursorSpan.textContent = '> ';
-        const cursorBlock = document.createElement('span');
-        cursorBlock.id = 'boot-cursor';
-        cursorSpan.appendChild(cursorBlock);
-        container.appendChild(cursorSpan);
-
-        setTimeout(finishBoot, totalDelay + 380);
     })();
 
     /* ===========================================================
-       LIVE CLOCK & DYNAMIC TELEMETRY SIMULATION
+       2. LIVE CLIENT SECURITY & TRANSPORT DIAGNOSTICS
     =========================================================== */
     (function () {
-        const elClock  = document.getElementById('liveClock');
-        const elYear   = document.getElementById('footerYear');
-        const elFlops  = document.getElementById('telFlops');
-        const elTokens = document.getElementById('telTokens');
-        const elCycle  = document.getElementById('inferenceCycle');
-        const barL1    = document.getElementById('barL1');
-        const valL1    = document.getElementById('valL1');
-        const barL2    = document.getElementById('barL2');
-        const valL2    = document.getElementById('valL2');
-        const barL4    = document.getElementById('barL4');
-        const valL4    = document.getElementById('valL4');
+        const elCtx   = document.getElementById('diagContext');
+        const elProto = document.getElementById('diagProtocol');
+        const elTopP  = document.getElementById('liveProto');
+        const elCores = document.getElementById('diagCores');
+        const elClock = document.getElementById('liveClock');
+        const elYear  = document.getElementById('footerYear');
+        const elFlops = document.getElementById('telFlops');
 
-        let cycleCount = 884920;
+        if (elCtx) {
+            elCtx.textContent = window.isSecureContext ? 'VERIFIED HTTPS ENCLAVE' : 'LOCAL SANDBOX';
+        }
+        if (elCores) {
+            const cores = navigator.hardwareConcurrency || 8;
+            elCores.textContent = cores + ' LOGICAL CORES ACTIVE';
+        }
+        try {
+            const navEntries = performance.getEntriesByType('navigation');
+            if (navEntries && navEntries.length > 0 && navEntries[0].nextHopProtocol) {
+                const proto = navEntries[0].nextHopProtocol.toUpperCase();
+                if (elProto) elProto.textContent = 'TLS 1.3 · ' + proto;
+                if (elTopP)  elTopP.textContent  = 'TLS 1.3 / ' + proto;
+            }
+        } catch (e) {}
 
         function tick() {
             const now = new Date();
             if (elClock) elClock.textContent = now.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
             if (elYear)  elYear.textContent  = String(now.getUTCFullYear());
-
-            cycleCount += Math.floor(Math.random() * 14) + 5;
-            if (elCycle) elCycle.textContent = 'CYCLE #' + cycleCount;
-
-            const flops = (142.4 + Math.random() * 0.9).toFixed(1);
-            const toks  = (1.81 + Math.random() * 0.08).toFixed(2);
-            if (elFlops)  elFlops.textContent  = flops + ' ExaFLOPS';
-            if (elTokens) elTokens.textContent = toks + 'M tok/s';
-
-            const l1 = (92.0 + Math.random() * 5.5).toFixed(1);
-            const l2 = (97.5 + Math.random() * 2.1).toFixed(1);
-            const l4 = (79.0 + Math.random() * 6.0).toFixed(1);
-
-            if (barL1 && valL1) { barL1.style.width = l1 + '%'; valL1.textContent = l1 + '%'; }
-            if (barL2 && valL2) { barL2.style.width = l2 + '%'; valL2.textContent = l2 + '%'; }
-            if (barL4 && valL4) { barL4.style.width = l4 + '%'; valL4.textContent = l4 + '%'; }
+            if (elFlops) elFlops.textContent = (148.2 + Math.random() * 0.8).toFixed(1) + ' ExaFLOPS';
         }
         tick();
-        setInterval(tick, 1800);
+        setInterval(tick, 1000);
     })();
 
     /* ===========================================================
-       GOOGLE GROUNDING CONSOLE INTERACTIVITY
+       3. 3D GEODESIC NEURAL GLOBE ENGINE
+    =========================================================== */
+    (function () {
+        const canvas = document.getElementById('globeCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const coordEl = document.getElementById('globeCoord');
+
+        let width = 320, height = 290;
+        function resizeGlobe() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            width  = rect.width || 320;
+            height = rect.height || 290;
+            canvas.width  = width * dpr;
+            canvas.height = height * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        resizeGlobe();
+        window.addEventListener('resize', resizeGlobe, { passive: true });
+
+        // Fibonacci sphere points
+        const NUM_PTS = 110;
+        const nodes = [];
+        const goldenRatio = (1 + Math.sqrt(5)) / 2;
+
+        for (let i = 0; i < NUM_PTS; i++) {
+            const theta = TWO_PI * i / goldenRatio;
+            const phi   = Math.acos(1 - 2 * (i + 0.5) / NUM_PTS);
+            nodes.push({
+                x: Math.cos(theta) * Math.sin(phi),
+                y: Math.cos(phi),
+                z: Math.sin(theta) * Math.sin(phi),
+                hub: i % 18 === 0
+            });
+        }
+
+        let rotY = 0;
+        let rotX = 0.25;
+        let targetSpeedY = 0.006;
+
+        canvas.addEventListener('mousemove', e => {
+            const rect = canvas.getBoundingClientRect();
+            const nx = ((e.clientX - rect.left) / width - 0.5) * 2;
+            const ny = ((e.clientY - rect.top) / height - 0.5) * 2;
+            targetSpeedY = nx * 0.025;
+            rotX = 0.25 + ny * 0.4;
+            if (coordEl) {
+                const lat = (51.23 - ny * 40).toFixed(2);
+                const lon = (0.57 + nx * 90).toFixed(2);
+                coordEl.textContent = `LAT ${lat}° N · LON ${lon}° E`;
+            }
+        }, { passive: true });
+
+        function renderGlobe(ts) {
+            ctx.clearRect(0, 0, width, height);
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            const colNode = isDark ? '#00ff41' : '#007a2f';
+            const colMesh = isDark ? 'rgba(0, 255, 65, 0.22)' : 'rgba(0, 122, 47, 0.20)';
+            const colHub  = isDark ? '#00e5ff' : '#1a73e8';
+
+            rotY += targetSpeedY;
+            const radius = Math.min(width, height) * 0.39;
+            const cx = width / 2;
+            const cy = height / 2;
+
+            const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+            const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
+
+            // Outer orbital ring
+            ctx.beginPath();
+            ctx.ellipse(cx, cy, radius * 1.18, radius * 0.36, -0.28, 0, TWO_PI);
+            ctx.strokeStyle = colMesh;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            const projected = [];
+            for (let i = 0; i < nodes.length; i++) {
+                const n = nodes[i];
+                const x1 = n.x * cosY - n.z * sinY;
+                const z1 = n.z * cosY + n.x * sinY;
+                const y2 = n.y * cosX - z1 * sinX;
+                const z2 = z1 * cosX + n.y * sinX;
+
+                const scale = 2.4 / (2.4 - z2 * 0.6);
+                projected.push({
+                    px: cx + x1 * radius * scale * 0.72,
+                    py: cy + y2 * radius * scale * 0.72,
+                    z: z2,
+                    hub: n.hub
+                });
+            }
+
+            // Connect nearby surface nodes
+            ctx.beginPath();
+            ctx.strokeStyle = colMesh;
+            ctx.lineWidth = 0.65;
+            for (let i = 0; i < projected.length; i++) {
+                const a = projected[i];
+                if (a.z < -0.25) continue;
+                for (let j = i + 1; j < projected.length; j++) {
+                    const b = projected[j];
+                    if (b.z < -0.25) continue;
+                    const dx = a.px - b.px, dy = a.py - b.py;
+                    if (dx * dx + dy * dy < 1450) {
+                        ctx.moveTo(a.px, a.py);
+                        ctx.lineTo(b.px, b.py);
+                    }
+                }
+            }
+            ctx.stroke();
+
+            // Draw nodes
+            for (let i = 0; i < projected.length; i++) {
+                const p = projected[i];
+                const alpha = Math.max(0.15, (p.z + 1) / 2);
+                ctx.beginPath();
+                ctx.arc(p.px, p.py, p.hub ? 3.4 : 1.8, 0, TWO_PI);
+                ctx.fillStyle = p.hub ? colHub : colNode;
+                ctx.globalAlpha = alpha;
+                ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+
+            requestAnimationFrame(renderGlobe);
+        }
+        requestAnimationFrame(renderGlobe);
+    })();
+
+    /* ===========================================================
+       4. INTERACTIVE CLI & LIVE DIG SANDBOX
+    =========================================================== */
+    (function () {
+        const output = document.getElementById('cliOutput');
+        const form   = document.getElementById('cliForm');
+        const input  = document.getElementById('cliInput');
+        const btns   = document.querySelectorAll('.cli-btn');
+
+        function printLine(text, cls) {
+            const div = document.createElement('div');
+            div.className = 'cli-line' + (cls ? ' ' + cls : '');
+            div.textContent = text;
+            output.appendChild(div);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function runCommand(raw) {
+            const cmd = raw.trim().toLowerCase();
+            if (!cmd) return;
+            printLine('operator@negarix.uk:~$ ' + raw, 'cmd');
+
+            if (cmd === 'clear') {
+                output.innerHTML = '';
+                return;
+            }
+            if (cmd === 'help') {
+                printLine('Available Sovereign CLI Commands:', 'info');
+                printLine('  dig negarix.uk  - Inspect DNS, CAA, and edge security posture');
+                printLine('  pqc-audit       - Verify NIST FIPS 203/204 Post-Quantum key encapsulation');
+                printLine('  tpu-status      - Query Google Cloud Trillium v6e optical pod telemetry');
+                printLine('  agi-bench       - Display System-2 formal reasoning verification scores');
+                printLine('  clear           - Clear terminal buffer');
+                return;
+            }
+            if (cmd.startsWith('dig')) {
+                printLine('; <<>> MÉRIDIAN Sovereign DiG 9.18-UK <<>> negarix.uk ANY', 'muted');
+                printLine(';; Got answer:opcode: QUERY, status: NOERROR, flags: qr rd ra ad;', 'ok');
+                printLine('negarix.uk.        300  IN  A      [SOVEREIGN-EDGE-ANYCAST]', 'info');
+                printLine('negarix.uk.        3600 IN  CAA    0 issue "letsencrypt.org"', 'ok');
+                printLine('negarix.uk.        3600 IN  TXT    "v=spf1 include:_spf.google.com -all"', 'ok');
+                printLine(';; TRANSPORT: TLS 1.3 Strict · CSP Level-3 Enforced · Formspree Origin Locked', 'ok');
+                return;
+            }
+            if (cmd === 'pqc-audit') {
+                printLine('[AUDIT] Executing NIST Post-Quantum Cryptographic inspection...', 'info');
+                printLine('  [✓] Key Encapsulation : X25519MLKEM768 (FIPS 203 Compliant)', 'ok');
+                printLine('  [✓] Digital Signatures: ML-DSA-87 (FIPS 204 Dilithium)', 'ok');
+                printLine('  [✓] Symmetric Cipher  : AES-256-GCM authenticated encryption', 'ok');
+                printLine('  [✓] Browser Sandbox   : Default-deny Content-Security-Policy active', 'ok');
+                return;
+            }
+            if (cmd === 'tpu-status') {
+                printLine('[GOOGLE CLOUD INTERCONNECT] Querying TPU v6e Trillium fabric...', 'info');
+                printLine('  POD-UK-WEST2 : 64x Trillium v6e · Optical ICI 3.2 Tbps · UTIL: 94.2%', 'ok');
+                printLine('  POD-CH-WEST6 : 128x TPU v5p     · Hydro Clean Grid     · UTIL: 88.7%', 'ok');
+                printLine('  CONFIDENTIAL : AMD SEV-SNP & Intel TDX RAM Encryption VERIFIED', 'ok');
+                return;
+            }
+            if (cmd === 'agi-bench') {
+                printLine('[AGI EVALUATION] System-2 Deliberative Tree Search + Lean-4 Verifier:', 'info');
+                printLine('  Formal Math Synthesis : 96.8% (Verified zero-contradiction proofs)', 'ok');
+                printLine('  Autonomous SWE-Bench  : 94.2% (Sandboxed multi-agent quorum)', 'ok');
+                printLine('  10M Context Recall    : 99.9% (Exact needle retrieval)', 'ok');
+                return;
+            }
+            printLine('Command not recognised: "' + raw + '". Type "help" for available diagnostics.', 'muted');
+        }
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            runCommand(input.value);
+            input.value = '';
+        });
+
+        btns.forEach(b => {
+            b.addEventListener('click', () => runCommand(b.getAttribute('data-cmd')));
+        });
+    })();
+
+    /* ===========================================================
+       5. LIVE AGI VERIFICATION SUITE MODAL
+    =========================================================== */
+    (function () {
+        const modal    = document.getElementById('verifyModal');
+        const open1    = document.getElementById('openModalBtn');
+        const open2    = document.getElementById('openModalBtn2');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const rerunBtn = document.getElementById('rerunModalBtn');
+        const logEl    = document.getElementById('modalLog');
+        const statusEl = document.getElementById('modalStatus');
+        let timers     = [];
+
+        const STEPS = [
+            '[00.02s] Initialising isolated gVisor microVM & AMD SEV-SNP memory enclave...',
+            '[00.18s] Attesting hardware cryptographic signature with UK-South root key... PASS',
+            '[00.42s] Mounting MÉRIDIAN AGI v5.2 System-2 MCTS reasoning weights...',
+            '[00.75s] Connecting to Google Cloud TPU v6e optical pod (europe-west2)... 1.8ms RTT',
+            '[01.10s] Synthesising formal Lean-4 mathematical proof across 1,024 search branches...',
+            '[01.55s] Clamping Sparse Autoencoder safety features (zero policy drift)... PASS',
+            '[01.95s] Cross-checking epistemic claims against live Google grounding index... PASS',
+            '[02.30s] VERIFICATION COMPLETE: 100% Formal Proof Integrity · Enclave Sealed.'
+        ];
+
+        function startSimulation() {
+            timers.forEach(clearTimeout);
+            timers = [];
+            logEl.innerHTML = '';
+            statusEl.textContent = 'STATUS: RUNNING FORMAL VERIFICATION...';
+
+            STEPS.forEach((line, idx) => {
+                const t = setTimeout(() => {
+                    const div = document.createElement('div');
+                    div.textContent = line;
+                    if (idx === STEPS.length - 1) {
+                        div.style.color = '#00ff66';
+                        div.style.fontWeight = '700';
+                        statusEl.textContent = 'STATUS: ALL CHECKS PASSED ✓';
+                    }
+                    logEl.appendChild(div);
+                    logEl.scrollTop = logEl.scrollHeight;
+                }, idx * 320);
+                timers.push(t);
+            });
+        }
+
+        function openModal() {
+            modal.classList.add('open');
+            startSimulation();
+        }
+        function closeModal() {
+            modal.classList.remove('open');
+            timers.forEach(clearTimeout);
+        }
+
+        if (open1) open1.addEventListener('click', openModal);
+        if (open2) open2.addEventListener('click', openModal);
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        if (rerunBtn) rerunBtn.addEventListener('click', startSimulation);
+        window.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    })();
+
+    /* ===========================================================
+       6. GOOGLE GROUNDING & NODE TOPOLOGY SWITCHER
     =========================================================== */
     (function () {
         const queryInput = document.getElementById('groundingQuery');
         const scholarBtn = document.getElementById('scholarBtn');
-        const chips      = document.querySelectorAll('.chip-btn');
-
-        chips.forEach(chip => {
+        document.querySelectorAll('.chip-btn').forEach(chip => {
             chip.addEventListener('click', () => {
-                const q = chip.getAttribute('data-query');
-                if (queryInput && q) {
-                    queryInput.value = q;
-                    queryInput.focus();
-                }
+                queryInput.value = chip.getAttribute('data-query');
+                queryInput.focus();
             });
         });
-
-        if (scholarBtn && queryInput) {
+        if (scholarBtn) {
             scholarBtn.addEventListener('click', () => {
                 const q = queryInput.value.trim() || 'Artificial General Intelligence mechanistic interpretability';
-                const url = 'https://scholar.google.com/scholar?q=' + encodeURIComponent(q);
-                window.open(url, '_blank', 'noopener,noreferrer');
+                window.open('https://scholar.google.com/scholar?q=' + encodeURIComponent(q), '_blank', 'noopener,noreferrer');
             });
         }
-    })();
 
-    /* ===========================================================
-       INTERACTIVE GLOBAL COMPUTE NODE SWITCHER
-    =========================================================== */
-    (function () {
         const NODE_DATA = {
             uk: {
                 badge: 'STATUS: ONLINE · PRIMARY SOVEREIGN ENCLAVE',
                 title: 'UK-South Sovereign Compute Core (London / Surrey)',
-                desc:  'Serves as the primary command and governance enclave for UK operations. Directly peered with Google Cloud europe-west2 via dedicated sub-millisecond dark fibre, enforcing strict UK data residency and NCSC cryptographic standards.',
+                desc:  'Primary command and governance enclave for UK operations. Directly peered with Google Cloud europe-west2 via dedicated sub-millisecond optical fibre, enforcing strict UK data residency and NCSC cryptographic standards.',
                 hw:    '64x TPU v6e + H200 Enclave',
-                lat:   '1.8 ms (Optical Direct)',
+                lat:   '1.8 ms (Direct Peering)',
                 cfe:   '94.6% Verified Clean Grid',
                 enc:   'ML-KEM-1024 + AES-256-GCM'
             },
             ch: {
-                badge: 'STATUS: ONLINE · EUROPEAN QUANTUM & SAFETY HUB',
+                badge: 'STATUS: ONLINE · EUROPEAN QUANTUM & ALIGNMENT HUB',
                 title: 'EU-Central Research Core (Zurich, Switzerland)',
                 desc:  'Dedicated to mechanistic interpretability, formal mathematical verification, and constitutional alignment auditing. Peered with Google Cloud europe-west6 Zurich region under strict Swiss privacy protections.',
                 hw:    '128x Google Cloud TPU v5p',
@@ -1667,7 +1877,7 @@
             us: {
                 badge: 'STATUS: ONLINE · HYPERSCALE TRAINING FABRIC',
                 title: 'US-East Hyperscale Cluster (Northern Virginia)',
-                desc:  'High-density exascale training and multi-modal world-model simulation fabric. Connected via 3.2 Tbps optical Jupiter mesh to Google Cloud us-east4 pods for massive parallel tree-search inference.',
+                desc:  'High-density exascale training and multi-modal world-model simulation fabric. Connected via 3.2 Tbps optical mesh to Google Cloud us-east4 pods for parallel tree-search inference.',
                 hw:    '512x TPU Trillium v6e Pod',
                 lat:   '68.4 ms (Transatlantic Optical)',
                 cfe:   '88.5% Carbon-Matched Grid',
@@ -1684,259 +1894,88 @@
             }
         };
 
-        const tabs      = document.querySelectorAll('.node-tab');
-        const elBadge   = document.getElementById('nodeStatusBadge');
-        const elTitle   = document.getElementById('nodeTitle');
-        const elDesc    = document.getElementById('nodeDesc');
-        const elHw      = document.getElementById('nodeHw');
-        const elLat     = document.getElementById('nodeLat');
-        const elCfe     = document.getElementById('nodeCfe');
-        const elEnc     = document.getElementById('nodeEnc');
-
+        const tabs = document.querySelectorAll('.node-tab');
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
-                const key = tab.getAttribute('data-node');
-                const d   = NODE_DATA[key];
+                const d = NODE_DATA[tab.getAttribute('data-node')];
                 if (!d) return;
-
-                tabs.forEach(t => {
-                    t.classList.remove('active');
-                    t.setAttribute('aria-selected', 'false');
-                });
+                tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
                 tab.classList.add('active');
                 tab.setAttribute('aria-selected', 'true');
-
-                elBadge.textContent = d.badge;
-                elTitle.textContent = d.title;
-                elDesc.textContent  = d.desc;
-                elHw.textContent    = d.hw;
-                elLat.textContent   = d.lat;
-                elCfe.textContent   = d.cfe;
-                elEnc.textContent   = d.enc;
+                document.getElementById('nodeStatusBadge').textContent = d.badge;
+                document.getElementById('nodeTitle').textContent       = d.title;
+                document.getElementById('nodeDesc').textContent        = d.desc;
+                document.getElementById('nodeHw').textContent          = d.hw;
+                document.getElementById('nodeLat').textContent         = d.lat;
+                document.getElementById('nodeCfe').textContent         = d.cfe;
+                document.getElementById('nodeEnc').textContent         = d.enc;
             });
         });
     })();
 
     /* ===========================================================
-       DAYLIGHT ANIMATION ENGINES
+       7. BACKGROUND PARTICLE & SUBTLE MATRIX TELEMETRY
     =========================================================== */
     (function () {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-        const PARTICLE_COL = 'rgba(0, 122, 47, 0.40)';
-        const MATRIX_TRAIL = '#68a37c';
-        const MATRIX_HEAD  = '#006626';
-
-        const mouse = { x: null, y: null };
-        window.addEventListener('mousemove', e => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        }, { passive: true });
-        window.addEventListener('mouseout', () => {
-            mouse.x = null;
-            mouse.y = null;
-        }, { passive: true });
-
-        let resizeTimer;
+        const pCanvas = document.getElementById('particleCanvas');
+        const pCtx    = pCanvas.getContext('2d');
         let logicalWidth  = window.innerWidth;
         let logicalHeight = window.innerHeight;
 
-        function onResize(cbs) {
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(() => {
-                    logicalWidth  = window.innerWidth;
-                    logicalHeight = window.innerHeight;
-                    cbs.forEach(f => f());
-                }, 200);
-            }, { passive: true });
-        }
-
-        const pCanvas = document.getElementById('particleCanvas');
-        const pCtx    = pCanvas.getContext('2d');
-        let particles = [];
-
-        function sizePCanvas() {
-            pCanvas.width        = logicalWidth * dpr;
-            pCanvas.height       = logicalHeight * dpr;
-            pCanvas.style.width  = logicalWidth + 'px';
-            pCanvas.style.height = logicalHeight + 'px';
+        function sizeCanvases() {
+            logicalWidth  = window.innerWidth;
+            logicalHeight = window.innerHeight;
+            pCanvas.width  = logicalWidth * dpr;
+            pCanvas.height = logicalHeight * dpr;
             pCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
         }
-        sizePCanvas();
+        sizeCanvases();
+        window.addEventListener('resize', sizeCanvases, { passive: true });
 
-        const CONN_DIST_SQ = 10000;
-        const CELL_SIZE    = Math.sqrt(CONN_DIST_SQ) + 1;
+        const count = Math.min(Math.floor(logicalWidth * logicalHeight / 20000), 65);
+        const pts = Array.from({ length: count }, () => ({
+            x: Math.random() * logicalWidth,
+            y: Math.random() * logicalHeight,
+            vx: (Math.random() - 0.5) * 0.25,
+            vy: (Math.random() - 0.5) * 0.25,
+            r: Math.random() * 1.5 + 0.5
+        }));
 
-        class Particle {
-            constructor(id) {
-                this.id = id;
-                this.reset(true);
-            }
-            reset(init) {
-                this.x     = Math.random() * logicalWidth;
-                this.y     = init ? Math.random() * logicalHeight : -5;
-                this.r     = Math.random() * 1.6 + 0.5;
-                this.vx    = (Math.random() - 0.5) * 0.24;
-                this.vy    = (Math.random() - 0.5) * 0.24;
-                this.phase = Math.random() * TWO_PI;
-                this.speed = Math.random() * 0.24 + 0.08;
-            }
-            update(t) {
-                this.x += this.vx + Math.sin(t * this.speed + this.phase) * 0.14;
-                this.y += this.vy + Math.cos(t * this.speed + this.phase) * 0.14;
-
-                if (mouse.x !== null) {
-                    const dx = mouse.x - this.x, dy = mouse.y - this.y;
-                    const d2 = dx * dx + dy * dy;
-                    if (d2 < 16000) {
-                        const f = (1 - d2 / 16000) * 0.35;
-                        this.x -= dx * f * 0.05;
-                        this.y -= dy * f * 0.05;
-                    }
-                }
-
-                if (this.x < -5)              this.x = logicalWidth + 5;
-                if (this.x > logicalWidth+5)  this.x = -5;
-                if (this.y < -5)              this.y = logicalHeight + 5;
-                if (this.y > logicalHeight+5) this.y = -5;
-            }
-        }
-
-        function buildParticles() {
-            const small = logicalWidth < 768;
-            const max   = small ? 35 : 75;
-            const count = Math.min(Math.floor(logicalWidth * logicalHeight / (small ? 28000 : 16000)), max);
-            particles   = Array.from({ length: count }, (_, idx) => new Particle(idx));
-        }
-
-        function drawConnections() {
-            const grid = new Map();
-            for (const p of particles) {
-                const cx  = (Math.floor(p.x / CELL_SIZE) + 100) & 0xFFFF;
-                const cy  = (Math.floor(p.y / CELL_SIZE) + 100) & 0xFFFF;
-                const key = (cx << 16) | cy;
-                if (!grid.has(key)) grid.set(key, []);
-                grid.get(key).push(p);
-            }
-
-            const buckets = new Map();
-            for (const p of particles) {
-                const cx = (Math.floor(p.x / CELL_SIZE) + 100) & 0xFFFF;
-                const cy = (Math.floor(p.y / CELL_SIZE) + 100) & 0xFFFF;
-
-                for (let ox = -1; ox <= 1; ox++) {
-                    for (let oy = -1; oy <= 1; oy++) {
-                        const nb = grid.get(((cx + ox) << 16) | (cy + oy));
-                        if (!nb) continue;
-                        for (const q of nb) {
-                            if (p.id >= q.id) continue;
-                            const dx = p.x - q.x, dy = p.y - q.y;
-                            const d2 = dx * dx + dy * dy;
-                            if (d2 < CONN_DIST_SQ) {
-                                const alpha = Math.round((0.40 - (d2 / CONN_DIST_SQ) * 0.40) * 10) / 10;
-                                if (alpha <= 0) continue;
-                                if (!buckets.has(alpha)) buckets.set(alpha, []);
-                                buckets.get(alpha).push(p.x, p.y, q.x, q.y);
-                            }
-                        }
-                    }
-                }
-            }
-
-            buckets.forEach((coords, alpha) => {
-                pCtx.beginPath();
-                pCtx.strokeStyle = `rgba(0, 122, 47, ${alpha})`;
-                pCtx.lineWidth   = 0.45;
-                for (let i = 0; i < coords.length; i += 4) {
-                    pCtx.moveTo(coords[i],   coords[i+1]);
-                    pCtx.lineTo(coords[i+2], coords[i+3]);
-                }
-                pCtx.stroke();
-            });
-        }
-
-        function tickParticles(t) {
+        function loop() {
             pCtx.clearRect(0, 0, logicalWidth, logicalHeight);
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            pCtx.fillStyle   = isDark ? 'rgba(0, 255, 65, 0.45)' : 'rgba(0, 122, 47, 0.38)';
+            pCtx.strokeStyle = isDark ? 'rgba(0, 255, 65, 0.14)' : 'rgba(0, 122, 47, 0.14)';
+            pCtx.lineWidth   = 0.5;
+
             pCtx.beginPath();
-            pCtx.fillStyle = PARTICLE_COL;
-            for (const p of particles) {
-                p.update(t);
+            for (let i = 0; i < pts.length; i++) {
+                const p = pts[i];
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0) p.x = logicalWidth;
+                if (p.x > logicalWidth) p.x = 0;
+                if (p.y < 0) p.y = logicalHeight;
+                if (p.y > logicalHeight) p.y = 0;
                 pCtx.moveTo(p.x + p.r, p.y);
                 pCtx.arc(p.x, p.y, p.r, 0, TWO_PI);
             }
             pCtx.fill();
-            drawConnections();
-        }
 
-        const mCanvas = document.getElementById('matrixCanvas');
-        const mCtx    = mCanvas.getContext('2d');
-        const CHARS   = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ∆∇∈∏∑√∞∧∨∩∪∫≈≠≡≤≥⊂⊃⊕⊗⊥'.split('');
-        const COL_W   = 30;
-        const FONT_SZ = 13;
-        let drops     = [];
-
-        function sizeMCanvas() {
-            mCanvas.width        = logicalWidth * dpr;
-            mCanvas.height       = logicalHeight * dpr;
-            mCanvas.style.width  = logicalWidth + 'px';
-            mCanvas.style.height = logicalHeight + 'px';
-            mCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-            const totalCols = Math.floor(logicalWidth / COL_W);
-            drops = Array.from({ length: totalCols }, (_, i) => ({
-                x: i * COL_W,
-                y: Math.random() * logicalHeight * 1.5 - logicalHeight,
-                speed: 0.75 + Math.random() * 0.45,
-                active: i % 2 === 0 && Math.random() > 0.4
-            }));
-        }
-        sizeMCanvas();
-
-        function tickMatrix() {
-            mCtx.fillStyle = 'rgba(242, 246, 243, 0.20)';
-            mCtx.fillRect(0, 0, logicalWidth, logicalHeight);
-            mCtx.font = FONT_SZ + 'px monospace';
-
-            for (let i = 0; i < drops.length; i++) {
-                const d = drops[i];
-                if (!d.active) continue;
-
-                if (d.y > 0 && d.y < logicalHeight) {
-                    const ch = CHARS[(Math.random() * CHARS.length) | 0];
-                    let hovered = false;
-
-                    if (mouse.x !== null) {
-                        const dx = mouse.x - d.x, dy = mouse.y - d.y;
-                        if (dx * dx + dy * dy < 14000) hovered = true;
+            pCtx.beginPath();
+            for (let i = 0; i < pts.length; i++) {
+                for (let j = i + 1; j < pts.length; j++) {
+                    const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+                    if (dx * dx + dy * dy < 11000) {
+                        pCtx.moveTo(pts[i].x, pts[i].y);
+                        pCtx.lineTo(pts[j].x, pts[j].y);
                     }
-
-                    if (hovered) {
-                        mCtx.fillStyle = '#0b1c11';
-                        mCtx.fillText(ch, d.x, d.y);
-                    } else {
-                        mCtx.fillStyle = Math.random() > 0.82 ? MATRIX_HEAD : MATRIX_TRAIL;
-                        mCtx.fillText(ch, d.x, d.y);
-                    }
-                }
-
-                d.y += d.speed;
-                if (d.y > logicalHeight && Math.random() > 0.985) {
-                    d.y = -20;
-                    d.active = Math.random() > 0.4;
                 }
             }
-        }
-
-        function loop(ts) {
-            const t = ts * 0.001;
-            tickParticles(t);
-            tickMatrix();
+            pCtx.stroke();
             requestAnimationFrame(loop);
         }
-
-        buildParticles();
-        onResize([sizePCanvas, sizeMCanvas, buildParticles]);
         requestAnimationFrame(loop);
     })();
     </script>
