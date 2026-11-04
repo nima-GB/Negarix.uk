@@ -3,54 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="referrer" content="no-referrer">
-    <title>MÉRIDIAN</title>
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>MÉRIDIAN · Sovereign Digital Infrastructure & Advisory</title>
 
-    <!-- 
-      PRODUCTION CSP NOTE: 
-      Extract <style> and <script> into external files (style.css, app.js) 
-      and remove 'unsafe-inline' for strict level-3 CSP compliance.
-    -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'none';
-        script-src 'self' 'unsafe-inline' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://www.recaptcha.net/;
-        frame-src https://www.google.com/recaptcha/ https://www.recaptcha.net/;
+        script-src 'self' 'unsafe-inline';
         style-src 'self' 'unsafe-inline';
-        connect-src 'self' https://formspree.io;
         img-src 'self' data:;
+        connect-src 'none';
+        frame-src 'none';
         base-uri 'self';
-        form-action https://formspree.io;
+        form-action 'none';
         object-src 'none';
         upgrade-insecure-requests;
     ">
 
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
     <style>
         /* -- HIGH-CONTRAST LIGHT TOKENS ----------------------- */
         :root {
-            --bg:           #f4f7f5;
-            --surface:      rgba(255, 255, 255, 0.94);
-            --input-bg:     #ffffff;
-            --input-focus:  #f0faf4;
-            --accent:       #007a2f;
-            --accent-bright:#00a843;
-            --accent-soft:  rgba(0, 122, 47, 0.08);
-            --text:         #0d1f14;
-            --text-muted:   #4a6654;
-            --red-alert:    #c91c1c;
-            --warn-color:   #b45309;
-            --border:       rgba(0, 102, 38, 0.24);
-            --border-hot:   #007a2f;
-            --shadow-sm:    0 2px 8px rgba(0, 102, 38, 0.10);
-            --shadow-md:    0 6px 20px rgba(0, 102, 38, 0.16);
-            --shadow-lg:    0 20px 50px rgba(13, 31, 20, 0.09), 0 1px 3px rgba(0, 0, 0, 0.05);
-            --font-mono:    'Courier New', Courier, monospace;
-            --transition:   0.2s ease;
+            --bg:            #f4f7f5;
+            --surface:       rgba(255, 255, 255, 0.94);
+            --surface-solid: #ffffff;
+            --surface-tint:  #f0faf4;
+            --accent:        #007a2f;
+            --accent-hover:  #005f24;
+            --accent-bright: #00a843;
+            --accent-soft:   rgba(0, 122, 47, 0.08);
+            --text:          #0d1f14;
+            --text-muted:    #4a6654;
+            --border:        rgba(0, 102, 38, 0.22);
+            --border-hot:    #007a2f;
+            --shadow-sm:     0 2px 8px rgba(0, 102, 38, 0.08);
+            --shadow-md:     0 8px 24px rgba(0, 102, 38, 0.14);
+            --shadow-lg:     0 20px 50px rgba(13, 31, 20, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+            --font-mono:     'Courier New', Courier, monospace;
+            --transition:    0.2s ease;
+            --max-w:         1120px;
         }
 
         /* -- RESET -------------------------------------------- */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            scroll-behavior: smooth;
+        }
 
         html, body {
             width: 100%; min-height: 100%;
@@ -59,6 +56,12 @@
             font-family: var(--font-mono);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
         }
 
         /* -- BOOT SCREEN -------------------------------------- */
@@ -87,8 +90,6 @@
         #boot-lines .line { display: block; opacity: 0; }
         #boot-lines .line.visible { opacity: 1; }
         #boot-lines .ok   { color: var(--accent); }
-        #boot-lines .warn { color: var(--warn-color); }
-        #boot-lines .err  { color: var(--red-alert); }
         #boot-lines .dim  { color: var(--text-muted); font-weight: 400; }
 
         #boot-cursor {
@@ -118,8 +119,8 @@
                 to bottom,
                 transparent 0px,
                 transparent 3px,
-                rgba(0, 60, 20, 0.02) 3px,
-                rgba(0, 60, 20, 0.02) 4px
+                rgba(0, 60, 20, 0.018) 3px,
+                rgba(0, 60, 20, 0.018) 4px
             );
         }
 
@@ -129,7 +130,7 @@
             z-index: 899;
             background: radial-gradient(ellipse at center,
                 transparent 60%,
-                rgba(180, 200, 188, 0.35) 100%
+                rgba(180, 200, 188, 0.3) 100%
             );
         }
 
@@ -140,53 +141,37 @@
             width: 100%; height: 100%;
             pointer-events: none;
         }
-        #particleCanvas { z-index: 1; opacity: 0.55; }
-        #matrixCanvas   { z-index: 2; opacity: 0.35; }
+        #particleCanvas { z-index: 1; opacity: 0.5; }
+        #matrixCanvas   { z-index: 2; opacity: 0.28; }
 
-        /* -- MAIN LAYOUT (FAIL-SAFE VISIBLE) ------------------ */
-        #app {
-            position: relative;
-            z-index: 10;
-            min-height: 100dvh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 32px 16px;
-            opacity: 1;
-        }
-
-        /* -- CARD --------------------------------------------- */
-        .card {
+        /* -- NAVIGATION BAR ----------------------------------- */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
             width: 100%;
-            max-width: 520px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            box-shadow: var(--shadow-lg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            overflow: hidden;
-        }
-
-        /* -- CARD HEADER -------------------------------------- */
-        .card-header {
-            padding: 28px 32px 24px;
+            background: rgba(244, 247, 245, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--border);
-            position: relative;
-            background: linear-gradient(to bottom, rgba(0, 122, 47, 0.03), transparent);
         }
 
-        .status-bar {
+        .nav-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 16px 24px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            letter-spacing: 0.08em;
+            justify-content: space-between;
+            gap: 20px;
         }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .status-dot {
             width: 8px; height: 8px;
             border-radius: 50%;
@@ -195,265 +180,460 @@
             animation: pulse-dot 2.5s ease-in-out infinite;
             flex-shrink: 0;
         }
-        .status-bar span { flex: 1; }
-        .status-time { font-variant-numeric: tabular-nums; flex: 0 !important; white-space: nowrap; }
 
-        .site-title {
-            font-size: clamp(2rem, 7vw, 2.8rem);
+        .brand-name {
+            font-size: 1.15rem;
             font-weight: 700;
-            letter-spacing: 0.12em;
-            line-height: 1;
+            letter-spacing: 0.18em;
             color: var(--text);
-            position: relative;
-            display: inline-block;
-            user-select: none;
         }
 
-        .site-sub {
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
             font-size: 0.74rem;
             font-weight: 700;
-            color: var(--accent);
-            letter-spacing: 0.22em;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            margin-top: 8px;
+            color: var(--text-muted);
         }
 
-        .corner { position: absolute; width: 14px; height: 14px; }
-        .corner.tl { top: 10px; left: 10px; border-top: 2px solid var(--accent); border-left: 2px solid var(--accent); }
-        .corner.tr { top: 10px; right: 10px; border-top: 2px solid var(--accent); border-right: 2px solid var(--accent); }
-        .corner.bl { bottom: 10px; left: 10px; border-bottom: 2px solid var(--accent); border-left: 2px solid var(--accent); }
-        .corner.br { bottom: 10px; right: 10px; border-bottom: 2px solid var(--accent); border-right: 2px solid var(--accent); }
+        .nav-links a:hover {
+            color: var(--accent);
+        }
 
-        /* -- CARD BODY ---------------------------------------- */
-        .card-body { padding: 28px 32px 32px; }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
 
-        .section-label {
+        .nav-clock {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 0.06em;
+        }
+
+        .btn-nav {
+            background: var(--accent);
+            color: #ffffff;
+            padding: 9px 16px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            border-radius: 2px;
+            border: 1px solid var(--accent);
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .btn-nav:hover {
+            background: var(--accent-hover);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* -- MAIN CONTAINER ----------------------------------- */
+        #app {
+            position: relative;
+            z-index: 10;
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 48px 24px 80px;
+            display: flex;
+            flex-direction: column;
+            gap: 72px;
+        }
+
+        /* -- HERO MODULE -------------------------------------- */
+        .hero-card {
+            position: relative;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: clamp(32px, 6vw, 64px);
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            overflow: hidden;
+        }
+
+        .corner { position: absolute; width: 16px; height: 16px; pointer-events: none; }
+        .corner.tl { top: 12px; left: 12px; border-top: 2px solid var(--accent); border-left: 2px solid var(--accent); }
+        .corner.tr { top: 12px; right: 12px; border-top: 2px solid var(--accent); border-right: 2px solid var(--accent); }
+        .corner.bl { bottom: 12px; left: 12px; border-bottom: 2px solid var(--accent); border-left: 2px solid var(--accent); }
+        .corner.br { bottom: 12px; right: 12px; border-bottom: 2px solid var(--accent); border-right: 2px solid var(--accent); }
+
+        .telemetry-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: var(--accent-soft);
+            border: 1px solid var(--border);
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 3.4rem);
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            line-height: 1.15;
+            color: var(--text);
+            max-width: 820px;
+        }
+
+        .hero-lead {
+            margin-top: 20px;
+            font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+            color: var(--text-muted);
+            max-width: 680px;
+            font-weight: 600;
+            line-height: 1.75;
+        }
+
+        .hero-actions {
+            margin-top: 36px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #ffffff;
+            border: 1px solid var(--accent);
+            padding: 15px 28px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            border-radius: 2px;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--surface-solid);
+            color: var(--text);
+            border: 1px solid var(--border-hot);
+            padding: 15px 28px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        .btn-secondary:hover {
+            background: var(--surface-tint);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .hero-metrics {
+            margin-top: 48px;
+            padding-top: 28px;
+            border-top: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 24px;
+        }
+
+        .metric-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .metric-val {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.08em;
+        }
+
+        .metric-lbl {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        /* -- SECTION HEADERS ---------------------------------- */
+        .section-header {
+            margin-bottom: 28px;
+        }
+
+        .section-tag {
             font-size: 0.68rem;
             font-weight: 700;
             letter-spacing: 0.28em;
-            color: var(--text-muted);
+            color: var(--accent);
             text-transform: uppercase;
-            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 12px;
+            margin-bottom: 10px;
         }
-        .section-label::after {
+
+        .section-tag::after {
             content: '';
             flex: 1;
             height: 1px;
             background: linear-gradient(to right, var(--border), transparent);
         }
 
-        /* -- FORM --------------------------------------------- */
-        .form { display: flex; flex-direction: column; gap: 18px; }
-        .field { display: flex; flex-direction: column; gap: 6px; }
+        .section-title {
+            font-size: clamp(1.4rem, 3vw, 2rem);
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            color: var(--text);
+        }
 
-        .field-label {
+        /* -- CAPABILITIES GRID -------------------------------- */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .tactical-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 32px 28px;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            transition: transform var(--transition), border-color var(--transition);
+            position: relative;
+        }
+
+        .tactical-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border-hot);
+        }
+
+        .card-index {
             font-size: 0.7rem;
             font-weight: 700;
-            letter-spacing: 0.18em;
-            color: var(--text);
-            text-transform: uppercase;
-        }
-
-        .field-wrap {
-            position: relative;
-            display: flex;
-            align-items: stretch;
-        }
-
-        .field-prefix {
-            display: flex;
-            align-items: center;
-            padding: 0 12px;
-            background: var(--accent-soft);
-            border: 1px solid var(--border);
-            border-right: none;
             color: var(--accent);
-            font-size: 0.78rem;
-            font-weight: 700;
-            flex-shrink: 0;
-            transition: var(--transition);
-            user-select: none;
-        }
-
-        .field-input {
-            flex: 1;
-            background: var(--input-bg);
+            letter-spacing: 0.2em;
+            background: var(--accent-soft);
+            align-self: flex-start;
+            padding: 4px 10px;
             border: 1px solid var(--border);
-            color: var(--text);
-            padding: 12px 14px;
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            font-weight: 600;
-            outline: none;
-            transition: var(--transition);
-            caret-color: var(--accent);
-            width: 100%;
         }
 
-        .field-input::placeholder {
-            color: #8da395;
-            font-weight: 400;
-        }
-
-        /* Lock light theme against browser autofill overrides */
-        .field-input:-webkit-autofill,
-        .field-input:-webkit-autofill:hover,
-        .field-input:-webkit-autofill:focus {
-            -webkit-text-fill-color: var(--text);
-            -webkit-box-shadow: 0 0 0 1000px #f0faf4 inset;
-            transition: background-color 5000s ease-in-out 0s;
-            border-color: var(--border-hot);
-        }
-
-        .field-input:focus {
-            border-color: var(--border-hot);
-            background: var(--input-focus);
-            box-shadow: var(--shadow-sm);
-        }
-        .field-input:focus ~ .field-scan { opacity: 1; }
-        .field-wrap:focus-within .field-prefix {
-            border-color: var(--border-hot);
-            background: rgba(0, 122, 47, 0.14);
-        }
-
-        .field-scan {
-            position: absolute;
-            left: 0; right: 0;
-            height: 2px;
-            bottom: 0;
-            background: linear-gradient(to right, transparent, var(--accent), transparent);
-            opacity: 0;
-            transition: opacity 0.2s ease;
-            animation: scan-sweep 1.8s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        textarea.field-input {
-            resize: vertical;
-            min-height: 100px;
-            line-height: 1.6;
-        }
-
-        .char-counter {
-            font-size: 0.65rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-align: right;
-            letter-spacing: 0.1em;
-            transition: color 0.2s;
-        }
-        .char-counter.warn { color: var(--warn-color); }
-        .char-counter.danger { color: var(--red-alert); }
-
-        /* -- HONEYPOT ----------------------------------------- */
-        .hp-field {
-            position: absolute;
-            left: -9999px; width: 1px; height: 1px;
-            opacity: 0; pointer-events: none;
-        }
-
-        /* -- RECAPTCHA ---------------------------------------- */
-        .recaptcha-wrap {
-            display: flex;
-            justify-content: center;
-        }
-
-        /* -- MSG ---------------------------------------------- */
-        .form-msg {
-            font-size: 0.78rem;
+        .card-title {
+            font-size: 1.1rem;
             font-weight: 700;
-            min-height: 1.2em;
             letter-spacing: 0.06em;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 0 2px;
+            color: var(--text);
+            margin-top: 4px;
         }
-        .form-msg::before { content: ''; display: none; }
-        .form-msg.error  { color: var(--red-alert); }
-        .form-msg.error::before  { display: inline-block; content: '✕'; }
-        .form-msg.success { color: var(--accent); }
-        .form-msg.success::before { display: inline-block; content: '✓'; }
-        .form-msg.info { color: var(--text-muted); }
-        .form-msg.info::before { display: inline-block; content: '›'; }
 
-        /* -- SUBMIT BUTTON ------------------------------------ */
-        .submit-btn {
-            position: relative;
-            background: var(--accent);
-            color: #ffffff;
-            border: 1px solid var(--accent);
-            padding: 15px 20px;
-            cursor: pointer;
-            font-family: var(--font-mono);
+        .card-desc {
+            font-size: 0.86rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            line-height: 1.7;
+            flex: 1;
+        }
+
+        .card-meta {
+            margin-top: 12px;
+            padding-top: 14px;
+            border-top: 1px dashed var(--border);
+            font-size: 0.68rem;
             font-weight: 700;
-            font-size: 0.84rem;
+            color: var(--text);
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            letter-spacing: 0.22em;
+        }
+
+        /* -- ARCHITECTURE & TELEMETRY PANEL ------------------- */
+        .spec-panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            box-shadow: var(--shadow-lg);
             overflow: hidden;
-            transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
-            width: 100%;
-            border-radius: 2px;
         }
 
-        .submit-btn:hover,
-        .submit-btn:focus-visible {
-            background: #005f24;
-            box-shadow: var(--shadow-md);
-            outline: none;
-        }
-        .submit-btn:active {
-            transform: translateY(1px);
-        }
-        .submit-btn span { position: relative; z-index: 1; }
-        .submit-btn:disabled {
-            opacity: 0.55;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-
-        .btn-progress {
-            position: absolute;
-            bottom: 0; left: 0;
-            height: 3px;
-            width: 0%;
-            background: #ffffff;
-            transition: width 2s linear;
-            z-index: 2;
-        }
-        .submit-btn.loading .btn-progress { width: 85%; }
-
-        /* -- FOOTER ------------------------------------------- */
-        .card-footer {
-            padding: 14px 32px;
-            border-top: 1px solid var(--border);
-            background: rgba(0, 122, 47, 0.03);
+        .spec-header {
+            padding: 18px 28px;
+            background: var(--accent-soft);
+            border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 8px;
             flex-wrap: wrap;
+            gap: 12px;
         }
-        .card-footer span {
+
+        .spec-header span {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .spec-table tr {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .spec-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .spec-table th,
+        .spec-table td {
+            padding: 16px 28px;
+            text-align: left;
+            font-size: 0.84rem;
+        }
+
+        .spec-table th {
+            width: 34%;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.74rem;
+            background: rgba(0, 122, 47, 0.02);
+        }
+
+        .spec-table td {
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .badge-verified {
+            display: inline-block;
+            padding: 3px 8px;
+            background: var(--surface-tint);
+            border: 1px solid var(--border-hot);
+            color: var(--accent);
             font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        /* -- CTA TERMINAL BANNER ------------------------------ */
+        .cta-banner {
+            background: var(--surface);
+            border: 1px solid var(--border-hot);
+            border-radius: 4px;
+            padding: clamp(28px, 5vw, 48px);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 28px;
+            position: relative;
+        }
+
+        .cta-content {
+            max-width: 600px;
+        }
+
+        .cta-title {
+            font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            color: var(--text);
+        }
+
+        .cta-sub {
+            margin-top: 8px;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* -- FOOTER ------------------------------------------- */
+        .site-footer {
+            border-top: 1px solid var(--border);
+            background: var(--surface);
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 28px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-meta {
+            font-size: 0.68rem;
             font-weight: 700;
             color: var(--text-muted);
             letter-spacing: 0.14em;
             text-transform: uppercase;
         }
+
+        .footer-links {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
         .enc-badge {
             display: flex;
             align-items: center;
-            gap: 5px;
-            font-size: 0.65rem;
+            gap: 6px;
+            font-size: 0.68rem;
             font-weight: 700;
             color: var(--accent);
             letter-spacing: 0.1em;
         }
-        .enc-badge svg { width: 11px; height: 11px; }
+
+        .enc-badge svg { width: 12px; height: 12px; }
 
         /* -- ANIMATIONS --------------------------------------- */
         @keyframes blink {
@@ -464,10 +644,6 @@
             0%, 100% { box-shadow: 0 0 0 0 rgba(0, 168, 67, 0.5); }
             50%      { box-shadow: 0 0 0 5px rgba(0, 168, 67, 0); }
         }
-        @keyframes scan-sweep {
-            0%   { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
 
         /* -- REDUCED MOTION ----------------------------------- */
         @media (prefers-reduced-motion: reduce) {
@@ -476,11 +652,12 @@
             #boot { display: none !important; }
         }
 
-        /* -- MOBILE ------------------------------------------- */
-        @media (max-width: 480px) {
-            .card-header, .card-body { padding-left: 20px; padding-right: 20px; }
-            .card-footer { padding-left: 20px; padding-right: 20px; }
-            .site-title { font-size: 1.9rem; }
+        /* -- RESPONSIVE --------------------------------------- */
+        @media (max-width: 768px) {
+            .nav-links, .nav-clock { display: none; }
+            .spec-table th, .spec-table td { display: block; width: 100%; padding: 10px 20px; }
+            .spec-table th { padding-bottom: 2px; }
+            .spec-table td { padding-top: 2px; padding-bottom: 14px; }
         }
     </style>
 </head>
@@ -494,105 +671,224 @@
     <canvas id="particleCanvas" aria-hidden="true"></canvas>
     <canvas id="matrixCanvas"   aria-hidden="true"></canvas>
 
-    <!-- Boot sequence -->
+    <!-- Skippable boot sequence (runs once per session) -->
     <div id="boot" role="status" aria-label="System initialising">
         <div id="boot-lines"></div>
         <div class="boot-skip">[Click or press any key to enter]</div>
     </div>
 
-    <!-- Main content -->
-    <div id="app">
-      <main class="card" role="main">
+    <!-- Top Navigation -->
+    <header class="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="brand">
+                <div class="status-dot" aria-hidden="true"></div>
+                <span class="brand-name">MÉRIDIAN</span>
+            </a>
 
-        <header class="card-header">
+            <nav class="nav-links" aria-label="Primary Navigation">
+                <a href="#capabilities">Capabilities</a>
+                <a href="#specifications">Architecture</a>
+                <a href="#protocol">Protocol</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
+            <div class="nav-right">
+                <span class="nav-clock" id="liveClock" aria-live="off"></span>
+                <a href="contact.html" class="btn-nav">Initiate Comms</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="app" role="main">
+
+        <!-- Hero Section -->
+        <section class="hero-card" aria-labelledby="hero-heading">
             <div class="corner tl"></div>
             <div class="corner tr"></div>
             <div class="corner bl"></div>
             <div class="corner br"></div>
 
-            <div class="status-bar">
-                <div class="status-dot" aria-hidden="true"></div>
-                <span>SECURE CHANNEL ACTIVE</span>
-                <span class="status-time" id="liveClock" aria-live="off"></span>
+            <div class="telemetry-tag">
+                <span>NODE: UK-SOUTH · STATUS: OPERATIONAL</span>
             </div>
 
-            <h1 class="site-title">MÉRIDIAN</h1>
-            <p class="site-sub">Encrypted Communications Relay</p>
-        </header>
+            <h1 class="hero-title" id="hero-heading">SOVEREIGN DIGITAL INFRASTRUCTURE &amp; TECHNICAL ADVISORY</h1>
+            <p class="hero-lead">
+                MÉRIDIAN engineers resilient, zero-trust systems, high-assurance web architectures, and precision operational compliance. Built for organisations that require verifiable security without third-party bloat.
+            </p>
 
-        <div class="card-body">
-            <p class="section-label">Initiate Secure Transmission</p>
+            <div class="hero-actions">
+                <a href="contact.html" class="btn-primary">
+                    <span>Open Secure Channel</span>
+                    <span aria-hidden="true">→</span>
+                </a>
+                <a href="#capabilities" class="btn-secondary">Inspect Capabilities</a>
+            </div>
 
-            <form id="contactForm" class="form"
-                  action="https://formspree.io/f/xdavzgko"
-                  method="POST" novalidate>
-
-                <!-- Honeypot -->
-                <label class="hp-field" aria-hidden="true">
-                    Leave empty
-                    <input type="text" id="inp-gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
-                </label>
-
-                <!-- Name -->
-                <div class="field">
-                    <label class="field-label" for="inp-name">Operator Identity</label>
-                    <div class="field-wrap">
-                        <span class="field-prefix" aria-hidden="true">ID://</span>
-                        <input class="field-input" type="text" id="inp-name" name="name"
-                               required minlength="2" maxlength="100"
-                               autocomplete="name" spellcheck="false"
-                               placeholder="Full name or callsign">
-                        <div class="field-scan" aria-hidden="true"></div>
-                    </div>
+            <div class="hero-metrics">
+                <div class="metric-item">
+                    <span class="metric-val">TLS 1.3</span>
+                    <span class="metric-lbl">Strict Transport Layer</span>
                 </div>
-
-                <!-- Email -->
-                <div class="field">
-                    <label class="field-label" for="inp-email">Secure Endpoint</label>
-                    <div class="field-wrap">
-                        <span class="field-prefix" aria-hidden="true">@://</span>
-                        <input class="field-input" type="email" id="inp-email" name="email"
-                               required maxlength="200"
-                               autocomplete="email" spellcheck="false"
-                               placeholder="name@domain.com">
-                        <div class="field-scan" aria-hidden="true"></div>
-                    </div>
+                <div class="metric-item">
+                    <span class="metric-val">ZERO-TRUST</span>
+                    <span class="metric-lbl">Default Security Posture</span>
                 </div>
-
-                <!-- Message -->
-                <div class="field">
-                    <label class="field-label" for="inp-message">Payload</label>
-                    <div class="field-wrap" style="flex-direction:column">
-                        <textarea class="field-input" id="inp-message" name="message"
-                                  required minlength="10" maxlength="5000"
-                                  spellcheck="false"
-                                  placeholder="Transmit your message..."></textarea>
-                        <div class="field-scan" aria-hidden="true"></div>
-                    </div>
-                    <div class="char-counter" id="charCounter" aria-live="polite">0 / 5000</div>
+                <div class="metric-item">
+                    <span class="metric-val">CSP L3</span>
+                    <span class="metric-lbl">Execution Isolation</span>
                 </div>
-
-                <!-- reCAPTCHA (Light Theme) -->
-                <div class="recaptcha-wrap">
-                    <div class="g-recaptcha"
-                         data-sitekey="6LfesBotAAAAAG_Guq1ZKS5977I7_omstqT_YDE8"
-                         data-theme="light"></div>
+                <div class="metric-item">
+                    <span class="metric-val">24/7/365</span>
+                    <span class="metric-lbl">Continuous Telemetry</span>
                 </div>
+            </div>
+        </section>
 
-                <!-- Status message -->
-                <p id="formMsg" class="form-msg" role="alert" aria-live="polite"></p>
+        <!-- Core Capabilities Section -->
+        <section id="capabilities" aria-labelledby="cap-heading">
+            <div class="section-header">
+                <div class="section-tag">01 // Core Capabilities</div>
+                <h2 class="section-title" id="cap-heading">ENGINEERED FOR RESILIENCE</h2>
+            </div>
 
-                <!-- Submit -->
-                <button type="submit" id="submitBtn" class="submit-btn">
-                    <div class="btn-progress" id="btnProgress"></div>
-                    <span id="btnLabel">Transmit Securely</span>
-                </button>
+            <div class="grid-3">
+                <article class="tactical-card">
+                    <span class="card-index">MOD-01</span>
+                    <h3 class="card-title">HARDENED WEB ARCHITECTURE</h3>
+                    <p class="card-desc">
+                        Zero-dependency front-end and edge engineering enforced by strict Content Security Policies, subresource integrity, and minimal attack surfaces.
+                    </p>
+                    <div class="card-meta">STATUS: PRODUCTION READY</div>
+                </article>
 
-            </form>
-        </div>
+                <article class="tactical-card">
+                    <span class="card-index">MOD-02</span>
+                    <h3 class="card-title">SECURITY AUDITING &amp; DEFENCE</h3>
+                    <p class="card-desc">
+                        Comprehensive threat modelling, vulnerability remediation, DNS and cryptographic posture hardening aligned with NCSC and OWASP ASVS benchmarks.
+                    </p>
+                    <div class="card-meta">STANDARD: ASVS LEVEL 3</div>
+                </article>
 
-        <footer class="card-footer">
-            <span>MÉRIDIAN &copy; <span id="footerYear"></span></span>
+                <article class="tactical-card">
+                    <span class="card-index">MOD-03</span>
+                    <h3 class="card-title">STRATEGIC TECHNICAL ADVISORY</h3>
+                    <p class="card-desc">
+                        Bespoke systems integration, regulatory compliance architecture, and executive technical governance for high-consequence operations.
+                    </p>
+                    <div class="card-meta">CLEARANCE: DIRECT ENGAGEMENT</div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Technical Specifications Matrix -->
+        <section id="specifications" aria-labelledby="spec-heading">
+            <div class="section-header">
+                <div class="section-tag">02 // System Architecture</div>
+                <h2 class="section-title" id="spec-heading">VERIFIED SECURITY POSTURE</h2>
+            </div>
+
+            <div class="spec-panel">
+                <div class="spec-header">
+                    <span>MÉRIDIAN CORE SPECIFICATION MATRIX</span>
+                    <span class="badge-verified">AUDIT PASSED ✓</span>
+                </div>
+                <table class="spec-table">
+                    <tbody>
+                        <tr>
+                            <th>Transport Encryption</th>
+                            <td>TLS 1.3 with ECDHE key exchange and strict HSTS preload enforcement</td>
+                        </tr>
+                        <tr>
+                            <th>Execution Policy</th>
+                            <td>Default-deny Content Security Policy with zero external script dependencies on core hub</td>
+                        </tr>
+                        <tr>
+                            <th>Data Retention</th>
+                            <td>Zero-knowledge transient relay architecture with strict origin verification</td>
+                        </tr>
+                        <tr>
+                            <th>Bot &amp; Flood Mitigation</th>
+                            <td>Cryptographic challenge verification paired with deterministic timing traps</td>
+                        </tr>
+                        <tr>
+                            <th>Accessibility &amp; Performance</th>
+                            <td>High-contrast daylight tactical palette, 60fps spatial-hash rendering, and reduced-motion compliance</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Operational Protocol -->
+        <section id="protocol" aria-labelledby="prot-heading">
+            <div class="section-header">
+                <div class="section-tag">03 // Engagement Protocol</div>
+                <h2 class="section-title" id="prot-heading">OPERATIONAL WORKFLOW</h2>
+            </div>
+
+            <div class="grid-3">
+                <article class="tactical-card">
+                    <span class="card-index">STEP 01</span>
+                    <h3 class="card-title">ENCRYPTED HANDSHAKE</h3>
+                    <p class="card-desc">
+                        Initiate contact via our dedicated communications relay with your operational requirements and endpoint details.
+                    </p>
+                </article>
+
+                <article class="tactical-card">
+                    <span class="card-index">STEP 02</span>
+                    <h3 class="card-title">ARCHITECTURAL SCOPING</h3>
+                    <p class="card-desc">
+                        We conduct a structured technical review, threat assessment, and define clear deliverables with verifiable milestones.
+                    </p>
+                </article>
+
+                <article class="tactical-card">
+                    <span class="card-index">STEP 03</span>
+                    <h3 class="card-title">DEPLOYMENT &amp; ASSURANCE</h3>
+                    <p class="card-desc">
+                        Execution of hardened code, infrastructure configuration, and post-deployment verification testing.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Bottom Call to Action -->
+        <section class="cta-banner" aria-labelledby="cta-heading">
+            <div class="corner tl"></div>
+            <div class="corner tr"></div>
+            <div class="corner bl"></div>
+            <div class="corner br"></div>
+
+            <div class="cta-content">
+                <h2 class="cta-title" id="cta-heading">READY TO ESTABLISH COMMUNICATIONS?</h2>
+                <p class="cta-sub">Route your enquiry through our protected transmission endpoint.</p>
+            </div>
+
+            <a href="contact.html" class="btn-primary">
+                <span>Launch Contact Terminal</span>
+                <span aria-hidden="true">→</span>
+            </a>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-meta">
+                MÉRIDIAN &copy; <span id="footerYear"></span> · ALL RIGHTS RESERVED
+            </div>
+
+            <div class="footer-links">
+                <a href="#capabilities">Capabilities</a>
+                <a href="#specifications">Architecture</a>
+                <a href="contact.html">Secure Contact</a>
+            </div>
+
             <div class="enc-badge">
                 <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
                     <rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/>
@@ -600,37 +896,28 @@
                 </svg>
                 TLS 1.3 · AES-256
             </div>
-        </footer>
-
-      </main>
-    </div>
+        </div>
+    </footer>
 
     <script>
     'use strict';
 
     const TWO_PI = Math.PI * 2;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const bootTimestamp = performance.now();
 
     /* ===========================================================
-       BOOT SEQUENCE (FAIL-SAFE & SKIPPABLE)
+       BOOT SEQUENCE (SHARED SESSION STATE WITH CONTACT PAGE)
     =========================================================== */
     (function () {
         const LINES = [
-            { text: 'MÉRIDIAN SECURE KERNEL v4.3.0 - DAYLIGHT MODE', cls: '' },
-            { text: 'Loading cryptographic modules...',              cls: 'dim', delay: 120 },
-            { text: '  [✓] AES-256-GCM                  OK',        cls: 'ok' },
-            { text: '  [✓] TLS 1.3 strict transport     OK',        cls: 'ok' },
-            { text: '  [✓] ECDHE key exchange           OK',        cls: 'ok' },
-            { text: '  [✓] reCAPTCHA v2 verification    OK',        cls: 'ok' },
-            { text: 'Scanning threat surface...',                    cls: 'dim' },
-            { text: '  [✓] Content security policy      LOCKED',    cls: 'ok' },
-            { text: '  [✓] Anti-automation time trap    ACTIVE',    cls: 'ok' },
-            { text: '  [✓] Input sanitisation layer     OK',        cls: 'ok' },
-            { text: 'Establishing secure channel...',                cls: 'dim' },
-            { text: '  [✓] Endpoint verified            READY',     cls: 'ok' },
-            { text: '=========================================',    cls: 'dim' },
-            { text: 'ACCESS GRANTED. SECURE CHANNEL OPEN.',         cls: 'ok' },
+            { text: 'MÉRIDIAN COMMAND HUB v4.3.0 - INITIALISING',    cls: '' },
+            { text: 'Verifying core infrastructure modules...',      cls: 'dim', delay: 110 },
+            { text: '  [✓] Zero-trust policy engine      ACTIVE',    cls: 'ok' },
+            { text: '  [✓] Strict CSP isolation          LOCKED',    cls: 'ok' },
+            { text: '  [✓] TLS 1.3 transport security    VERIFIED',  cls: 'ok' },
+            { text: '  [✓] Telemetry rendering grid      ONLINE',    cls: 'ok' },
+            { text: '=========================================',     cls: 'dim' },
+            { text: 'SYSTEM READY. WELCOME TO MÉRIDIAN.',            cls: 'ok' },
         ];
 
         const container = document.getElementById('boot-lines');
@@ -663,7 +950,7 @@
             span.textContent = item.text;
             container.appendChild(span);
 
-            const baseDelay = i === 0 ? 100 : totalDelay + (item.delay || 55) + (Math.random() * 35);
+            const baseDelay = i === 0 ? 90 : totalDelay + (item.delay || 55) + (Math.random() * 30);
             totalDelay = baseDelay;
 
             setTimeout(() => { if (!bootDone) span.classList.add('visible'); }, baseDelay);
@@ -677,7 +964,7 @@
         cursorSpan.appendChild(cursorBlock);
         container.appendChild(cursorSpan);
 
-        setTimeout(finishBoot, totalDelay + 450);
+        setTimeout(finishBoot, totalDelay + 400);
     })();
 
     /* ===========================================================
@@ -688,165 +975,11 @@
         const yr = document.getElementById('footerYear');
         function tick() {
             const now = new Date();
-            el.textContent = now.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
-            yr.textContent = String(now.getUTCFullYear());
+            if (el) el.textContent = now.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+            if (yr) yr.textContent = String(now.getUTCFullYear());
         }
         tick();
         setInterval(tick, 1000);
-    })();
-
-    /* ===========================================================
-       CHAR COUNTER
-    =========================================================== */
-    (function () {
-        const ta      = document.getElementById('inp-message');
-        const counter = document.getElementById('charCounter');
-        const MAX     = 5000;
-        ta.addEventListener('input', () => {
-            const len = ta.value.length;
-            counter.textContent = len + ' / ' + MAX;
-            counter.className = 'char-counter' +
-                (len > MAX * 0.9 ? ' danger' : len > MAX * 0.75 ? ' warn' : '');
-        });
-    })();
-
-    /* ===========================================================
-       HARDENED FORM VALIDATION & SUBMISSION
-    =========================================================== */
-    (function () {
-        const form       = document.getElementById('contactForm');
-        const inpName    = document.getElementById('inp-name');
-        const inpEmail   = document.getElementById('inp-email');
-        const inpMessage = document.getElementById('inp-message');
-        const inpGotcha  = document.getElementById('inp-gotcha');
-        const submitBtn  = document.getElementById('submitBtn');
-        const btnLabel   = document.getElementById('btnLabel');
-        const btnProg    = document.getElementById('btnProgress');
-        const msgEl      = document.getElementById('formMsg');
-        const counterEl  = document.getElementById('charCounter');
-
-        const emailRx    = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
-        let cooldownUntil = 0;
-
-        function sanitiseText(str) {
-            return str.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '').trim();
-        }
-
-        function msg(text, type) {
-            msgEl.textContent = text;
-            msgEl.className   = 'form-msg' + (type ? ' ' + type : '');
-        }
-
-        function simulateSuccessAndReset() {
-            btnLabel.textContent = 'Transmitted ✓';
-            btnProg.style.width  = '100%';
-            msg('Transmission received. Standby for response.', 'success');
-            form.reset();
-            counterEl.textContent = '0 / 5000';
-            if (typeof grecaptcha !== 'undefined' && typeof grecaptcha.reset === 'function') {
-                grecaptcha.reset();
-            }
-            setTimeout(() => {
-                btnLabel.textContent = 'Transmit Securely';
-                btnProg.style.width  = '0%';
-            }, 3000);
-        }
-
-        form.addEventListener('submit', async function (e) {
-            e.preventDefault();
-            msg('', '');
-
-            const now = performance.now();
-            if (now < cooldownUntil) {
-                const waitSec = Math.ceil((cooldownUntil - now) / 1000);
-                msg('Rate limit active. Please wait ' + waitSec + 's before retrying.', 'error');
-                return;
-            }
-
-            const name     = sanitiseText(inpName.value);
-            const email    = sanitiseText(inpEmail.value);
-            const message  = sanitiseText(inpMessage.value);
-            const honeypot = inpGotcha.value;
-
-            if (honeypot.length > 0 || (now - bootTimestamp) < 2500) {
-                simulateSuccessAndReset();
-                return;
-            }
-
-            if (name.length < 2 || name.length > 100) {
-                msg('Operator identity required (2 to 100 chars).', 'error');
-                inpName.focus();
-                return;
-            }
-            if (email.length > 200 || !emailRx.test(email)) {
-                msg('Valid secure endpoint required.', 'error');
-                inpEmail.focus();
-                return;
-            }
-            if (message.length < 10) {
-                msg('Payload too short (min 10 chars).', 'error');
-                inpMessage.focus();
-                return;
-            }
-            if (message.length > 5000) {
-                msg('Payload exceeds 5000 char limit.', 'error');
-                inpMessage.focus();
-                return;
-            }
-
-            if (typeof grecaptcha === 'undefined' || typeof grecaptcha.getResponse !== 'function') {
-                msg('Security challenge failed to load. Check ad-blocker or connection.', 'error');
-                return;
-            }
-            const captchaToken = grecaptcha.getResponse();
-            if (!captchaToken || captchaToken.length === 0) {
-                msg('Complete the reCAPTCHA challenge to proceed.', 'error');
-                return;
-            }
-
-            submitBtn.disabled = true;
-            submitBtn.classList.add('loading');
-            btnLabel.textContent = 'Transmitting...';
-            msg('Encrypting payload...', 'info');
-
-            const payload = new FormData();
-            payload.append('name', name);
-            payload.append('email', email);
-            payload.append('message', message);
-            payload.append('g-recaptcha-response', captchaToken);
-
-            const controller = new AbortController();
-            const timeoutId  = setTimeout(() => controller.abort(), 10000);
-
-            try {
-                const res = await fetch(form.action, {
-                    method: 'POST',
-                    body: payload,
-                    headers: { 'Accept': 'application/json' },
-                    signal: controller.signal,
-                    referrerPolicy: 'no-referrer'
-                });
-
-                if (res.ok) {
-                    cooldownUntil = performance.now() + 30000;
-                    simulateSuccessAndReset();
-                } else {
-                    msg('Transmission failed (' + res.status + '). Retry shortly.', 'error');
-                    btnLabel.textContent = 'Transmit Securely';
-                }
-            } catch (err) {
-                if (err && err.name === 'AbortError') {
-                    msg('Transmission timed out. Verify connection and retry.', 'error');
-                } else {
-                    msg('Network error. Verify connection and retry.', 'error');
-                }
-                btnLabel.textContent = 'Transmit Securely';
-            } finally {
-                clearTimeout(timeoutId);
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('loading');
-            }
-        });
     })();
 
     /* ===========================================================
@@ -855,7 +988,7 @@
     (function () {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-        const PARTICLE_COL = 'rgba(0, 122, 47, 0.45)';
+        const PARTICLE_COL = 'rgba(0, 122, 47, 0.42)';
         const MATRIX_TRAIL = '#68a37c';
         const MATRIX_HEAD  = '#006626';
 
@@ -967,7 +1100,7 @@
                             const dx = p.x - q.x, dy = p.y - q.y;
                             const d2 = dx * dx + dy * dy;
                             if (d2 < CONN_DIST_SQ) {
-                                const alpha = Math.round((0.45 - (d2 / CONN_DIST_SQ) * 0.45) * 10) / 10;
+                                const alpha = Math.round((0.42 - (d2 / CONN_DIST_SQ) * 0.42) * 10) / 10;
                                 if (alpha <= 0) continue;
                                 if (!buckets.has(alpha)) buckets.set(alpha, []);
                                 buckets.get(alpha).push(p.x, p.y, q.x, q.y);
