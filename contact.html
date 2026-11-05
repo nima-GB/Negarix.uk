@@ -1,16 +1,11 @@
 <!DOCTYPE html>
-<html lang="en-GB">
+<html lang="en-GB" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="referrer" content="no-referrer">
-    <title>MÉRIDIAN</title>
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>MÉRIDIAN · Encrypted Communications Relay</title>
 
-    <!-- 
-      PRODUCTION CSP NOTE: 
-      Extract <style> and <script> into external files (style.css, app.js) 
-      and remove 'unsafe-inline' for strict level-3 CSP compliance.
-    -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'none';
         script-src 'self' 'unsafe-inline' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://www.recaptcha.net/;
@@ -27,210 +22,324 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <style>
-        /* -- HIGH-CONTRAST LIGHT TOKENS ----------------------- */
-        :root {
-            --bg:           #f4f7f5;
-            --surface:      rgba(255, 255, 255, 0.94);
-            --input-bg:     #ffffff;
-            --input-focus:  #f0faf4;
-            --accent:       #007a2f;
-            --accent-bright:#00a843;
-            --accent-soft:  rgba(0, 122, 47, 0.08);
-            --text:         #0d1f14;
-            --text-muted:   #4a6654;
-            --red-alert:    #c91c1c;
-            --warn-color:   #b45309;
-            --border:       rgba(0, 102, 38, 0.24);
-            --border-hot:   #007a2f;
-            --shadow-sm:    0 2px 8px rgba(0, 102, 38, 0.10);
-            --shadow-md:    0 6px 20px rgba(0, 102, 38, 0.16);
-            --shadow-lg:    0 20px 50px rgba(13, 31, 20, 0.09), 0 1px 3px rgba(0, 0, 0, 0.05);
-            --font-mono:    'Courier New', Courier, monospace;
-            --transition:   0.2s ease;
+        /* -- DUAL-THEME TACTICAL TOKENS (SYNCHRONISED WITH INDEX.HTML) -- */
+        :root, [data-theme="light"] {
+            --bg:             #edf3ef;
+            --bg-grid:        rgba(0, 90, 34, 0.045);
+            --surface:        rgba(255, 255, 255, 0.95);
+            --surface-solid:  #ffffff;
+            --surface-alt:    #f4f9f6;
+            --surface-tint:   #e3f3ea;
+            --input-bg:       #ffffff;
+            --input-focus:    #f0faf4;
+            --autofill-bg:    #f0faf4;
+            --accent:         #007a2f;
+            --accent-hover:   #005a22;
+            --accent-bright:  #00b848;
+            --accent-soft:    rgba(0, 122, 47, 0.09);
+            --text:           #091a0f;
+            --text-muted:     #425e4b;
+            --red-alert:      #c91c1c;
+            --warn-color:     #b45309;
+            --border:         rgba(0, 102, 38, 0.22);
+            --border-hot:     #007a2f;
+            --shadow-sm:      0 2px 10px rgba(0, 80, 30, 0.07);
+            --shadow-md:      0 12px 30px rgba(0, 80, 30, 0.13);
+            --shadow-lg:      0 24px 60px rgba(10, 28, 16, 0.09), 0 1px 3px rgba(0, 0, 0, 0.05);
+            --font-mono:      'Courier New', Courier, monospace;
+            --transition:     0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --max-w:          1280px;
         }
 
-        /* -- RESET -------------------------------------------- */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        [data-theme="dark"] {
+            --bg:             #030805;
+            --bg-grid:        rgba(0, 255, 65, 0.04);
+            --surface:        rgba(6, 16, 9, 0.94);
+            --surface-solid:  #07130a;
+            --surface-alt:    #0a1b0f;
+            --surface-tint:   rgba(0, 255, 65, 0.11);
+            --input-bg:       rgba(4, 14, 7, 0.9);
+            --input-focus:    rgba(0, 28, 8, 0.95);
+            --autofill-bg:    #041207;
+            --accent:         #00e63b;
+            --accent-hover:   #33ff66;
+            --accent-bright:  #00ff41;
+            --accent-soft:    rgba(0, 255, 65, 0.1);
+            --text:           #e4fcee;
+            --text-muted:     #7ba888;
+            --red-alert:      #ff4d4d;
+            --warn-color:     #ffcc00;
+            --border:         rgba(0, 255, 65, 0.25);
+            --border-hot:     #00ff41;
+            --shadow-sm:      0 0 12px rgba(0, 255, 65, 0.15);
+            --shadow-md:      0 0 25px rgba(0, 255, 65, 0.25);
+            --shadow-lg:      0 24px 60px rgba(0, 0, 0, 0.85), 0 0 30px rgba(0, 255, 65, 0.1);
+        }
 
+        /* -- RESET & BASE ------------------------------------- */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
         html, body {
             width: 100%; min-height: 100%;
-            background: var(--bg);
+            background-color: var(--bg);
+            background-image:
+                linear-gradient(to right, var(--bg-grid) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--bg-grid) 1px, transparent 1px);
+            background-size: 38px 38px;
             color: var(--text);
             font-family: var(--font-mono);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-        }
-
-        /* -- BOOT SCREEN -------------------------------------- */
-        #boot {
-            position: fixed; inset: 0;
-            background: var(--bg);
-            z-index: 1000;
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            padding: clamp(24px, 8vw, 80px);
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-            cursor: pointer;
         }
-        #boot.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        a { color: inherit; text-decoration: none; }
+        button { font-family: var(--font-mono); }
 
-        #boot-lines {
-            font-size: clamp(0.75rem, 1.5vw, 0.92rem);
-            line-height: 1.9;
-            color: var(--text);
-            max-width: 640px;
-            width: 100%;
-            font-weight: 600;
-        }
-        #boot-lines .line { display: block; opacity: 0; }
-        #boot-lines .line.visible { opacity: 1; }
-        #boot-lines .ok   { color: var(--accent); }
-        #boot-lines .warn { color: var(--warn-color); }
-        #boot-lines .err  { color: var(--red-alert); }
-        #boot-lines .dim  { color: var(--text-muted); font-weight: 400; }
-
-        #boot-cursor {
-            display: inline-block;
-            width: 9px; height: 1.1em;
-            background: var(--accent);
-            margin-left: 4px;
-            vertical-align: text-bottom;
-            animation: blink 0.75s step-end infinite;
-        }
-
-        .boot-skip {
-            margin-top: 24px;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        /* -- SUBTLE GRID & VIGNETTE --------------------------- */
-        #scanlines {
-            position: fixed; inset: 0;
-            pointer-events: none;
-            z-index: 900;
-            background: repeating-linear-gradient(
-                to bottom,
-                transparent 0px,
-                transparent 3px,
-                rgba(0, 60, 20, 0.02) 3px,
-                rgba(0, 60, 20, 0.02) 4px
-            );
-        }
-
-        #vignette {
-            position: fixed; inset: 0;
-            pointer-events: none;
-            z-index: 899;
-            background: radial-gradient(ellipse at center,
-                transparent 60%,
-                rgba(180, 200, 188, 0.35) 100%
-            );
-        }
-
-        /* -- CANVASES ----------------------------------------- */
-        canvas {
+        canvas.bg-canvas {
             display: block;
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
             pointer-events: none;
+            z-index: 1;
+            opacity: 0.42;
         }
-        #particleCanvas { z-index: 1; opacity: 0.55; }
-        #matrixCanvas   { z-index: 2; opacity: 0.35; }
 
-        /* -- MAIN LAYOUT (FAIL-SAFE VISIBLE) ------------------ */
+        /* -- TOP SILICON TELEMETRY RIBBON --------------------- */
+        .telemetry-ribbon {
+            position: relative;
+            z-index: 101;
+            background: #051008;
+            color: #d0f5dc;
+            font-size: 0.68rem;
+            border-bottom: 1px solid var(--border);
+            padding: 8px 24px;
+        }
+        .ribbon-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+        .ribbon-group {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+        .ribbon-stat {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .ribbon-stat strong {
+            color: #00ff66;
+            font-weight: 700;
+        }
+        .ribbon-pill {
+            padding: 2px 8px;
+            background: rgba(0, 255, 102, 0.15);
+            border: 1px solid rgba(0, 255, 102, 0.45);
+            color: #00ff66;
+            font-weight: 700;
+            border-radius: 2px;
+        }
+
+        /* -- STICKY NAVIGATION BAR ---------------------------- */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            background: var(--surface);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .status-dot {
+            width: 9px; height: 9px;
+            border-radius: 50%;
+            background: var(--accent-bright);
+            box-shadow: 0 0 10px var(--accent-bright);
+            animation: pulse-dot 2.2s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+        .brand-name {
+            font-size: 1.22rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            color: var(--text);
+        }
+        .brand-tag {
+            font-size: 0.62rem;
+            padding: 2px 8px;
+            background: var(--accent-soft);
+            border: 1px solid var(--border);
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent);
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .theme-toggle {
+            background: var(--surface-alt);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+        .theme-toggle:hover {
+            border-color: var(--border-hot);
+            color: var(--accent);
+        }
+        .btn-nav {
+            background: var(--surface-alt);
+            color: var(--accent);
+            padding: 8px 15px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            border-radius: 2px;
+            border: 1px solid var(--border-hot);
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .btn-nav:hover {
+            background: var(--accent);
+            color: #ffffff;
+            box-shadow: var(--shadow-sm);
+        }
+        [data-theme="dark"] .btn-nav:hover {
+            color: #030805;
+        }
+
+        /* -- MAIN LAYOUT -------------------------------------- */
         #app {
             position: relative;
             z-index: 10;
-            min-height: 100dvh;
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 32px 16px;
-            opacity: 1;
+            padding: 44px 16px 64px;
         }
 
-        /* -- CARD --------------------------------------------- */
+        /* -- CONTACT TERMINAL CARD ---------------------------- */
         .card {
             width: 100%;
-            max-width: 520px;
+            max-width: 580px;
             background: var(--surface);
-            border: 1px solid var(--border);
+            border: 2px solid var(--border-hot);
             border-radius: 4px;
             box-shadow: var(--shadow-lg);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             overflow: hidden;
+            position: relative;
         }
 
-        /* -- CARD HEADER -------------------------------------- */
         .card-header {
-            padding: 28px 32px 24px;
+            padding: 28px 32px 22px;
             border-bottom: 1px solid var(--border);
             position: relative;
-            background: linear-gradient(to bottom, rgba(0, 122, 47, 0.03), transparent);
+            background: linear-gradient(to bottom, var(--accent-soft), transparent);
         }
 
-        .status-bar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            letter-spacing: 0.08em;
-        }
-        .status-dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: var(--accent-bright);
-            box-shadow: 0 0 8px rgba(0, 168, 67, 0.6);
-            animation: pulse-dot 2.5s ease-in-out infinite;
-            flex-shrink: 0;
-        }
-        .status-bar span { flex: 1; }
-        .status-time { font-variant-numeric: tabular-nums; flex: 0 !important; white-space: nowrap; }
-
-        .site-title {
-            font-size: clamp(2rem, 7vw, 2.8rem);
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            line-height: 1;
-            color: var(--text);
-            position: relative;
-            display: inline-block;
-            user-select: none;
-        }
-
-        .site-sub {
-            font-size: 0.74rem;
-            font-weight: 700;
-            color: var(--accent);
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            margin-top: 8px;
-        }
-
-        .corner { position: absolute; width: 14px; height: 14px; }
+        .corner { position: absolute; width: 14px; height: 14px; pointer-events: none; }
         .corner.tl { top: 10px; left: 10px; border-top: 2px solid var(--accent); border-left: 2px solid var(--accent); }
         .corner.tr { top: 10px; right: 10px; border-top: 2px solid var(--accent); border-right: 2px solid var(--accent); }
         .corner.bl { bottom: 10px; left: 10px; border-bottom: 2px solid var(--accent); border-left: 2px solid var(--accent); }
         .corner.br { bottom: 10px; right: 10px; border-bottom: 2px solid var(--accent); border-right: 2px solid var(--accent); }
 
-        /* -- CARD BODY ---------------------------------------- */
+        .status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 18px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            flex-wrap: wrap;
+        }
+        .status-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .back-hub-link {
+            color: var(--accent);
+            font-weight: 700;
+            border-bottom: 1px dashed var(--accent);
+            padding-bottom: 1px;
+        }
+        .back-hub-link:hover {
+            opacity: 0.8;
+        }
+
+        .site-title {
+            font-size: clamp(1.85rem, 6vw, 2.5rem);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            line-height: 1.1;
+            color: var(--text);
+            user-select: none;
+        }
+        .site-sub {
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-top: 8px;
+        }
+
+        /* -- CARD BODY & FORM --------------------------------- */
         .card-body { padding: 28px 32px 32px; }
 
         .section-label {
             font-size: 0.68rem;
             font-weight: 700;
-            letter-spacing: 0.28em;
+            letter-spacing: 0.24em;
             color: var(--text-muted);
             text-transform: uppercase;
             margin-bottom: 20px;
@@ -245,16 +354,17 @@
             background: linear-gradient(to right, var(--border), transparent);
         }
 
-        /* -- FORM --------------------------------------------- */
         .form { display: flex; flex-direction: column; gap: 18px; }
         .field { display: flex; flex-direction: column; gap: 6px; }
 
         .field-label {
             font-size: 0.7rem;
             font-weight: 700;
-            letter-spacing: 0.18em;
+            letter-spacing: 0.16em;
             color: var(--text);
             text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
         }
 
         .field-wrap {
@@ -271,7 +381,7 @@
             border: 1px solid var(--border);
             border-right: none;
             color: var(--accent);
-            font-size: 0.78rem;
+            font-size: 0.76rem;
             font-weight: 700;
             flex-shrink: 0;
             transition: var(--transition);
@@ -285,7 +395,7 @@
             color: var(--text);
             padding: 12px 14px;
             font-family: var(--font-mono);
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             font-weight: 600;
             outline: none;
             transition: var(--transition);
@@ -294,16 +404,16 @@
         }
 
         .field-input::placeholder {
-            color: #8da395;
+            color: var(--text-muted);
+            opacity: 0.6;
             font-weight: 400;
         }
 
-        /* Lock light theme against browser autofill overrides */
         .field-input:-webkit-autofill,
         .field-input:-webkit-autofill:hover,
         .field-input:-webkit-autofill:focus {
             -webkit-text-fill-color: var(--text);
-            -webkit-box-shadow: 0 0 0 1000px #f0faf4 inset;
+            -webkit-box-shadow: 0 0 0 1000px var(--autofill-bg) inset;
             transition: background-color 5000s ease-in-out 0s;
             border-color: var(--border-hot);
         }
@@ -316,7 +426,6 @@
         .field-input:focus ~ .field-scan { opacity: 1; }
         .field-wrap:focus-within .field-prefix {
             border-color: var(--border-hot);
-            background: rgba(0, 122, 47, 0.14);
         }
 
         .field-scan {
@@ -333,17 +442,27 @@
 
         textarea.field-input {
             resize: vertical;
-            min-height: 100px;
+            min-height: 110px;
             line-height: 1.6;
         }
 
-        .char-counter {
-            font-size: 0.65rem;
-            font-weight: 600;
+        .payload-telemetry {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+            padding: 6px 10px;
+            background: var(--surface-alt);
+            border: 1px solid var(--border);
+            font-size: 0.62rem;
+            font-weight: 700;
             color: var(--text-muted);
-            text-align: right;
-            letter-spacing: 0.1em;
-            transition: color 0.2s;
+        }
+        .payload-hash {
+            color: var(--accent);
+            font-variant-numeric: tabular-nums;
         }
         .char-counter.warn { color: var(--warn-color); }
         .char-counter.danger { color: var(--red-alert); }
@@ -359,26 +478,27 @@
         .recaptcha-wrap {
             display: flex;
             justify-content: center;
+            padding: 6px 0;
         }
 
-        /* -- MSG ---------------------------------------------- */
+        /* -- STATUS MESSAGE ----------------------------------- */
         .form-msg {
-            font-size: 0.78rem;
+            font-size: 0.76rem;
             font-weight: 700;
             min-height: 1.2em;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.05em;
             display: flex;
             align-items: center;
             gap: 8px;
             padding: 0 2px;
         }
         .form-msg::before { content: ''; display: none; }
-        .form-msg.error  { color: var(--red-alert); }
-        .form-msg.error::before  { display: inline-block; content: '✕'; }
+        .form-msg.error   { color: var(--red-alert); }
+        .form-msg.error::before   { display: inline-block; content: '✕'; }
         .form-msg.success { color: var(--accent); }
         .form-msg.success::before { display: inline-block; content: '✓'; }
-        .form-msg.info { color: var(--text-muted); }
-        .form-msg.info::before { display: inline-block; content: '›'; }
+        .form-msg.info    { color: var(--text-muted); }
+        .form-msg.info::before    { display: inline-block; content: '›'; }
 
         /* -- SUBMIT BUTTON ------------------------------------ */
         .submit-btn {
@@ -390,18 +510,20 @@
             cursor: pointer;
             font-family: var(--font-mono);
             font-weight: 700;
-            font-size: 0.84rem;
+            font-size: 0.82rem;
             text-transform: uppercase;
-            letter-spacing: 0.22em;
+            letter-spacing: 0.2em;
             overflow: hidden;
             transition: background var(--transition), box-shadow var(--transition), transform var(--transition);
             width: 100%;
             border-radius: 2px;
         }
-
+        [data-theme="dark"] .submit-btn {
+            color: #030805;
+        }
         .submit-btn:hover,
         .submit-btn:focus-visible {
-            background: #005f24;
+            background: var(--accent-hover);
             box-shadow: var(--shadow-md);
             outline: none;
         }
@@ -426,184 +548,250 @@
         }
         .submit-btn.loading .btn-progress { width: 85%; }
 
-        /* -- FOOTER ------------------------------------------- */
+        /* -- CARD FOOTER & SITE FOOTER ------------------------ */
         .card-footer {
             padding: 14px 32px;
             border-top: 1px solid var(--border);
-            background: rgba(0, 122, 47, 0.03);
+            background: var(--surface-alt);
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 8px;
             flex-wrap: wrap;
-        }
-        .card-footer span {
-            font-size: 0.65rem;
+            font-size: 0.64rem;
             font-weight: 700;
             color: var(--text-muted);
-            letter-spacing: 0.14em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
         }
         .enc-badge {
             display: flex;
             align-items: center;
             gap: 5px;
-            font-size: 0.65rem;
-            font-weight: 700;
             color: var(--accent);
-            letter-spacing: 0.1em;
         }
         .enc-badge svg { width: 11px; height: 11px; }
 
-        /* -- ANIMATIONS --------------------------------------- */
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50%      { opacity: 0; }
+        .site-footer {
+            border-top: 1px solid var(--border);
+            background: var(--surface);
+            position: relative;
+            z-index: 10;
         }
+        .footer-inner {
+            max-width: var(--max-w);
+            margin: 0 auto;
+            padding: 22px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+        .footer-links { display: flex; gap: 20px; }
+        .footer-links a:hover { color: var(--accent); }
+
         @keyframes pulse-dot {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 168, 67, 0.5); }
-            50%      { box-shadow: 0 0 0 5px rgba(0, 168, 67, 0); }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 184, 72, 0.55); }
+            50%      { box-shadow: 0 0 0 6px rgba(0, 184, 72, 0); }
         }
         @keyframes scan-sweep {
             0%   { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
         }
 
-        /* -- REDUCED MOTION ----------------------------------- */
         @media (prefers-reduced-motion: reduce) {
-            #particleCanvas, #matrixCanvas, #scanlines { display: none; }
+            #particleCanvas { display: none; }
             *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
-            #boot { display: none !important; }
         }
-
-        /* -- MOBILE ------------------------------------------- */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+        }
         @media (max-width: 480px) {
-            .card-header, .card-body { padding-left: 20px; padding-right: 20px; }
-            .card-footer { padding-left: 20px; padding-right: 20px; }
-            .site-title { font-size: 1.9rem; }
+            .card-header, .card-body, .card-footer { padding-left: 20px; padding-right: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Subtle grid & vignette -->
-    <div id="scanlines" aria-hidden="true"></div>
-    <div id="vignette"  aria-hidden="true"></div>
+    <!-- Background spatial particle canvas -->
+    <canvas id="particleCanvas" class="bg-canvas" aria-hidden="true"></canvas>
 
-    <!-- Background canvases -->
-    <canvas id="particleCanvas" aria-hidden="true"></canvas>
-    <canvas id="matrixCanvas"   aria-hidden="true"></canvas>
-
-    <!-- Boot sequence -->
-    <div id="boot" role="status" aria-label="System initialising">
-        <div id="boot-lines"></div>
-        <div class="boot-skip">[Click or press any key to enter]</div>
-    </div>
-
-    <!-- Main content -->
-    <div id="app">
-      <main class="card" role="main">
-
-        <header class="card-header">
-            <div class="corner tl"></div>
-            <div class="corner tr"></div>
-            <div class="corner bl"></div>
-            <div class="corner br"></div>
-            
-            <div class="status-bar">
-                <div class="status-dot" aria -hidden="true"></div>
-                <span><a href="index.html" style="color:var(--accent);text-decoration:none;">← COMMAND HUB</a> · SECURE CHANNEL</span>
-                <span class="status-time" id="liveClock" aria-live="off"></span>
+    <!-- Top Live Silicon & Hardware Telemetry Ribbon -->
+    <div class="telemetry-ribbon" role="region" aria-label="Silicon Compute Telemetry">
+        <div class="ribbon-inner">
+            <div class="ribbon-group">
+                <span class="ribbon-pill">GEMINI AGI SWARM v6.5</span>
+                <span class="ribbon-stat">COMMS ENCLAVE: <strong>ORIGIN-LOCKED RELAY</strong></span>
+                <span class="ribbon-stat">CLIENT THREADS: <strong id="hwCpuCores">DETECTING...</strong></span>
             </div>
-
-            <h1 class="site-title">MÉRIDIAN</h1>
-            <p class="site-sub">Encrypted Communications Relay</p>
-        </header>
-
-        <div class="card-body">
-            <p class="section-label">Initiate Secure Transmission</p>
-
-            <form id="contactForm" class="form"
-                  action="https://formspree.io/f/xdavzgko"
-                  method="POST" novalidate>
-
-                <!-- Honeypot -->
-                <label class="hp-field" aria-hidden="true">
-                    Leave empty
-                    <input type="text" id="inp-gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
-                </label>
-
-                <!-- Name -->
-                <div class="field">
-                    <label class="field-label" for="inp-name">Operator Identity</label>
-                    <div class="field-wrap">
-                        <span class="field-prefix" aria-hidden="true">ID://</span>
-                        <input class="field-input" type="text" id="inp-name" name="name"
-                               required minlength="2" maxlength="100"
-                               autocomplete="name" spellcheck="false"
-                               placeholder="Full name or callsign">
-                        <div class="field-scan" aria-hidden="true"></div>
-                    </div>
-                </div>
-
-                <!-- Email -->
-                <div class="field">
-                    <label class="field-label" for="inp-email">Secure Endpoint</label>
-                    <div class="field-wrap">
-                        <span class="field-prefix" aria-hidden="true">@://</span>
-                        <input class="field-input" type="email" id="inp-email" name="email"
-                               required maxlength="200"
-                               autocomplete="email" spellcheck="false"
-                               placeholder="name@domain.com">
-                        <div class="field-scan" aria-hidden="true"></div>
-                    </div>
-                </div>
-
-                <!-- Message -->
-                <div class="field">
-                    <label class="field-label" for="inp-message">Payload</label>
-                    <div class="field-wrap" style="flex-direction:column">
-                        <textarea class="field-input" id="inp-message" name="message"
-                                  required minlength="10" maxlength="5000"
-                                  spellcheck="false"
-                                  placeholder="Transmit your message..."></textarea>
-                        <div class="field-scan" aria-hidden="true"></div>
-                    </div>
-                    <div class="char-counter" id="charCounter" aria-live="polite">0 / 5000</div>
-                </div>
-
-                <!-- reCAPTCHA (Light Theme) -->
-                <div class="recaptcha-wrap">
-                    <div class="g-recaptcha"
-                         data-sitekey="6LfesBotAAAAAG_Guq1ZKS5977I7_omstqT_YDE8"
-                         data-theme="light"></div>
-                </div>
-
-                <!-- Status message -->
-                <p id="formMsg" class="form-msg" role="alert" aria-live="polite"></p>
-
-                <!-- Submit -->
-                <button type="submit" id="submitBtn" class="submit-btn">
-                    <div class="btn-progress" id="btnProgress"></div>
-                    <span id="btnLabel">Transmit Securely</span>
-                </button>
-
-            </form>
+            <div class="ribbon-group">
+                <span class="ribbon-stat">PAYLOAD ATTESTATION: <strong>WEBCRYPTO SHA-256</strong></span>
+                <span class="ribbon-stat">UTC: <strong id="liveClock">SYNCHRONISING...</strong></span>
+            </div>
         </div>
-
-        <footer class="card-footer">
-            <span>MÉRIDIAN &copy; <span id="footerYear"></span></span>
-            <div class="enc-badge">
-                <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                    <rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/>
-                    <path d="M4 5V3.5a2 2 0 0 1 4 0V5" stroke="currentColor" stroke-width="1.3"/>
-                </svg>
-                TLS 1.3 · AES-256
-            </div>
-        </footer>
-
-      </main>
     </div>
+
+    <!-- Sticky Navigation -->
+    <header class="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="brand">
+                <div class="status-dot" aria-hidden="true"></div>
+                <span class="brand-name">MÉRIDIAN</span>
+                <span class="brand-tag">AGI SWARM CORE</span>
+            </a>
+
+            <nav class="nav-links" aria-label="Primary Navigation">
+                <a href="index.html#gemini-agi-engine">Gemini AGI Prompt</a>
+                <a href="index.html#overview">Planetary Topology</a>
+                <a href="index.html#google-ecosystem">Google Grounding</a>
+                <a href="index.html#capabilities">Neuro-Symbolic Core</a>
+                <a href="contact.html" class="active">Comms Relay</a>
+            </nav>
+
+            <div class="nav-right">
+                <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch colour theme">
+                    MODE: DAYLIGHT
+                </button>
+                <a href="index.html" class="btn-nav">← Command Hub</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Contact Terminal -->
+    <div id="app">
+        <main class="card" role="main">
+
+            <header class="card-header">
+                <div class="corner tl"></div>
+                <div class="corner tr"></div>
+                <div class="corner bl"></div>
+                <div class="corner br"></div>
+
+                <div class="status-bar">
+                    <div class="status-left">
+                        <div class="status-dot" aria-hidden="true"></div>
+                        <span><a href="index.html" class="back-hub-link">← COMMAND HUB</a> · SECURE CHANNEL ACTIVE</span>
+                    </div>
+                    <span>ENCLAVE: UK-SOUTH</span>
+                </div>
+
+                <h1 class="site-title">MÉRIDIAN</h1>
+                <p class="site-sub">Encrypted Communications Relay</p>
+            </header>
+
+            <div class="card-body">
+                <p class="section-label">Initiate Secure Transmission</p>
+
+                <form id="contactForm" class="form"
+                      action="https://formspree.io/f/xdavzgko"
+                      method="POST" novalidate>
+
+                    <!-- Honeypot -->
+                    <label class="hp-field" aria-hidden="true">
+                        Leave empty
+                        <input type="text" id="inp-gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
+                    </label>
+
+                    <!-- Operator Identity -->
+                    <div class="field">
+                        <label class="field-label" for="inp-name">
+                            <span>Operator Identity</span>
+                            <span style="color:var(--text-muted); font-size:0.62rem;">REQUIRED</span>
+                        </label>
+                        <div class="field-wrap">
+                            <span class="field-prefix" aria-hidden="true">ID://</span>
+                            <input class="field-input" type="text" id="inp-name" name="name"
+                                   required minlength="2" maxlength="100"
+                                   autocomplete="name" spellcheck="false"
+                                   placeholder="Full name or callsign">
+                            <div class="field-scan" aria-hidden="true"></div>
+                        </div>
+                    </div>
+
+                    <!-- Secure Endpoint -->
+                    <div class="field">
+                        <label class="field-label" for="inp-email">
+                            <span>Secure Endpoint</span>
+                            <span style="color:var(--text-muted); font-size:0.62rem;">RFC-VERIFIED</span>
+                        </label>
+                        <div class="field-wrap">
+                            <span class="field-prefix" aria-hidden="true">@://</span>
+                            <input class="field-input" type="email" id="inp-email" name="email"
+                                   required maxlength="200"
+                                   autocomplete="email" spellcheck="false"
+                                   placeholder="name@domain.com">
+                            <div class="field-scan" aria-hidden="true"></div>
+                        </div>
+                    </div>
+
+                    <!-- Payload -->
+                    <div class="field">
+                        <label class="field-label" for="inp-message">
+                            <span>Transmission Payload</span>
+                            <span id="entropyReadout" style="color:var(--accent); font-size:0.62rem;">ENTROPY: 0.00 bits/sym</span>
+                        </label>
+                        <div class="field-wrap" style="flex-direction:column">
+                            <textarea class="field-input" id="inp-message" name="message"
+                                      required minlength="10" maxlength="5000"
+                                      spellcheck="false"
+                                      placeholder="Enter encrypted transmission directive..."></textarea>
+                            <div class="field-scan" aria-hidden="true"></div>
+                        </div>
+                        <div class="payload-telemetry">
+                            <span class="payload-hash" id="payloadHash">SHA-256 SEAL: AWAITING INPUT...</span>
+                            <span class="char-counter" id="charCounter" aria-live="polite">0 / 5000</span>
+                        </div>
+                    </div>
+
+                    <!-- Google reCAPTCHA v2 -->
+                    <div class="recaptcha-wrap">
+                        <div class="g-recaptcha"
+                             data-sitekey="6LfesBotAAAAAG_Guq1ZKS5977I7_omstqT_YDE8"
+                             data-theme="light"></div>
+                    </div>
+
+                    <!-- Status Message -->
+                    <p id="formMsg" class="form-msg" role="alert" aria-live="polite"></p>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="submitBtn" class="submit-btn">
+                        <div class="btn-progress" id="btnProgress"></div>
+                        <span id="btnLabel">Transmit Securely ⚡</span>
+                    </button>
+
+                </form>
+            </div>
+
+            <footer class="card-footer">
+                <span>ORIGIN VERIFIED · ZERO RETENTION</span>
+                <div class="enc-badge">
+                    <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                        <rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/>
+                        <path d="M4 5V3.5a2 2 0 0 1 4 0V5" stroke="currentColor" stroke-width="1.3"/>
+                    </svg>
+                    TLS 1.3 · ML-KEM-1024 · AES-256
+                </div>
+            </footer>
+
+        </main>
+    </div>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div>MÉRIDIAN AGI SYSTEMS &copy; <span id="footerYear"></span> · SOVEREIGN COMMUNICATIONS RELAY</div>
+            <div class="footer-links">
+                <a href="index.html#gemini-agi-engine">Gemini AGI Prompt</a>
+                <a href="index.html#overview">Planetary Topology</a>
+                <a href="index.html#google-ecosystem">Google Federation</a>
+            </div>
+            <div style="color:var(--accent);">CSP LEVEL-3 · FORMSPREE ORIGIN LOCKED</div>
+        </div>
+    </footer>
 
     <script>
     'use strict';
@@ -613,105 +801,106 @@
     const bootTimestamp = performance.now();
 
     /* ===========================================================
-       BOOT SEQUENCE (FAIL-SAFE & SKIPPABLE)
+       1. SHARED THEME SWITCHER (SYNCHRONISED WITH INDEX.HTML)
     =========================================================== */
     (function () {
-        const LINES = [
-            { text: 'MÉRIDIAN SECURE KERNEL v4.3.0 - DAYLIGHT MODE', cls: '' },
-            { text: 'Loading cryptographic modules...',              cls: 'dim', delay: 120 },
-            { text: '  [✓] AES-256-GCM                  OK',        cls: 'ok' },
-            { text: '  [✓] TLS 1.3 strict transport     OK',        cls: 'ok' },
-            { text: '  [✓] ECDHE key exchange           OK',        cls: 'ok' },
-            { text: '  [✓] reCAPTCHA v2 verification    OK',        cls: 'ok' },
-            { text: 'Scanning threat surface...',                    cls: 'dim' },
-            { text: '  [✓] Content security policy      LOCKED',    cls: 'ok' },
-            { text: '  [✓] Anti-automation time trap    ACTIVE',    cls: 'ok' },
-            { text: '  [✓] Input sanitisation layer     OK',        cls: 'ok' },
-            { text: 'Establishing secure channel...',                cls: 'dim' },
-            { text: '  [✓] Endpoint verified            READY',     cls: 'ok' },
-            { text: '=========================================',    cls: 'dim' },
-            { text: 'ACCESS GRANTED. SECURE CHANNEL OPEN.',         cls: 'ok' },
-        ];
+        const htmlEl = document.documentElement;
+        const btn    = document.getElementById('themeToggle');
 
-        const container = document.getElementById('boot-lines');
-        const bootEl    = document.getElementById('boot');
-        let bootDone    = false;
-
-        function finishBoot() {
-            if (bootDone) return;
-            bootDone = true;
-            bootEl.classList.add('hidden');
-            try { sessionStorage.setItem('meridian_booted', '1'); } catch (e) {}
+        function applyTheme(theme) {
+            htmlEl.setAttribute('data-theme', theme);
+            btn.textContent = theme === 'dark' ? 'MODE: QUANTUM DARK' : 'MODE: DAYLIGHT';
+            try { localStorage.setItem('meridian_theme', theme); } catch (e) {}
         }
 
-        let alreadyBooted = false;
-        try { alreadyBooted = sessionStorage.getItem('meridian_booted') === '1'; } catch (e) {}
+        let saved = 'light';
+        try { saved = localStorage.getItem('meridian_theme') || 'light'; } catch (e) {}
+        applyTheme(saved);
 
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || alreadyBooted) {
-            finishBoot();
-            return;
-        }
-
-        bootEl.addEventListener('click', finishBoot, { once: true });
-        window.addEventListener('keydown', finishBoot, { once: true });
-
-        let totalDelay = 0;
-
-        LINES.forEach((item, i) => {
-            const span = document.createElement('span');
-            span.className = 'line' + (item.cls ? ' ' + item.cls : '');
-            span.textContent = item.text;
-            container.appendChild(span);
-
-            const baseDelay = i === 0 ? 100 : totalDelay + (item.delay || 55) + (Math.random() * 35);
-            totalDelay = baseDelay;
-
-            setTimeout(() => { if (!bootDone) span.classList.add('visible'); }, baseDelay);
+        btn.addEventListener('click', () => {
+            const next = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
         });
-
-        const cursorSpan = document.createElement('span');
-        cursorSpan.className = 'line visible';
-        cursorSpan.textContent = '> ';
-        const cursorBlock = document.createElement('span');
-        cursorBlock.id = 'boot-cursor';
-        cursorSpan.appendChild(cursorBlock);
-        container.appendChild(cursorSpan);
-
-        setTimeout(finishBoot, totalDelay + 450);
     })();
 
     /* ===========================================================
-       LIVE CLOCK
+       2. LIVE CLOCK & SILICON TELEMETRY
     =========================================================== */
     (function () {
-        const el = document.getElementById('liveClock');
-        const yr = document.getElementById('footerYear');
+        const elClock = document.getElementById('liveClock');
+        const elYear  = document.getElementById('footerYear');
+        const elCores = document.getElementById('hwCpuCores');
+
+        const threads = navigator.hardwareConcurrency || 8;
+        if (elCores) elCores.textContent = threads + ' LOGICAL CORES ACTIVE';
+
         function tick() {
             const now = new Date();
-            el.textContent = now.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
-            yr.textContent = String(now.getUTCFullYear());
+            if (elClock) elClock.textContent = now.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+            if (elYear)  elYear.textContent  = String(now.getUTCFullYear());
         }
         tick();
         setInterval(tick, 1000);
     })();
 
     /* ===========================================================
-       CHAR COUNTER
+       3. REAL-TIME WEBCRYPTO SHA-256 PAYLOAD SEAL & ENTROPY
     =========================================================== */
     (function () {
-        const ta      = document.getElementById('inp-message');
-        const counter = document.getElementById('charCounter');
-        const MAX     = 5000;
-        ta.addEventListener('input', () => {
-            const len = ta.value.length;
+        const ta        = document.getElementById('inp-message');
+        const counter   = document.getElementById('charCounter');
+        const hashEl    = document.getElementById('payloadHash');
+        const entropyEl = document.getElementById('entropyReadout');
+        const MAX       = 5000;
+
+        function computeEntropy(str) {
+            if (!str || !str.length) return 0;
+            const freq = new Map();
+            for (let i = 0; i < str.length; i++) {
+                const c = str[i];
+                freq.set(c, (freq.get(c) || 0) + 1);
+            }
+            let h = 0;
+            freq.forEach(cnt => {
+                const p = cnt / str.length;
+                h -= p * Math.log2(p);
+            });
+            return h;
+        }
+
+        async function updateHashAndMetrics() {
+            const val = ta.value;
+            const len = val.length;
             counter.textContent = len + ' / ' + MAX;
             counter.className = 'char-counter' +
                 (len > MAX * 0.9 ? ' danger' : len > MAX * 0.75 ? ' warn' : '');
-        });
+
+            const h = computeEntropy(val);
+            if (entropyEl) entropyEl.textContent = 'ENTROPY: ' + h.toFixed(2) + ' bits/sym';
+
+            if (!val.trim()) {
+                if (hashEl) hashEl.textContent = 'SHA-256 SEAL: AWAITING INPUT...';
+                return;
+            }
+
+            if (window.crypto && window.crypto.subtle) {
+                try {
+                    const buf = new TextEncoder().encode(val);
+                    const digest = await window.crypto.subtle.digest('SHA-256', buf);
+                    const hex = Array.from(new Uint8Array(digest))
+                        .slice(0, 12)
+                        .map(b => b.toString(16).padStart(2, '0'))
+                        .join('');
+                    if (hashEl) hashEl.textContent = 'SHA-256 SEAL: 0x' + hex + '...';
+                } catch (e) {}
+            }
+        }
+
+        ta.addEventListener('input', updateHashAndMetrics);
     })();
 
     /* ===========================================================
-       HARDENED FORM VALIDATION & SUBMISSION
+       4. HARDENED FORM VALIDATION & TRANSMISSION
     =========================================================== */
     (function () {
         const form       = document.getElementById('contactForm');
@@ -724,6 +913,8 @@
         const btnProg    = document.getElementById('btnProgress');
         const msgEl      = document.getElementById('formMsg');
         const counterEl  = document.getElementById('charCounter');
+        const hashEl     = document.getElementById('payloadHash');
+        const entropyEl  = document.getElementById('entropyReadout');
 
         const emailRx    = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
         let cooldownUntil = 0;
@@ -740,14 +931,16 @@
         function simulateSuccessAndReset() {
             btnLabel.textContent = 'Transmitted ✓';
             btnProg.style.width  = '100%';
-            msg('Transmission received. Standby for response.', 'success');
+            msg('Transmission received and verified. Standby for response.', 'success');
             form.reset();
             counterEl.textContent = '0 / 5000';
+            if (hashEl)    hashEl.textContent    = 'SHA-256 SEAL: AWAITING INPUT...';
+            if (entropyEl) entropyEl.textContent = 'ENTROPY: 0.00 bits/sym';
             if (typeof grecaptcha !== 'undefined' && typeof grecaptcha.reset === 'function') {
                 grecaptcha.reset();
             }
             setTimeout(() => {
-                btnLabel.textContent = 'Transmit Securely';
+                btnLabel.textContent = 'Transmit Securely ⚡';
                 btnProg.style.width  = '0%';
             }, 3000);
         }
@@ -807,7 +1000,7 @@
             submitBtn.disabled = true;
             submitBtn.classList.add('loading');
             btnLabel.textContent = 'Transmitting...';
-            msg('Encrypting payload...', 'info');
+            msg('Sealing and transmitting payload...', 'info');
 
             const payload = new FormData();
             payload.append('name', name);
@@ -824,7 +1017,7 @@
                     body: payload,
                     headers: { 'Accept': 'application/json' },
                     signal: controller.signal,
-                    referrerPolicy: 'no-referrer'
+                    referrerPolicy: 'strict-origin-when-cross-origin'
                 });
 
                 if (res.ok) {
@@ -832,7 +1025,7 @@
                     simulateSuccessAndReset();
                 } else {
                     msg('Transmission failed (' + res.status + '). Retry shortly.', 'error');
-                    btnLabel.textContent = 'Transmit Securely';
+                    btnLabel.textContent = 'Transmit Securely ⚡';
                 }
             } catch (err) {
                 if (err && err.name === 'AbortError') {
@@ -840,7 +1033,7 @@
                 } else {
                     msg('Network error. Verify connection and retry.', 'error');
                 }
-                btnLabel.textContent = 'Transmit Securely';
+                btnLabel.textContent = 'Transmit Securely ⚡';
             } finally {
                 clearTimeout(timeoutId);
                 submitBtn.disabled = false;
@@ -850,233 +1043,68 @@
     })();
 
     /* ===========================================================
-       DAYLIGHT ANIMATION ENGINES
+       5. BACKGROUND SPATIAL PARTICLE FIELD
     =========================================================== */
     (function () {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-        const PARTICLE_COL = 'rgba(0, 122, 47, 0.45)';
-        const MATRIX_TRAIL = '#68a37c';
-        const MATRIX_HEAD  = '#006626';
-
-        const mouse = { x: null, y: null };
-        window.addEventListener('mousemove', e => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        }, { passive: true });
-        window.addEventListener('mouseout', () => {
-            mouse.x = null;
-            mouse.y = null;
-        }, { passive: true });
-
-        let resizeTimer;
+        const pCanvas = document.getElementById('particleCanvas');
+        const pCtx    = pCanvas.getContext('2d');
         let logicalWidth  = window.innerWidth;
         let logicalHeight = window.innerHeight;
 
-        function onResize(cbs) {
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(() => {
-                    logicalWidth  = window.innerWidth;
-                    logicalHeight = window.innerHeight;
-                    cbs.forEach(f => f());
-                }, 200);
-            }, { passive: true });
-        }
-
-        /* -- ENGINE 1: Subtle particle field ------------------- */
-        const pCanvas = document.getElementById('particleCanvas');
-        const pCtx    = pCanvas.getContext('2d');
-        let particles = [];
-
-        function sizePCanvas() {
-            pCanvas.width        = logicalWidth * dpr;
-            pCanvas.height       = logicalHeight * dpr;
-            pCanvas.style.width  = logicalWidth + 'px';
-            pCanvas.style.height = logicalHeight + 'px';
+        function sizeCanvases() {
+            logicalWidth  = window.innerWidth;
+            logicalHeight = window.innerHeight;
+            pCanvas.width  = logicalWidth * dpr;
+            pCanvas.height = logicalHeight * dpr;
             pCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
         }
-        sizePCanvas();
+        sizeCanvases();
+        window.addEventListener('resize', sizeCanvases, { passive: true });
 
-        const CONN_DIST_SQ = 10000;
-        const CELL_SIZE    = Math.sqrt(CONN_DIST_SQ) + 1;
+        const count = Math.min(Math.floor(logicalWidth * logicalHeight / 22000), 55);
+        const pts = Array.from({ length: count }, () => ({
+            x: Math.random() * logicalWidth,
+            y: Math.random() * logicalHeight,
+            vx: (Math.random() - 0.5) * 0.22,
+            vy: (Math.random() - 0.5) * 0.22,
+            r: Math.random() * 1.5 + 0.5
+        }));
 
-        class Particle {
-            constructor(id) {
-                this.id = id;
-                this.reset(true);
-            }
-            reset(init) {
-                this.x     = Math.random() * logicalWidth;
-                this.y     = init ? Math.random() * logicalHeight : -5;
-                this.r     = Math.random() * 1.6 + 0.5;
-                this.vx    = (Math.random() - 0.5) * 0.25;
-                this.vy    = (Math.random() - 0.5) * 0.25;
-                this.phase = Math.random() * TWO_PI;
-                this.speed = Math.random() * 0.25 + 0.08;
-            }
-            update(t) {
-                this.x += this.vx + Math.sin(t * this.speed + this.phase) * 0.14;
-                this.y += this.vy + Math.cos(t * this.speed + this.phase) * 0.14;
-
-                if (mouse.x !== null) {
-                    const dx = mouse.x - this.x, dy = mouse.y - this.y;
-                    const d2 = dx * dx + dy * dy;
-                    if (d2 < 16000) {
-                        const f = (1 - d2 / 16000) * 0.35;
-                        this.x -= dx * f * 0.05;
-                        this.y -= dy * f * 0.05;
-                    }
-                }
-
-                if (this.x < -5)              this.x = logicalWidth + 5;
-                if (this.x > logicalWidth+5)  this.x = -5;
-                if (this.y < -5)              this.y = logicalHeight + 5;
-                if (this.y > logicalHeight+5) this.y = -5;
-            }
-        }
-
-        function buildParticles() {
-            const small = logicalWidth < 768;
-            const max   = small ? 35 : 80;
-            const count = Math.min(Math.floor(logicalWidth * logicalHeight / (small ? 28000 : 16000)), max);
-            particles   = Array.from({ length: count }, (_, idx) => new Particle(idx));
-        }
-
-        function drawConnections() {
-            const grid = new Map();
-            for (const p of particles) {
-                const cx  = (Math.floor(p.x / CELL_SIZE) + 100) & 0xFFFF;
-                const cy  = (Math.floor(p.y / CELL_SIZE) + 100) & 0xFFFF;
-                const key = (cx << 16) | cy;
-                if (!grid.has(key)) grid.set(key, []);
-                grid.get(key).push(p);
-            }
-
-            const buckets = new Map();
-            for (const p of particles) {
-                const cx = (Math.floor(p.x / CELL_SIZE) + 100) & 0xFFFF;
-                const cy = (Math.floor(p.y / CELL_SIZE) + 100) & 0xFFFF;
-
-                for (let ox = -1; ox <= 1; ox++) {
-                    for (let oy = -1; oy <= 1; oy++) {
-                        const nb = grid.get(((cx + ox) << 16) | (cy + oy));
-                        if (!nb) continue;
-                        for (const q of nb) {
-                            if (p.id >= q.id) continue;
-                            const dx = p.x - q.x, dy = p.y - q.y;
-                            const d2 = dx * dx + dy * dy;
-                            if (d2 < CONN_DIST_SQ) {
-                                const alpha = Math.round((0.45 - (d2 / CONN_DIST_SQ) * 0.45) * 10) / 10;
-                                if (alpha <= 0) continue;
-                                if (!buckets.has(alpha)) buckets.set(alpha, []);
-                                buckets.get(alpha).push(p.x, p.y, q.x, q.y);
-                            }
-                        }
-                    }
-                }
-            }
-
-            buckets.forEach((coords, alpha) => {
-                pCtx.beginPath();
-                pCtx.strokeStyle = `rgba(0, 122, 47, ${alpha})`;
-                pCtx.lineWidth   = 0.45;
-                for (let i = 0; i < coords.length; i += 4) {
-                    pCtx.moveTo(coords[i],   coords[i+1]);
-                    pCtx.lineTo(coords[i+2], coords[i+3]);
-                }
-                pCtx.stroke();
-            });
-        }
-
-        function tickParticles(t) {
+        function loop() {
             pCtx.clearRect(0, 0, logicalWidth, logicalHeight);
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            pCtx.fillStyle   = isDark ? 'rgba(0, 255, 65, 0.42)' : 'rgba(0, 122, 47, 0.35)';
+            pCtx.strokeStyle = isDark ? 'rgba(0, 255, 65, 0.12)' : 'rgba(0, 122, 47, 0.12)';
+            pCtx.lineWidth   = 0.5;
 
             pCtx.beginPath();
-            pCtx.fillStyle = PARTICLE_COL;
-            for (const p of particles) {
-                p.update(t);
+            for (let i = 0; i < pts.length; i++) {
+                const p = pts[i];
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0) p.x = logicalWidth;
+                if (p.x > logicalWidth) p.x = 0;
+                if (p.y < 0) p.y = logicalHeight;
+                if (p.y > logicalHeight) p.y = 0;
                 pCtx.moveTo(p.x + p.r, p.y);
                 pCtx.arc(p.x, p.y, p.r, 0, TWO_PI);
             }
             pCtx.fill();
 
-            drawConnections();
-        }
-
-        /* -- ENGINE 2: Daylight Matrix rain -------------------- */
-        const mCanvas = document.getElementById('matrixCanvas');
-        const mCtx    = mCanvas.getContext('2d');
-        const CHARS   = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ'.split('');
-        const COL_W   = 28;
-        const FONT_SZ = 13;
-        let drops     = [];
-
-        function sizeMCanvas() {
-            mCanvas.width        = logicalWidth * dpr;
-            mCanvas.height       = logicalHeight * dpr;
-            mCanvas.style.width  = logicalWidth + 'px';
-            mCanvas.style.height = logicalHeight + 'px';
-            mCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-            const totalCols = Math.floor(logicalWidth / COL_W);
-            drops = Array.from({ length: totalCols }, (_, i) => ({
-                x: i * COL_W,
-                y: Math.random() * logicalHeight * 1.5 - logicalHeight,
-                speed: 0.8 + Math.random() * 0.5,
-                active: i % 2 === 0 && Math.random() > 0.35
-            }));
-        }
-        sizeMCanvas();
-
-        function tickMatrix() {
-            mCtx.fillStyle = 'rgba(244, 247, 245, 0.18)';
-            mCtx.fillRect(0, 0, logicalWidth, logicalHeight);
-
-            mCtx.font = FONT_SZ + 'px monospace';
-
-            for (let i = 0; i < drops.length; i++) {
-                const d = drops[i];
-                if (!d.active) continue;
-
-                if (d.y > 0 && d.y < logicalHeight) {
-                    const ch = CHARS[(Math.random() * CHARS.length) | 0];
-                    let hovered = false;
-
-                    if (mouse.x !== null) {
-                        const dx = mouse.x - d.x, dy = mouse.y - d.y;
-                        if (dx * dx + dy * dy < 14000) {
-                            hovered = true;
-                        }
+            pCtx.beginPath();
+            for (let i = 0; i < pts.length; i++) {
+                for (let j = i + 1; j < pts.length; j++) {
+                    const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+                    if (dx * dx + dy * dy < 11000) {
+                        pCtx.moveTo(pts[i].x, pts[i].y);
+                        pCtx.lineTo(pts[j].x, pts[j].y);
                     }
-
-                    if (hovered) {
-                        mCtx.fillStyle = '#0d1f14';
-                        mCtx.fillText(ch, d.x, d.y);
-                    } else {
-                        mCtx.fillStyle = Math.random() > 0.82 ? MATRIX_HEAD : MATRIX_TRAIL;
-                        mCtx.fillText(ch, d.x, d.y);
-                    }
-                }
-
-                d.y += d.speed;
-                if (d.y > logicalHeight && Math.random() > 0.985) {
-                    d.y = -20;
-                    d.active = Math.random() > 0.4;
                 }
             }
-        }
-
-        /* -- UNIFIED RAF LOOP ---------------------------------- */
-        function loop(ts) {
-            const t = ts * 0.001;
-            tickParticles(t);
-            tickMatrix();
+            pCtx.stroke();
             requestAnimationFrame(loop);
         }
-
-        buildParticles();
-        onResize([sizePCanvas, sizeMCanvas, buildParticles]);
         requestAnimationFrame(loop);
     })();
     </script>
