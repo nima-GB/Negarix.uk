@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title>MÉRIDIAN · Encrypted Communications Relay</title>
+    <title>MÉRIDIAN · Encrypted Communications Relay v7.0</title>
 
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'none';
@@ -206,9 +206,7 @@
             color: var(--text-muted);
         }
         .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--accent);
-        }
+        .nav-links a.active { color: var(--accent); }
         .nav-right {
             display: flex;
             align-items: center;
@@ -246,9 +244,7 @@
             color: #ffffff;
             box-shadow: var(--shadow-sm);
         }
-        [data-theme="dark"] .btn-nav:hover {
-            color: #030805;
-        }
+        [data-theme="dark"] .btn-nav:hover { color: #030805; }
 
         /* -- MAIN LAYOUT -------------------------------------- */
         #app {
@@ -265,7 +261,7 @@
         /* -- CONTACT TERMINAL CARD ---------------------------- */
         .card {
             width: 100%;
-            max-width: 580px;
+            max-width: 600px;
             background: var(--surface);
             border: 2px solid var(--border-hot);
             border-radius: 4px;
@@ -312,9 +308,7 @@
             border-bottom: 1px dashed var(--accent);
             padding-bottom: 1px;
         }
-        .back-hub-link:hover {
-            opacity: 0.8;
-        }
+        .back-hub-link:hover { opacity: 0.8; }
 
         .site-title {
             font-size: clamp(1.85rem, 6vw, 2.5rem);
@@ -360,11 +354,13 @@
         .field-label {
             font-size: 0.7rem;
             font-weight: 700;
-            letter-spacing: 0.16em;
+            letter-spacing: 0.14em;
             color: var(--text);
             text-transform: uppercase;
             display: flex;
             justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 6px;
         }
 
         .field-wrap {
@@ -424,9 +420,7 @@
             box-shadow: var(--shadow-sm);
         }
         .field-input:focus ~ .field-scan { opacity: 1; }
-        .field-wrap:focus-within .field-prefix {
-            border-color: var(--border-hot);
-        }
+        .field-wrap:focus-within .field-prefix { border-color: var(--border-hot); }
 
         .field-scan {
             position: absolute;
@@ -467,21 +461,18 @@
         .char-counter.warn { color: var(--warn-color); }
         .char-counter.danger { color: var(--red-alert); }
 
-        /* -- HONEYPOT ----------------------------------------- */
         .hp-field {
             position: absolute;
             left: -9999px; width: 1px; height: 1px;
             opacity: 0; pointer-events: none;
         }
 
-        /* -- RECAPTCHA ---------------------------------------- */
         .recaptcha-wrap {
             display: flex;
             justify-content: center;
             padding: 6px 0;
         }
 
-        /* -- STATUS MESSAGE ----------------------------------- */
         .form-msg {
             font-size: 0.76rem;
             font-weight: 700;
@@ -500,7 +491,6 @@
         .form-msg.info    { color: var(--text-muted); }
         .form-msg.info::before    { display: inline-block; content: '›'; }
 
-        /* -- SUBMIT BUTTON ------------------------------------ */
         .submit-btn {
             position: relative;
             background: var(--accent);
@@ -518,18 +508,14 @@
             width: 100%;
             border-radius: 2px;
         }
-        [data-theme="dark"] .submit-btn {
-            color: #030805;
-        }
+        [data-theme="dark"] .submit-btn { color: #030805; }
         .submit-btn:hover,
         .submit-btn:focus-visible {
             background: var(--accent-hover);
             box-shadow: var(--shadow-md);
             outline: none;
         }
-        .submit-btn:active {
-            transform: translateY(1px);
-        }
+        .submit-btn:active { transform: translateY(1px); }
         .submit-btn span { position: relative; z-index: 1; }
         .submit-btn:disabled {
             opacity: 0.55;
@@ -548,7 +534,6 @@
         }
         .submit-btn.loading .btn-progress { width: 85%; }
 
-        /* -- CARD FOOTER & SITE FOOTER ------------------------ */
         .card-footer {
             padding: 14px 32px;
             border-top: 1px solid var(--border);
@@ -602,14 +587,11 @@
             0%   { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
         }
-
         @media (prefers-reduced-motion: reduce) {
             #particleCanvas { display: none; }
             *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
         }
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-        }
+        @media (max-width: 768px) { .nav-links { display: none; } }
         @media (max-width: 480px) {
             .card-header, .card-body, .card-footer { padding-left: 20px; padding-right: 20px; }
         }
@@ -624,12 +606,12 @@
     <div class="telemetry-ribbon" role="region" aria-label="Silicon Compute Telemetry">
         <div class="ribbon-inner">
             <div class="ribbon-group">
-                <span class="ribbon-pill">GEMINI AGI SWARM v6.5</span>
+                <span class="ribbon-pill">GEMINI AGI QUANTUM CORE v7.0</span>
                 <span class="ribbon-stat">COMMS ENCLAVE: <strong>ORIGIN-LOCKED RELAY</strong></span>
                 <span class="ribbon-stat">CLIENT THREADS: <strong id="hwCpuCores">DETECTING...</strong></span>
             </div>
             <div class="ribbon-group">
-                <span class="ribbon-stat">PAYLOAD ATTESTATION: <strong>WEBCRYPTO SHA-256</strong></span>
+                <span class="ribbon-stat">ENVELOPE CIPHER: <strong>PBKDF2 + AES-256-GCM</strong></span>
                 <span class="ribbon-stat">UTC: <strong id="liveClock">SYNCHRONISING...</strong></span>
             </div>
         </div>
@@ -641,12 +623,12 @@
             <a href="index.html" class="brand">
                 <div class="status-dot" aria-hidden="true"></div>
                 <span class="brand-name">MÉRIDIAN</span>
-                <span class="brand-tag">AGI SWARM CORE</span>
+                <span class="brand-tag">AGI CORE v7.0</span>
             </a>
 
             <nav class="nav-links" aria-label="Primary Navigation">
                 <a href="index.html#gemini-agi-engine">Gemini AGI Prompt</a>
-                <a href="index.html#overview">Planetary Topology</a>
+                <a href="index.html#overview">4D Topology</a>
                 <a href="index.html#google-ecosystem">Google Grounding</a>
                 <a href="index.html#capabilities">Neuro-Symbolic Core</a>
                 <a href="contact.html" class="active">Comms Relay</a>
@@ -680,7 +662,7 @@
                 </div>
 
                 <h1 class="site-title">MÉRIDIAN</h1>
-                <p class="site-sub">Encrypted Communications Relay</p>
+                <p class="site-sub">Encrypted Communications Relay v7.0</p>
             </header>
 
             <div class="card-body">
@@ -724,6 +706,21 @@
                                    required maxlength="200"
                                    autocomplete="email" spellcheck="false"
                                    placeholder="name@domain.com">
+                            <div class="field-scan" aria-hidden="true"></div>
+                        </div>
+                    </div>
+
+                    <!-- Optional Client-Side AES-256-GCM Zero-Knowledge Passphrase -->
+                    <div class="field">
+                        <label class="field-label" for="inp-passphrase">
+                            <span>Client-Side AES-256-GCM Key (Optional)</span>
+                            <span style="color:var(--accent); font-size:0.62rem;">PBKDF2 100K ITERATIONS</span>
+                        </label>
+                        <div class="field-wrap">
+                            <span class="field-prefix" aria-hidden="true">KEY://</span>
+                            <input class="field-input" type="password" id="inp-passphrase"
+                                   maxlength="128" autocomplete="new-password"
+                                   placeholder="Leave blank for standard TLS, or enter shared secret to pre-encrypt">
                             <div class="field-scan" aria-hidden="true"></div>
                         </div>
                     </div>
@@ -773,7 +770,7 @@
                         <rect x="2" y="5" width="8" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/>
                         <path d="M4 5V3.5a2 2 0 0 1 4 0V5" stroke="currentColor" stroke-width="1.3"/>
                     </svg>
-                    TLS 1.3 · ML-KEM-1024 · AES-256
+                    TLS 1.3 · ML-KEM-1024 · AES-256-GCM
                 </div>
             </footer>
 
@@ -783,10 +780,10 @@
     <!-- Site Footer -->
     <footer class="site-footer">
         <div class="footer-inner">
-            <div>MÉRIDIAN AGI SYSTEMS &copy; <span id="footerYear"></span> · SOVEREIGN COMMUNICATIONS RELAY</div>
+            <div>MÉRIDIAN AGI SYSTEMS &copy; <span id="footerYear"></span> · SOVEREIGN COMMUNICATIONS RELAY v7.0</div>
             <div class="footer-links">
                 <a href="index.html#gemini-agi-engine">Gemini AGI Prompt</a>
-                <a href="index.html#overview">Planetary Topology</a>
+                <a href="index.html#overview">4D Topology</a>
                 <a href="index.html#google-ecosystem">Google Federation</a>
             </div>
             <div style="color:var(--accent);">CSP LEVEL-3 · FORMSPREE ORIGIN LOCKED</div>
@@ -809,7 +806,7 @@
 
         function applyTheme(theme) {
             htmlEl.setAttribute('data-theme', theme);
-            btn.textContent = theme === 'dark' ? 'MODE: QUANTUM DARK' : 'MODE: DAYLIGHT';
+            if (btn) btn.textContent = theme === 'dark' ? 'MODE: QUANTUM DARK' : 'MODE: DAYLIGHT';
             try { localStorage.setItem('meridian_theme', theme); } catch (e) {}
         }
 
@@ -817,10 +814,12 @@
         try { saved = localStorage.getItem('meridian_theme') || 'light'; } catch (e) {}
         applyTheme(saved);
 
-        btn.addEventListener('click', () => {
-            const next = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-            applyTheme(next);
-        });
+        if (btn) {
+            btn.addEventListener('click', () => {
+                const next = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                applyTheme(next);
+            });
+        }
     })();
 
     /* ===========================================================
@@ -900,12 +899,13 @@
     })();
 
     /* ===========================================================
-       4. HARDENED FORM VALIDATION & TRANSMISSION
+       4. HARDENED FORM VALIDATION, PBKDF2 AES-256-GCM & TRANSMISSION
     =========================================================== */
     (function () {
         const form       = document.getElementById('contactForm');
         const inpName    = document.getElementById('inp-name');
         const inpEmail   = document.getElementById('inp-email');
+        const inpPass    = document.getElementById('inp-passphrase');
         const inpMessage = document.getElementById('inp-message');
         const inpGotcha  = document.getElementById('inp-gotcha');
         const submitBtn  = document.getElementById('submitBtn');
@@ -926,6 +926,30 @@
         function msg(text, type) {
             msgEl.textContent = text;
             msgEl.className   = 'form-msg' + (type ? ' ' + type : '');
+        }
+
+        async function encryptWithPassphrase(plaintext, passphrase) {
+            const enc = new TextEncoder();
+            const salt = window.crypto.getRandomValues(new Uint8Array(16));
+            const iv   = window.crypto.getRandomValues(new Uint8Array(12));
+            const baseKey = await window.crypto.subtle.importKey(
+                'raw', enc.encode(passphrase), { name: 'PBKDF2' }, false, ['deriveKey']
+            );
+            const aesKey = await window.crypto.subtle.deriveKey(
+                { name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' },
+                baseKey,
+                { name: 'AES-GCM', length: 256 },
+                false,
+                ['encrypt']
+            );
+            const cipherBuf = await window.crypto.subtle.encrypt({ name: 'AES-GCM', iv }, aesKey, enc.encode(plaintext));
+            const toHex = b => Array.from(new Uint8Array(b)).map(x => x.toString(16).padStart(2, '0')).join('');
+            return `-----BEGIN MERIDIAN AES-256-GCM ENVELOPE-----\n` +
+                   `KDF: PBKDF2-HMAC-SHA256 (100000 iterations)\n` +
+                   `SALT: ${toHex(salt)}\n` +
+                   `IV: ${toHex(iv)}\n` +
+                   `CIPHERTEXT:\n${toHex(cipherBuf)}\n` +
+                   `-----END MERIDIAN AES-256-GCM ENVELOPE-----`;
         }
 
         function simulateSuccessAndReset() {
@@ -956,10 +980,11 @@
                 return;
             }
 
-            const name     = sanitiseText(inpName.value);
-            const email    = sanitiseText(inpEmail.value);
-            const message  = sanitiseText(inpMessage.value);
-            const honeypot = inpGotcha.value;
+            const name       = sanitiseText(inpName.value);
+            const email      = sanitiseText(inpEmail.value);
+            const passphrase = inpPass ? inpPass.value.trim() : '';
+            const message    = sanitiseText(inpMessage.value);
+            const honeypot   = inpGotcha.value;
 
             if (honeypot.length > 0 || (now - bootTimestamp) < 2500) {
                 simulateSuccessAndReset();
@@ -1000,12 +1025,26 @@
             submitBtn.disabled = true;
             submitBtn.classList.add('loading');
             btnLabel.textContent = 'Transmitting...';
-            msg('Sealing and transmitting payload...', 'info');
+
+            let finalPayloadMessage = message;
+            if (passphrase.length > 0 && window.crypto && window.crypto.subtle) {
+                msg('Deriving PBKDF2 key & sealing AES-256-GCM envelope...', 'info');
+                try {
+                    finalPayloadMessage = await encryptWithPassphrase(message, passphrase);
+                } catch (encErr) {
+                    msg('Local encryption failed. Retry.', 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('loading');
+                    return;
+                }
+            } else {
+                msg('Sealing and transmitting payload...', 'info');
+            }
 
             const payload = new FormData();
             payload.append('name', name);
             payload.append('email', email);
-            payload.append('message', message);
+            payload.append('message', finalPayloadMessage);
             payload.append('g-recaptcha-response', captchaToken);
 
             const controller = new AbortController();
