@@ -6,16 +6,16 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
 
     <!-- Primary SEO Meta Tags -->
-    <title>Executive Chauffeur &amp; Overland Passenger Transport | London &amp; Surrey</title>
+    <title>Private Overland Carriage &amp; Executive Chauffeur | London &amp; Surrey</title>
     <meta name="description" content="Bespoke overland passenger transport, executive chauffeur services, and private airport transfers across Central London, Surrey, and the United Kingdom.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.negarix.uk/">
 
-    <!-- Open Graph / Social Meta Tags -->
+    <!-- Open Graph Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_GB">
     <meta property="og:url" content="https://www.negarix.uk/">
-    <meta property="og:title" content="Executive Chauffeur &amp; Overland Passenger Transport | London &amp; Surrey">
+    <meta property="og:title" content="Private Overland Carriage &amp; Executive Chauffeur | London &amp; Surrey">
     <meta property="og:description" content="Discreet, punctual overland passenger transport, airport transfers, and private hire across London, Surrey, and the UK.">
 
     <!-- Hardened Content Security Policy -->
@@ -32,7 +32,7 @@
         upgrade-insecure-requests;
     ">
 
-    <!-- Schema.org Structured Data for Search Engines -->
+    <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -63,22 +63,16 @@
 
     <style>
         :root {
-            --bg:           #f8f6f2;
-            --surface:      #ffffff;
-            --surface-warm: #f2efe9;
-            --obsidian:     #141514;
-            --charcoal:     #262826;
-            --gold:         #9a7b42;
-            --gold-hover:   #7d6231;
-            --gold-light:   rgba(154, 123, 66, 0.22);
-            --text:         #1c1e1c;
-            --text-muted:   #5e615e;
-            --border:       #e4dfd7;
-            --error:        #a82020;
-            --success:      #1e5e3a;
-            --shadow:       0 18px 45px rgba(20, 21, 20, 0.05), 0 1px 3px rgba(20, 21, 20, 0.03);
-            --font-serif:   "Georgia", "Times New Roman", Times, serif;
-            --font-sans:    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --bg:         #faf9f6;
+            --surface:    #ffffff;
+            --ink:        #161716;
+            --muted:      #686662;
+            --gold:       #8c6f39;
+            --line:       #e6e2da;
+            --error:      #a61b1b;
+            --success:    #1b5e37;
+            --font-serif: "Georgia", "Times New Roman", Times, serif;
+            --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         *, *::before, *::after {
@@ -91,156 +85,124 @@
             width: 100%;
             min-height: 100vh;
             background-color: var(--bg);
-            color: var(--text);
+            color: var(--ink);
             font-family: var(--font-sans);
-            line-height: 1.65;
+            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             display: flex;
             flex-direction: column;
         }
 
-        /* Minimalist Luxury Top Bar */
+        /* Minimalist Top Bar */
         .site-header {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--line);
+            background: var(--bg);
         }
 
         .header-inner {
-            max-width: 1140px;
+            max-width: 1060px;
             margin: 0 auto;
-            padding: 18px 28px;
+            padding: 20px 28px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .header-monogram {
-            font-family: var(--font-serif);
-            font-size: 0.85rem;
-            letter-spacing: 0.24em;
-            text-transform: uppercase;
-            color: var(--obsidian);
-        }
-
-        .header-locations {
+            align-items: center;
             font-size: 0.72rem;
-            font-weight: 500;
-            letter-spacing: 0.18em;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: var(--gold);
+            color: var(--muted);
         }
 
-        /* Main Two-Column Content Area */
+        .header-location {
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        /* Main Single-Screen Workspace */
         .main-container {
             flex: 1;
-            max-width: 1140px;
+            max-width: 1060px;
             width: 100%;
             margin: 0 auto;
             padding: 48px 28px;
             display: grid;
-            grid-template-columns: 1.15fr 0.85fr;
-            gap: 52px;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 64px;
             align-items: center;
         }
 
-        /* Left Column: Luxury Editorial & Services */
-        .company-info {
+        /* Left Column: Clean Editorial */
+        .editorial {
             display: flex;
             flex-direction: column;
-            gap: 32px;
+            gap: 28px;
         }
 
         .eyebrow {
-            display: inline-block;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             font-weight: 600;
+            letter-spacing: 0.22em;
             text-transform: uppercase;
-            letter-spacing: 0.2em;
             color: var(--gold);
             margin-bottom: 12px;
+            display: block;
         }
 
         .hero-title {
             font-family: var(--font-serif);
-            font-size: clamp(1.95rem, 3.4vw, 2.65rem);
+            font-size: clamp(2rem, 3.5vw, 2.6rem);
             font-weight: 400;
             line-height: 1.2;
-            color: var(--obsidian);
-            letter-spacing: -0.01em;
+            color: var(--ink);
         }
 
         .hero-lead {
-            margin-top: 16px;
-            font-size: 0.98rem;
-            color: var(--text-muted);
-            max-width: 560px;
+            font-size: 0.96rem;
+            color: var(--muted);
             line-height: 1.75;
+            max-width: 480px;
         }
 
-        .services-grid {
+        .pillars {
+            border-top: 1px solid var(--line);
+            padding-top: 24px;
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 16px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
         }
 
-        .service-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-left: 3px solid var(--gold);
-            padding: 20px 24px;
-            box-shadow: var(--shadow);
-            transition: transform 0.2s ease, border-color 0.2s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .service-card h2 {
+        .pillar h2 {
             font-family: var(--font-serif);
-            font-size: 1.08rem;
+            font-size: 0.92rem;
             font-weight: 400;
-            color: var(--obsidian);
-            margin-bottom: 6px;
+            color: var(--ink);
+            margin-bottom: 4px;
         }
 
-        .service-card p {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            line-height: 1.6;
+        .pillar p {
+            font-size: 0.8rem;
+            color: var(--muted);
+            line-height: 1.5;
         }
 
-        /* Right Column: Bespoke Enquiry Card */
-        .contact-card {
+        /* Right Column: Clean Enquiry Panel */
+        .enquiry-panel {
             background: var(--surface);
-            border: 1px solid var(--border);
-            border-top: 3px solid var(--gold);
-            padding: 34px 32px;
-            box-shadow: var(--shadow);
+            border: 1px solid var(--line);
+            padding: 36px 32px;
         }
 
-        .contact-card h2 {
+        .enquiry-panel h2 {
             font-family: var(--font-serif);
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             font-weight: 400;
-            color: var(--obsidian);
-            margin-bottom: 6px;
-        }
-
-        .contact-sub {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 24px;
-            padding-bottom: 18px;
-            border-bottom: 1px solid var(--border);
+            color: var(--ink);
+            margin-bottom: 20px;
         }
 
         .form {
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 16px;
         }
 
         .field {
@@ -250,42 +212,35 @@
         }
 
         .field-label {
-            font-size: 0.74rem;
+            font-size: 0.7rem;
             font-weight: 600;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: var(--charcoal);
+            color: var(--muted);
             display: flex;
             justify-content: space-between;
         }
 
         .field-input {
             width: 100%;
-            padding: 11px 14px;
-            border: 1px solid var(--border);
-            background: #faf9f7;
-            color: var(--text);
+            padding: 11px 12px;
+            border: 1px solid var(--line);
+            background: var(--bg);
+            color: var(--ink);
             font-family: var(--font-sans);
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             outline: none;
-            transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
         }
 
         .field-input:focus {
             background: var(--surface);
             border-color: var(--gold);
-            box-shadow: 0 0 0 3px var(--gold-light);
         }
 
         textarea.field-input {
             resize: vertical;
-            min-height: 96px;
-        }
-
-        .char-counter {
-            font-size: 0.7rem;
-            font-weight: 400;
-            color: var(--text-muted);
+            min-height: 84px;
         }
 
         .hp-field {
@@ -300,27 +255,26 @@
         .recaptcha-wrap {
             display: flex;
             justify-content: center;
-            margin: 4px 0;
+            margin: 2px 0;
         }
 
         .form-msg {
-            font-size: 0.82rem;
-            font-weight: 500;
-            min-height: 1.2em;
+            font-size: 0.8rem;
+            min-height: 1.1em;
         }
         .form-msg.error   { color: var(--error); }
         .form-msg.success { color: var(--success); }
-        .form-msg.info    { color: var(--text-muted); }
+        .form-msg.info    { color: var(--muted); }
 
         .submit-btn {
-            background: var(--obsidian);
+            background: var(--ink);
             color: #ffffff;
-            border: 1px solid var(--obsidian);
-            padding: 13px 20px;
+            border: 1px solid var(--ink);
+            padding: 13px 18px;
             font-family: var(--font-sans);
-            font-size: 0.82rem;
+            font-size: 0.76rem;
             font-weight: 600;
-            letter-spacing: 0.14em;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
             cursor: pointer;
             transition: background-color 0.2s ease, border-color 0.2s ease;
@@ -335,68 +289,52 @@
         }
 
         .submit-btn:disabled {
-            opacity: 0.55;
+            opacity: 0.5;
             cursor: not-allowed;
         }
 
-        /* Clean, Organised Multi-Column Footer */
+        /* Clean, Organised Footer */
         .site-footer {
-            background: var(--obsidian);
-            color: #d8d5ce;
-            border-top: 2px solid var(--gold);
-            font-size: 0.8rem;
+            border-top: 1px solid var(--line);
+            background: var(--surface);
+            font-size: 0.75rem;
+            color: var(--muted);
         }
 
         .footer-inner {
-            max-width: 1140px;
+            max-width: 1060px;
             margin: 0 auto;
-            padding: 36px 28px 28px;
-        }
-
-        .footer-grid {
+            padding: 24px 28px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-            padding-bottom: 28px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 24px;
+            align-items: start;
         }
 
-        .footer-col h3 {
-            font-family: var(--font-serif);
-            font-size: 0.76rem;
-            font-weight: 400;
-            letter-spacing: 0.18em;
+        .footer-block strong {
+            display: block;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 10px;
+            color: var(--ink);
+            margin-bottom: 4px;
         }
 
-        .footer-col p {
-            color: #a8a49c;
-            line-height: 1.65;
-            font-size: 0.78rem;
+        .footer-block p {
+            line-height: 1.55;
         }
 
-        .footer-bottom {
-            padding-top: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            font-size: 0.73rem;
-            color: #85827a;
-        }
-
-        @media (max-width: 880px) {
+        @media (max-width: 860px) {
             .main-container {
                 grid-template-columns: 1fr;
+                gap: 40px;
                 padding: 32px 20px;
-                gap: 36px;
             }
-            .footer-grid {
+            .pillars,
+            .footer-inner {
                 grid-template-columns: 1fr;
-                gap: 24px;
+                gap: 16px;
             }
         }
     </style>
@@ -405,51 +343,48 @@
 
     <header class="site-header">
         <div class="header-inner">
-            <div class="header-monogram">Private Carriage &amp; Executive Travel</div>
-            <div class="header-locations">London · Surrey · United Kingdom</div>
+            <span>Private Overland Carriage</span>
+            <span class="header-location">London · Surrey · United Kingdom</span>
         </div>
     </header>
 
     <main class="main-container" role="main">
 
-        <!-- Left Column: Luxury Profile & Core Services -->
-        <section class="company-info" aria-labelledby="main-heading">
+        <!-- Left Column -->
+        <section class="editorial" aria-labelledby="main-heading">
             <div>
-                <span class="eyebrow">Bespoke Overland Passenger Transport</span>
+                <span class="eyebrow">Executive Passenger Transport</span>
                 <h1 class="hero-title" id="main-heading">Discreet, First-Class Overland Travel</h1>
-                <p class="hero-lead">
-                    We provide tailored door-to-door passenger transport, private chauffeur services, and scheduled corporate travel. Every journey is conducted in flagship hybrid luxury vehicles maintained to exacting main-dealer standards.
-                </p>
             </div>
 
-            <div class="services-grid">
-                <article class="service-card">
-                    <h2>Executive Chauffeur &amp; Private Hire</h2>
-                    <p>Refined point-to-point carriage in long-wheelbase executive saloons and luxury multi-passenger vehicles, driven by experienced professionals.</p>
-                </article>
+            <p class="hero-lead">
+                Tailored door-to-door passenger carriage, private chauffeur services, and scheduled corporate travel across London, Surrey, and the United Kingdom. Conducted in flagship plug-in hybrid vehicles maintained to main-dealer standards.
+            </p>
 
-                <article class="service-card">
-                    <h2>Private Aviation &amp; Airport Transfers</h2>
-                    <p>Flight-monitored arrivals and departures serving Heathrow, Gatwick, Farnborough, Biggin Hill, and private terminals nationwide.</p>
-                </article>
-
-                <article class="service-card">
-                    <h2>Corporate &amp; Retained Accounts</h2>
-                    <p>Dedicated overland scheduling for diplomatic missions, executive roadshows, visiting principals, and private family offices.</p>
-                </article>
+            <div class="pillars">
+                <div class="pillar">
+                    <h2>Private Chauffeur</h2>
+                    <p>Point-to-point executive saloons and luxury multi-passenger travel.</p>
+                </div>
+                <div class="pillar">
+                    <h2>Airport Transfers</h2>
+                    <p>Flight-monitored service for Heathrow, Gatwick, and Farnborough.</p>
+                </div>
+                <div class="pillar">
+                    <h2>Corporate Travel</h2>
+                    <p>Retained overland carriage for businesses and private offices.</p>
+                </div>
             </div>
         </section>
 
-        <!-- Right Column: Secure Reservation & Enquiry Card -->
-        <aside class="contact-card" aria-labelledby="form-heading">
+        <!-- Right Column -->
+        <aside class="enquiry-panel" aria-labelledby="form-heading">
             <h2 id="form-heading">Reservations &amp; Enquiries</h2>
-            <p class="contact-sub">Submit your itinerary or account enquiry for a prompt, confidential response.</p>
 
             <form id="contactForm" class="form"
                   action="https://formspree.io/f/xdavzgko"
                   method="POST" novalidate>
 
-                <!-- Anti-bot Honeypot -->
                 <label class="hp-field" aria-hidden="true">
                     Leave empty
                     <input type="text" id="inp-gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
@@ -459,26 +394,24 @@
                     <label class="field-label" for="inp-name">Name or Organisation</label>
                     <input class="field-input" type="text" id="inp-name" name="name"
                            required minlength="2" maxlength="100"
-                           autocomplete="name"
-                           placeholder="Full name or company">
+                           autocomplete="name">
                 </div>
 
                 <div class="field">
                     <label class="field-label" for="inp-email">Email Address</label>
                     <input class="field-input" type="email" id="inp-email" name="email"
                            required maxlength="200"
-                           autocomplete="email"
-                           placeholder="name@domain.co.uk">
+                           autocomplete="email">
                 </div>
 
                 <div class="field">
                     <label class="field-label" for="inp-message">
-                        <span>Itinerary or Enquiry</span>
-                        <span class="char-counter" id="charCounter">0 / 2000</span>
+                        <span>Journey Details</span>
+                        <span id="charCounter">0 / 2000</span>
                     </label>
                     <textarea class="field-input" id="inp-message" name="message"
                               required minlength="10" maxlength="2000"
-                              placeholder="Preferred dates, collection and destination points, or account requirements..."></textarea>
+                              placeholder="Dates, collection and destination points, or general enquiry..."></textarea>
                 </div>
 
                 <div class="recaptcha-wrap">
@@ -490,48 +423,26 @@
                 <p id="formMsg" class="form-msg" role="alert" aria-live="polite"></p>
 
                 <button type="submit" id="submitBtn" class="submit-btn">
-                    Request Consultation
+                    Send Enquiry
                 </button>
             </form>
         </aside>
 
     </main>
 
-    <!-- Organised Multi-Column Footer -->
     <footer class="site-footer">
         <div class="footer-inner">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h3>Registered Office</h3>
-                    <p>
-                        4th Floor, Silverstream House<br>
-                        45 Fitzroy Street, Fitzrovia<br>
-                        London, W1T 6EB
-                    </p>
-                </div>
-
-                <div class="footer-col">
-                    <h3>Service Coverage</h3>
-                    <p>
-                        Central London &amp; Surrey<br>
-                        Heathrow, Gatwick &amp; Farnborough<br>
-                        Nationwide UK Overland Carriage
-                    </p>
-                </div>
-
-                <div class="footer-col">
-                    <h3>Corporate Registration</h3>
-                    <p>
-                        Negarix Luminaire Limited<br>
-                        Registered in England &amp; Wales: 16073047<br>
-                        VAT Registration: GB 483755256
-                    </p>
-                </div>
+            <div class="footer-block">
+                <strong>Corporate Details</strong>
+                <p>Negarix Luminaire Limited<br>Registered in England &amp; Wales: 16073047</p>
             </div>
-
-            <div class="footer-bottom">
-                <span>&copy; <span id="footerYear">2026</span> Negarix Luminaire Limited. All rights reserved.</span>
-                <span>SIC 49390 · Other Passenger Land Transport</span>
+            <div class="footer-block">
+                <strong>Registered Office</strong>
+                <p>4th Floor, Silverstream House, 45 Fitzroy Street<br>Fitzrovia, London, W1T 6EB</p>
+            </div>
+            <div class="footer-block">
+                <strong>Tax &amp; Classification</strong>
+                <p>VAT Registration: GB 483755256<br>&copy; <span id="footerYear">2026</span> Negarix Luminaire Limited</p>
             </div>
         </div>
     </footer>
@@ -571,7 +482,7 @@
         }
 
         function completeSubmission() {
-            setStatus('Thank you. Your enquiry has been received by our reservations desk.', 'success');
+            setStatus('Thank you. Your enquiry has been received.', 'success');
             form.reset();
             counterEl.textContent = '0 / ' + MAX_CHARS;
             if (typeof grecaptcha !== 'undefined' && typeof grecaptcha.reset === 'function') {
@@ -586,7 +497,7 @@
             const now = performance.now();
             if (now < cooldownUntil) {
                 const waitSec = Math.ceil((cooldownUntil - now) / 1000);
-                setStatus('Please wait ' + waitSec + ' seconds before submitting another request.', 'error');
+                setStatus('Please wait ' + waitSec + ' seconds before sending another enquiry.', 'error');
                 return;
             }
 
@@ -601,7 +512,7 @@
             }
 
             if (name.length < 2 || name.length > 100) {
-                setStatus('Please enter your name or organisation (2 to 100 characters).', 'error');
+                setStatus('Please enter your name or organisation.', 'error');
                 inpName.focus();
                 return;
             }
@@ -611,7 +522,7 @@
                 return;
             }
             if (message.length < 10) {
-                setStatus('Please provide at least 10 characters of itinerary details.', 'error');
+                setStatus('Please provide at least 10 characters of journey details.', 'error');
                 inpMessage.focus();
                 return;
             }
@@ -627,13 +538,13 @@
             }
             const captchaToken = grecaptcha.getResponse();
             if (!captchaToken || captchaToken.length === 0) {
-                setStatus('Please complete the security verification tickbox.', 'error');
+                setStatus('Please complete the security tickbox.', 'error');
                 return;
             }
 
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Transmitting...';
-            setStatus('Sending your request...', 'info');
+            submitBtn.textContent = 'Sending...';
+            setStatus('Sending your enquiry...', 'info');
 
             const payload = new FormData();
             payload.append('name', name);
@@ -657,18 +568,18 @@
                     cooldownUntil = performance.now() + 30000;
                     completeSubmission();
                 } else {
-                    setStatus('Unable to send request (error ' + res.status + '). Please try again shortly.', 'error');
+                    setStatus('Unable to send enquiry (error ' + res.status + '). Please try again.', 'error');
                 }
             } catch (err) {
                 if (err && err.name === 'AbortError') {
-                    setStatus('Request timed out. Please verify your connection and retry.', 'error');
+                    setStatus('Request timed out. Please check your connection.', 'error');
                 } else {
-                    setStatus('Network error. Please verify your connection and retry.', 'error');
+                    setStatus('Network error. Please check your connection.', 'error');
                 }
             } finally {
                 clearTimeout(timeoutId);
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Request Consultation';
+                submitBtn.textContent = 'Send Enquiry';
             }
         });
     })();
