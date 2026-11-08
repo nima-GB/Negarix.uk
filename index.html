@@ -6,8 +6,8 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
 
     <!-- Primary SEO Meta Tags -->
-    <title>Negarix Luminaire Limited | Overland Passenger Transport &amp; Executive Travel</title>
-    <meta name="description" content="Negarix Luminaire Limited (Company No. 16073047) provides bespoke overland passenger transport, executive private hire, and corporate travel across London, Surrey, and the United Kingdom.">
+    <title>Executive Chauffeur &amp; Overland Passenger Transport | London &amp; Surrey</title>
+    <meta name="description" content="Bespoke overland passenger transport, executive chauffeur services, and private airport transfers across Central London, Surrey, and the United Kingdom.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.negarix.uk/">
 
@@ -15,9 +15,8 @@
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_GB">
     <meta property="og:url" content="https://www.negarix.uk/">
-    <meta property="og:site_name" content="Negarix Luminaire Limited">
-    <meta property="og:title" content="Negarix Luminaire Limited | Overland Passenger Transport">
-    <meta property="og:description" content="Dependable overland passenger transport, airport transfers, and corporate travel across London, Surrey, and the UK.">
+    <meta property="og:title" content="Executive Chauffeur &amp; Overland Passenger Transport | London &amp; Surrey">
+    <meta property="og:description" content="Discreet, punctual overland passenger transport, airport transfers, and private hire across London, Surrey, and the UK.">
 
     <!-- Hardened Content Security Policy -->
     <meta http-equiv="Content-Security-Policy" content="
@@ -41,7 +40,7 @@
       "name": "Negarix Luminaire Limited",
       "legalName": "NEGARIX LUMINAIRE LIMITED",
       "url": "https://www.negarix.uk/",
-      "description": "Overland passenger land transport, executive private hire, airport transfers, and corporate travel services in London, Surrey, and across the United Kingdom.",
+      "description": "Bespoke overland passenger land transport, executive private hire, airport transfers, and corporate travel services across London, Surrey, and the United Kingdom.",
       "identifier": "16073047",
       "taxID": "GB483755256",
       "foundingDate": "2024-11-10",
@@ -64,22 +63,22 @@
 
     <style>
         :root {
-            --bg:          #f6f8f7;
-            --surface:     #ffffff;
-            --surface-alt: #eef2f0;
-            --primary:     #0f291e;
-            --accent:      #146c43;
-            --accent-hover:#0d5030;
-            --text:        #111c16;
-            --text-muted:  #4f6358;
-            --border:      #d5dfd9;
-            --border-focus:#146c43;
-            --error:       #b91c1c;
-            --success:     #146c43;
-            --shadow:      0 10px 30px rgba(15, 41, 30, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
-            --radius:      6px;
-            --font-sans:   -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            --font-mono:   ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            --bg:           #f8f6f2;
+            --surface:      #ffffff;
+            --surface-warm: #f2efe9;
+            --obsidian:     #141514;
+            --charcoal:     #262826;
+            --gold:         #9a7b42;
+            --gold-hover:   #7d6231;
+            --gold-light:   rgba(154, 123, 66, 0.22);
+            --text:         #1c1e1c;
+            --text-muted:   #5e615e;
+            --border:       #e4dfd7;
+            --error:        #a82020;
+            --success:      #1e5e3a;
+            --shadow:       0 18px 45px rgba(20, 21, 20, 0.05), 0 1px 3px rgba(20, 21, 20, 0.03);
+            --font-serif:   "Georgia", "Times New Roman", Times, serif;
+            --font-sans:    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         *, *::before, *::after {
@@ -94,182 +93,154 @@
             background-color: var(--bg);
             color: var(--text);
             font-family: var(--font-sans);
-            line-height: 1.6;
+            line-height: 1.65;
             -webkit-font-smoothing: antialiased;
             display: flex;
             flex-direction: column;
         }
 
-        /* Top Header */
+        /* Minimalist Luxury Top Bar */
         .site-header {
             background: var(--surface);
             border-bottom: 1px solid var(--border);
         }
 
         .header-inner {
-            max-width: 1120px;
+            max-width: 1140px;
             margin: 0 auto;
-            padding: 18px 24px;
+            padding: 18px 28px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 16px;
+            gap: 12px;
         }
 
-        .brand {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .brand-name {
-            font-size: 1.15rem;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            color: var(--primary);
+        .header-monogram {
+            font-family: var(--font-serif);
+            font-size: 0.85rem;
+            letter-spacing: 0.24em;
             text-transform: uppercase;
+            color: var(--obsidian);
         }
 
-        .brand-sub {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-        }
-
-        .reg-badge {
-            font-family: var(--font-mono);
-            font-size: 0.74rem;
-            font-weight: 600;
-            color: var(--accent);
-            background: var(--surface-alt);
-            border: 1px solid var(--border);
-            padding: 6px 12px;
-            border-radius: 4px;
+        .header-locations {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
         }
 
         /* Main Two-Column Content Area */
         .main-container {
             flex: 1;
-            max-width: 1120px;
+            max-width: 1140px;
             width: 100%;
             margin: 0 auto;
-            padding: 40px 24px;
+            padding: 48px 28px;
             display: grid;
             grid-template-columns: 1.15fr 0.85fr;
-            gap: 40px;
-            align-items: start;
+            gap: 52px;
+            align-items: center;
         }
 
-        /* Left Column: Company Profile & Services */
+        /* Left Column: Luxury Editorial & Services */
         .company-info {
             display: flex;
             flex-direction: column;
-            gap: 28px;
+            gap: 32px;
         }
 
         .eyebrow {
             display: inline-block;
-            font-family: var(--font-mono);
-            font-size: 0.74rem;
+            font-size: 0.72rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--accent);
-            margin-bottom: 8px;
+            letter-spacing: 0.2em;
+            color: var(--gold);
+            margin-bottom: 12px;
         }
 
         .hero-title {
-            font-size: clamp(1.75rem, 3.2vw, 2.35rem);
-            font-weight: 700;
-            line-height: 1.22;
-            color: var(--primary);
+            font-family: var(--font-serif);
+            font-size: clamp(1.95rem, 3.4vw, 2.65rem);
+            font-weight: 400;
+            line-height: 1.2;
+            color: var(--obsidian);
+            letter-spacing: -0.01em;
         }
 
         .hero-lead {
-            margin-top: 14px;
-            font-size: 1rem;
+            margin-top: 16px;
+            font-size: 0.98rem;
             color: var(--text-muted);
-            max-width: 600px;
+            max-width: 560px;
+            line-height: 1.75;
         }
 
         .services-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 14px;
+            gap: 16px;
         }
 
         .service-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-left: 4px solid var(--accent);
-            border-radius: var(--radius);
-            padding: 18px 20px;
+            border-left: 3px solid var(--gold);
+            padding: 20px 24px;
             box-shadow: var(--shadow);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-2px);
         }
 
         .service-card h2 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 4px;
+            font-family: var(--font-serif);
+            font-size: 1.08rem;
+            font-weight: 400;
+            color: var(--obsidian);
+            margin-bottom: 6px;
         }
 
         .service-card p {
             font-size: 0.88rem;
             color: var(--text-muted);
+            line-height: 1.6;
         }
 
-        .credentials-box {
-            background: var(--surface-alt);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 16px 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 12px;
-            font-size: 0.82rem;
-        }
-
-        .cred-item span {
-            display: block;
-            font-size: 0.7rem;
-            font-family: var(--font-mono);
-            text-transform: uppercase;
-            color: var(--text-muted);
-        }
-
-        .cred-item strong {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        /* Right Column: Hardened Contact Card */
+        /* Right Column: Bespoke Enquiry Card */
         .contact-card {
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 28px;
+            border-top: 3px solid var(--gold);
+            padding: 34px 32px;
             box-shadow: var(--shadow);
         }
 
         .contact-card h2 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 4px;
+            font-family: var(--font-serif);
+            font-size: 1.35rem;
+            font-weight: 400;
+            color: var(--obsidian);
+            margin-bottom: 6px;
         }
 
         .contact-sub {
             font-size: 0.85rem;
             color: var(--text-muted);
-            margin-bottom: 20px;
-            padding-bottom: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 18px;
             border-bottom: 1px solid var(--border);
         }
 
         .form {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 18px;
         }
 
         .field {
@@ -279,41 +250,42 @@
         }
 
         .field-label {
-            font-size: 0.78rem;
+            font-size: 0.74rem;
             font-weight: 600;
-            color: var(--primary);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--charcoal);
             display: flex;
             justify-content: space-between;
         }
 
         .field-input {
             width: 100%;
-            padding: 10px 12px;
+            padding: 11px 14px;
             border: 1px solid var(--border);
-            border-radius: 4px;
-            background: var(--surface);
+            background: #faf9f7;
             color: var(--text);
             font-family: var(--font-sans);
             font-size: 0.92rem;
             outline: none;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
         }
 
         .field-input:focus {
-            border-color: var(--border-focus);
-            box-shadow: 0 0 0 3px rgba(20, 108, 67, 0.12);
+            background: var(--surface);
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px var(--gold-light);
         }
 
         textarea.field-input {
             resize: vertical;
-            min-height: 95px;
+            min-height: 96px;
         }
 
         .char-counter {
-            font-family: var(--font-mono);
-            font-size: 0.72rem;
+            font-size: 0.7rem;
+            font-weight: 400;
             color: var(--text-muted);
-            text-align: right;
         }
 
         .hp-field {
@@ -333,7 +305,7 @@
 
         .form-msg {
             font-size: 0.82rem;
-            font-weight: 600;
+            font-weight: 500;
             min-height: 1.2em;
         }
         .form-msg.error   { color: var(--error); }
@@ -341,326 +313,4 @@
         .form-msg.info    { color: var(--text-muted); }
 
         .submit-btn {
-            background: var(--accent);
-            color: #ffffff;
-            border: 1px solid var(--accent);
-            border-radius: 4px;
-            padding: 12px 18px;
-            font-family: var(--font-sans);
-            font-size: 0.92rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            width: 100%;
-        }
-
-        .submit-btn:hover,
-        .submit-btn:focus-visible {
-            background: var(--accent-hover);
-            outline: none;
-        }
-
-        .submit-btn:disabled {
-            opacity: 0.55;
-            cursor: not-allowed;
-        }
-
-        /* Statutory Footer */
-        .site-footer {
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            font-size: 0.78rem;
-            color: var(--text-muted);
-        }
-
-        .footer-inner {
-            max-width: 1120px;
-            margin: 0 auto;
-            padding: 20px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .footer-statutory {
-            line-height: 1.5;
-        }
-
-        .footer-statutory strong {
-            color: var(--primary);
-        }
-
-        @media (max-width: 860px) {
-            .main-container {
-                grid-template-columns: 1fr;
-                padding: 28px 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <header class="site-header">
-        <div class="header-inner">
-            <div class="brand">
-                <span class="brand-name">Negarix Luminaire Limited</span>
-                <span class="brand-sub">Overland Passenger Transport &amp; Executive Travel</span>
-            </div>
-            <div class="reg-badge">UK Company No. 16073047</div>
-        </div>
-    </header>
-
-    <main class="main-container" role="main">
-
-        <!-- Left Column: Business Overview & Services -->
-        <section class="company-info" aria-labelledby="main-heading">
-            <div>
-                <span class="eyebrow">SIC 49390 · Passenger Land Transport</span>
-                <h1 class="hero-title" id="main-heading">Dependable Overland Passenger Transport Across London, Surrey &amp; the UK</h1>
-                <p class="hero-lead">
-                    Negarix Luminaire Limited provides professional overland passenger transport, private hire, and scheduled corporate travel. We combine modern plug-in hybrid vehicles with punctual, discreet door-to-door service.
-                </p>
-            </div>
-
-            <div class="services-grid">
-                <article class="service-card">
-                    <h2>Executive Private Hire &amp; Chauffeur Services</h2>
-                    <p>Point-to-point passenger transport in executive saloons and multi-passenger hybrid vehicles, maintained to main-dealer safety standards.</p>
-                </article>
-
-                <article class="service-card">
-                    <h2>Airport &amp; Intercity Overland Transfers</h2>
-                    <p>Direct, flight-monitored transfers connecting Heathrow, Gatwick, Farnborough, Central London, Surrey, and destinations nationwide.</p>
-                </article>
-
-                <article class="service-card">
-                    <h2>Corporate &amp; Contract Transport</h2>
-                    <p>Dedicated account travel and tailored overland scheduling for businesses, visiting clients, and family transport requirements.</p>
-                </article>
-            </div>
-
-            <div class="credentials-box" aria-label="Company Registration Details">
-                <div class="cred-item">
-                    <span>Registered Entity</span>
-                    <strong>Negarix Luminaire Limited</strong>
-                </div>
-                <div class="cred-item">
-                    <span>Companies House No.</span>
-                    <strong>16073047 (England &amp; Wales)</strong>
-                </div>
-                <div class="cred-item">
-                    <span>VAT Registration</span>
-                    <strong>GB 483755256</strong>
-                </div>
-            </div>
-        </section>
-
-        <!-- Right Column: Secure Enquiry Form -->
-        <aside class="contact-card" aria-labelledby="form-heading">
-            <h2 id="form-heading">Booking &amp; General Enquiries</h2>
-            <p class="contact-sub">Send your journey requirements or account enquiry directly to our operations desk.</p>
-
-            <form id="contactForm" class="form"
-                  action="https://formspree.io/f/xdavzgko"
-                  method="POST" novalidate>
-
-                <!-- Anti-bot Honeypot -->
-                <label class="hp-field" aria-hidden="true">
-                    Leave empty
-                    <input type="text" id="inp-gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
-                </label>
-
-                <div class="field">
-                    <label class="field-label" for="inp-name">Your Name or Company</label>
-                    <input class="field-input" type="text" id="inp-name" name="name"
-                           required minlength="2" maxlength="100"
-                           autocomplete="name"
-                           placeholder="Full name or organisation">
-                </div>
-
-                <div class="field">
-                    <label class="field-label" for="inp-email">Email Address</label>
-                    <input class="field-input" type="email" id="inp-email" name="email"
-                           required maxlength="200"
-                           autocomplete="email"
-                           placeholder="name@domain.co.uk">
-                </div>
-
-                <div class="field">
-                    <label class="field-label" for="inp-message">
-                        <span>Journey or Enquiry Details</span>
-                        <span class="char-counter" id="charCounter">0 / 2000</span>
-                    </label>
-                    <textarea class="field-input" id="inp-message" name="message"
-                              required minlength="10" maxlength="2000"
-                              placeholder="Please include dates, pickup/drop-off locations, or general enquiry details..."></textarea>
-                </div>
-
-                <div class="recaptcha-wrap">
-                    <div class="g-recaptcha"
-                         data-sitekey="6LfesBotAAAAAG_Guq1ZKS5977I7_omstqT_YDE8"
-                         data-theme="light"></div>
-                </div>
-
-                <p id="formMsg" class="form-msg" role="alert" aria-live="polite"></p>
-
-                <button type="submit" id="submitBtn" class="submit-btn">
-                    Send Enquiry
-                </button>
-            </form>
-        </aside>
-
-    </main>
-
-    <footer class="site-footer">
-        <div class="footer-inner">
-            <div class="footer-statutory">
-                <strong>Negarix Luminaire Limited</strong> · Registered in England and Wales (No. 16073047) · VAT No. GB 483755256<br>
-                Registered Office: 4th Floor, Silverstream House, 45 Fitzroy Street, Fitzrovia, London, England, W1T 6EB
-            </div>
-            <div>&copy; <span id="footerYear">2026</span> Negarix Luminaire Limited</div>
-        </div>
-    </footer>
-
-    <script>
-    'use strict';
-
-    (function () {
-        const bootTimestamp = performance.now();
-        const yrEl = document.getElementById('footerYear');
-        if (yrEl) yrEl.textContent = String(new Date().getUTCFullYear());
-
-        const form       = document.getElementById('contactForm');
-        const inpName    = document.getElementById('inp-name');
-        const inpEmail   = document.getElementById('inp-email');
-        const inpMessage = document.getElementById('inp-message');
-        const inpGotcha  = document.getElementById('inp-gotcha');
-        const submitBtn  = document.getElementById('submitBtn');
-        const msgEl      = document.getElementById('formMsg');
-        const counterEl  = document.getElementById('charCounter');
-        const MAX_CHARS  = 2000;
-
-        const emailRx = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
-        let cooldownUntil = 0;
-
-        inpMessage.addEventListener('input', () => {
-            counterEl.textContent = inpMessage.value.length + ' / ' + MAX_CHARS;
-        });
-
-        function sanitiseText(str) {
-            return str.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '').trim();
-        }
-
-        function setStatus(text, type) {
-            msgEl.textContent = text;
-            msgEl.className = 'form-msg' + (type ? ' ' + type : '');
-        }
-
-        function completeSubmission() {
-            setStatus('Thank you. Your enquiry has been received.', 'success');
-            form.reset();
-            counterEl.textContent = '0 / ' + MAX_CHARS;
-            if (typeof grecaptcha !== 'undefined' && typeof grecaptcha.reset === 'function') {
-                grecaptcha.reset();
-            }
-        }
-
-        form.addEventListener('submit', async function (e) {
-            e.preventDefault();
-            setStatus('', '');
-
-            const now = performance.now();
-            if (now < cooldownUntil) {
-                const waitSec = Math.ceil((cooldownUntil - now) / 1000);
-                setStatus('Please wait ' + waitSec + ' seconds before sending another message.', 'error');
-                return;
-            }
-
-            const name     = sanitiseText(inpName.value);
-            const email    = sanitiseText(inpEmail.value);
-            const message  = sanitiseText(inpMessage.value);
-            const honeypot = inpGotcha.value;
-
-            // Silent trap for automated bots
-            if (honeypot.length > 0 || (now - bootTimestamp) < 2500) {
-                completeSubmission();
-                return;
-            }
-
-            if (name.length < 2 || name.length > 100) {
-                setStatus('Please enter your name or organisation (2 to 100 characters).', 'error');
-                inpName.focus();
-                return;
-            }
-            if (email.length > 200 || !emailRx.test(email)) {
-                setStatus('Please enter a valid email address.', 'error');
-                inpEmail.focus();
-                return;
-            }
-            if (message.length < 10) {
-                setStatus('Please enter at least 10 characters in your message.', 'error');
-                inpMessage.focus();
-                return;
-            }
-            if (message.length > MAX_CHARS) {
-                setStatus('Message exceeds the 2,000 character limit.', 'error');
-                inpMessage.focus();
-                return;
-            }
-
-            if (typeof grecaptcha === 'undefined' || typeof grecaptcha.getResponse !== 'function') {
-                setStatus('reCAPTCHA failed to load. Please check your connection or ad-blocker.', 'error');
-                return;
-            }
-            const captchaToken = grecaptcha.getResponse();
-            if (!captchaToken || captchaToken.length === 0) {
-                setStatus('Please complete the reCAPTCHA tickbox.', 'error');
-                return;
-            }
-
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
-            setStatus('Sending your enquiry...', 'info');
-
-            const payload = new FormData();
-            payload.append('name', name);
-            payload.append('email', email);
-            payload.append('message', message);
-            payload.append('g-recaptcha-response', captchaToken);
-
-            const controller = new AbortController();
-            const timeoutId  = setTimeout(() => controller.abort(), 10000);
-
-            try {
-                const res = await fetch(form.action, {
-                    method: 'POST',
-                    body: payload,
-                    headers: { 'Accept': 'application/json' },
-                    signal: controller.signal,
-                    referrerPolicy: 'strict-origin-when-cross-origin'
-                });
-
-                if (res.ok) {
-                    cooldownUntil = performance.now() + 30000;
-                    completeSubmission();
-                } else {
-                    setStatus('Could not send enquiry (error ' + res.status + '). Please try again shortly.', 'error');
-                }
-            } catch (err) {
-                if (err && err.name === 'AbortError') {
-                    setStatus('Request timed out. Please check your connection and try again.', 'error');
-                } else {
-                    setStatus('Network error. Please check your connection and try again.', 'error');
-                }
-            } finally {
-                clearTimeout(timeoutId);
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Send Enquiry';
-            }
-        });
-    })();
-    </script>
-</body>
-</html>
+            background
