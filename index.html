@@ -313,4 +313,365 @@
         .form-msg.info    { color: var(--text-muted); }
 
         .submit-btn {
-            background
+            background: var(--obsidian);
+            color: #ffffff;
+            border: 1px solid var(--obsidian);
+            padding: 13px 20px;
+            font-family: var(--font-sans);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover,
+        .submit-btn:focus-visible {
+            background: var(--gold);
+            border-color: var(--gold);
+            outline: none;
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        /* Clean, Organised Multi-Column Footer */
+        .site-footer {
+            background: var(--obsidian);
+            color: #d8d5ce;
+            border-top: 2px solid var(--gold);
+            font-size: 0.8rem;
+        }
+
+        .footer-inner {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 36px 28px 28px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-col h3 {
+            font-family: var(--font-serif);
+            font-size: 0.76rem;
+            font-weight: 400;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .footer-col p {
+            color: #a8a49c;
+            line-height: 1.65;
+            font-size: 0.78rem;
+        }
+
+        .footer-bottom {
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 0.73rem;
+            color: #85827a;
+        }
+
+        @media (max-width: 880px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 32px 20px;
+                gap: 36px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="header-monogram">Private Carriage &amp; Executive Travel</div>
+            <div class="header-locations">London · Surrey · United Kingdom</div>
+        </div>
+    </header>
+
+    <main class="main-container" role="main">
+
+        <!-- Left Column: Luxury Profile & Core Services -->
+        <section class="company-info" aria-labelledby="main-heading">
+            <div>
+                <span class="eyebrow">Bespoke Overland Passenger Transport</span>
+                <h1 class="hero-title" id="main-heading">Discreet, First-Class Overland Travel</h1>
+                <p class="hero-lead">
+                    We provide tailored door-to-door passenger transport, private chauffeur services, and scheduled corporate travel. Every journey is conducted in flagship hybrid luxury vehicles maintained to exacting main-dealer standards.
+                </p>
+            </div>
+
+            <div class="services-grid">
+                <article class="service-card">
+                    <h2>Executive Chauffeur &amp; Private Hire</h2>
+                    <p>Refined point-to-point carriage in long-wheelbase executive saloons and luxury multi-passenger vehicles, driven by experienced professionals.</p>
+                </article>
+
+                <article class="service-card">
+                    <h2>Private Aviation &amp; Airport Transfers</h2>
+                    <p>Flight-monitored arrivals and departures serving Heathrow, Gatwick, Farnborough, Biggin Hill, and private terminals nationwide.</p>
+                </article>
+
+                <article class="service-card">
+                    <h2>Corporate &amp; Retained Accounts</h2>
+                    <p>Dedicated overland scheduling for diplomatic missions, executive roadshows, visiting principals, and private family offices.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Right Column: Secure Reservation & Enquiry Card -->
+        <aside class="contact-card" aria-labelledby="form-heading">
+            <h2 id="form-heading">Reservations &amp; Enquiries</h2>
+            <p class="contact-sub">Submit your itinerary or account enquiry for a prompt, confidential response.</p>
+
+            <form id="contactForm" class="form"
+                  action="https://formspree.io/f/xdavzgko"
+                  method="POST" novalidate>
+
+                <!-- Anti-bot Honeypot -->
+                <label class="hp-field" aria-hidden="true">
+                    Leave empty
+                    <input type="text" id="inp-gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
+                </label>
+
+                <div class="field">
+                    <label class="field-label" for="inp-name">Name or Organisation</label>
+                    <input class="field-input" type="text" id="inp-name" name="name"
+                           required minlength="2" maxlength="100"
+                           autocomplete="name"
+                           placeholder="Full name or company">
+                </div>
+
+                <div class="field">
+                    <label class="field-label" for="inp-email">Email Address</label>
+                    <input class="field-input" type="email" id="inp-email" name="email"
+                           required maxlength="200"
+                           autocomplete="email"
+                           placeholder="name@domain.co.uk">
+                </div>
+
+                <div class="field">
+                    <label class="field-label" for="inp-message">
+                        <span>Itinerary or Enquiry</span>
+                        <span class="char-counter" id="charCounter">0 / 2000</span>
+                    </label>
+                    <textarea class="field-input" id="inp-message" name="message"
+                              required minlength="10" maxlength="2000"
+                              placeholder="Preferred dates, collection and destination points, or account requirements..."></textarea>
+                </div>
+
+                <div class="recaptcha-wrap">
+                    <div class="g-recaptcha"
+                         data-sitekey="6LfesBotAAAAAG_Guq1ZKS5977I7_omstqT_YDE8"
+                         data-theme="light"></div>
+                </div>
+
+                <p id="formMsg" class="form-msg" role="alert" aria-live="polite"></p>
+
+                <button type="submit" id="submitBtn" class="submit-btn">
+                    Request Consultation
+                </button>
+            </form>
+        </aside>
+
+    </main>
+
+    <!-- Organised Multi-Column Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Registered Office</h3>
+                    <p>
+                        4th Floor, Silverstream House<br>
+                        45 Fitzroy Street, Fitzrovia<br>
+                        London, W1T 6EB
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Service Coverage</h3>
+                    <p>
+                        Central London &amp; Surrey<br>
+                        Heathrow, Gatwick &amp; Farnborough<br>
+                        Nationwide UK Overland Carriage
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Corporate Registration</h3>
+                    <p>
+                        Negarix Luminaire Limited<br>
+                        Registered in England &amp; Wales: 16073047<br>
+                        VAT Registration: GB 483755256
+                    </p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>&copy; <span id="footerYear">2026</span> Negarix Luminaire Limited. All rights reserved.</span>
+                <span>SIC 49390 · Other Passenger Land Transport</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    'use strict';
+
+    (function () {
+        const bootTimestamp = performance.now();
+        const yrEl = document.getElementById('footerYear');
+        if (yrEl) yrEl.textContent = String(new Date().getUTCFullYear());
+
+        const form       = document.getElementById('contactForm');
+        const inpName    = document.getElementById('inp-name');
+        const inpEmail   = document.getElementById('inp-email');
+        const inpMessage = document.getElementById('inp-message');
+        const inpGotcha  = document.getElementById('inp-gotcha');
+        const submitBtn  = document.getElementById('submitBtn');
+        const msgEl      = document.getElementById('formMsg');
+        const counterEl  = document.getElementById('charCounter');
+        const MAX_CHARS  = 2000;
+
+        const emailRx = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+        let cooldownUntil = 0;
+
+        inpMessage.addEventListener('input', () => {
+            counterEl.textContent = inpMessage.value.length + ' / ' + MAX_CHARS;
+        });
+
+        function sanitiseText(str) {
+            return str.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '').trim();
+        }
+
+        function setStatus(text, type) {
+            msgEl.textContent = text;
+            msgEl.className = 'form-msg' + (type ? ' ' + type : '');
+        }
+
+        function completeSubmission() {
+            setStatus('Thank you. Your enquiry has been received by our reservations desk.', 'success');
+            form.reset();
+            counterEl.textContent = '0 / ' + MAX_CHARS;
+            if (typeof grecaptcha !== 'undefined' && typeof grecaptcha.reset === 'function') {
+                grecaptcha.reset();
+            }
+        }
+
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            setStatus('', '');
+
+            const now = performance.now();
+            if (now < cooldownUntil) {
+                const waitSec = Math.ceil((cooldownUntil - now) / 1000);
+                setStatus('Please wait ' + waitSec + ' seconds before submitting another request.', 'error');
+                return;
+            }
+
+            const name     = sanitiseText(inpName.value);
+            const email    = sanitiseText(inpEmail.value);
+            const message  = sanitiseText(inpMessage.value);
+            const honeypot = inpGotcha.value;
+
+            if (honeypot.length > 0 || (now - bootTimestamp) < 2500) {
+                completeSubmission();
+                return;
+            }
+
+            if (name.length < 2 || name.length > 100) {
+                setStatus('Please enter your name or organisation (2 to 100 characters).', 'error');
+                inpName.focus();
+                return;
+            }
+            if (email.length > 200 || !emailRx.test(email)) {
+                setStatus('Please enter a valid email address.', 'error');
+                inpEmail.focus();
+                return;
+            }
+            if (message.length < 10) {
+                setStatus('Please provide at least 10 characters of itinerary details.', 'error');
+                inpMessage.focus();
+                return;
+            }
+            if (message.length > MAX_CHARS) {
+                setStatus('Message exceeds the 2,000 character limit.', 'error');
+                inpMessage.focus();
+                return;
+            }
+
+            if (typeof grecaptcha === 'undefined' || typeof grecaptcha.getResponse !== 'function') {
+                setStatus('Security verification failed to load. Please check your connection.', 'error');
+                return;
+            }
+            const captchaToken = grecaptcha.getResponse();
+            if (!captchaToken || captchaToken.length === 0) {
+                setStatus('Please complete the security verification tickbox.', 'error');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Transmitting...';
+            setStatus('Sending your request...', 'info');
+
+            const payload = new FormData();
+            payload.append('name', name);
+            payload.append('email', email);
+            payload.append('message', message);
+            payload.append('g-recaptcha-response', captchaToken);
+
+            const controller = new AbortController();
+            const timeoutId  = setTimeout(() => controller.abort(), 10000);
+
+            try {
+                const res = await fetch(form.action, {
+                    method: 'POST',
+                    body: payload,
+                    headers: { 'Accept': 'application/json' },
+                    signal: controller.signal,
+                    referrerPolicy: 'strict-origin-when-cross-origin'
+                });
+
+                if (res.ok) {
+                    cooldownUntil = performance.now() + 30000;
+                    completeSubmission();
+                } else {
+                    setStatus('Unable to send request (error ' + res.status + '). Please try again shortly.', 'error');
+                }
+            } catch (err) {
+                if (err && err.name === 'AbortError') {
+                    setStatus('Request timed out. Please verify your connection and retry.', 'error');
+                } else {
+                    setStatus('Network error. Please verify your connection and retry.', 'error');
+                }
+            } finally {
+                clearTimeout(timeoutId);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Request Consultation';
+            }
+        });
+    })();
+    </script>
+</body>
+</html>
