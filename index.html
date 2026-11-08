@@ -1,2790 +1,665 @@
 <!DOCTYPE html>
-<html lang="en-GB" data-theme="light">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title>MÉRIDIAN · Gemini AGI v7.0 WebGPU &amp; Multi-Core Neuro-Symbolic Fabric</title>
 
+    <!-- Primary SEO Meta Tags -->
+    <title>Negarix Luminaire Limited | Overland Passenger Transport &amp; Executive Travel</title>
+    <meta name="description" content="Negarix Luminaire Limited (Company No. 16073047) provides bespoke overland passenger transport, executive private hire, and corporate travel across London, Surrey, and the United Kingdom.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.negarix.uk/">
+
+    <!-- Open Graph / Social Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:url" content="https://www.negarix.uk/">
+    <meta property="og:site_name" content="Negarix Luminaire Limited">
+    <meta property="og:title" content="Negarix Luminaire Limited | Overland Passenger Transport">
+    <meta property="og:description" content="Dependable overland passenger transport, airport transfers, and corporate travel across London, Surrey, and the UK.">
+
+    <!-- Hardened Content Security Policy -->
     <meta http-equiv="Content-Security-Policy" content="
         default-src 'none';
-        script-src 'self' 'unsafe-inline' blob:;
-        worker-src blob:;
-        child-src blob:;
+        script-src 'self' 'unsafe-inline' https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://www.recaptcha.net/;
+        frame-src https://www.google.com/recaptcha/ https://www.recaptcha.net/;
         style-src 'self' 'unsafe-inline';
-        img-src 'self' data: blob:;
-        connect-src 'none';
-        frame-src 'none';
+        connect-src 'self' https://formspree.io;
+        img-src 'self' data:;
         base-uri 'self';
-        form-action https://www.google.com https://scholar.google.com;
+        form-action https://formspree.io;
         object-src 'none';
         upgrade-insecure-requests;
     ">
 
+    <!-- Schema.org Structured Data for Search Engines -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Negarix Luminaire Limited",
+      "legalName": "NEGARIX LUMINAIRE LIMITED",
+      "url": "https://www.negarix.uk/",
+      "description": "Overland passenger land transport, executive private hire, airport transfers, and corporate travel services in London, Surrey, and across the United Kingdom.",
+      "identifier": "16073047",
+      "taxID": "GB483755256",
+      "foundingDate": "2024-11-10",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "4th Floor, Silverstream House, 45 Fitzroy Street, Fitzrovia",
+        "addressLocality": "London",
+        "postalCode": "W1T 6EB",
+        "addressCountry": "GB"
+      },
+      "areaServed": [
+        { "@type": "City", "name": "London" },
+        { "@type": "AdministrativeArea", "name": "Surrey" },
+        { "@type": "Country", "name": "United Kingdom" }
+      ]
+    }
+    </script>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
     <style>
-        /* -- DUAL-THEME TACTICAL TOKENS (DEFAULT: DAYLIGHT LAB) -- */
-        :root, [data-theme="light"] {
-            --bg:             #edf3ef;
-            --bg-grid:        rgba(0, 90, 34, 0.045);
-            --surface:        rgba(255, 255, 255, 0.95);
-            --surface-solid:  #ffffff;
-            --surface-alt:    #f4f9f6;
-            --surface-tint:   #e3f3ea;
-            --terminal-bg:    #050e08;
-            --terminal-text:  #c2ffd6;
-            --accent:         #007a2f;
-            --accent-hover:   #005a22;
-            --accent-bright:  #00b848;
-            --accent-soft:    rgba(0, 122, 47, 0.09);
-            --google-blue:    #1a73e8;
-            --google-soft:    rgba(26, 115, 232, 0.09);
-            --text:           #091a0f;
-            --text-muted:     #425e4b;
-            --border:         rgba(0, 102, 38, 0.22);
-            --border-hot:     #007a2f;
-            --shadow-sm:      0 2px 10px rgba(0, 80, 30, 0.07);
-            --shadow-md:      0 12px 30px rgba(0, 80, 30, 0.13);
-            --shadow-lg:      0 24px 60px rgba(10, 28, 16, 0.09), 0 1px 3px rgba(0, 0, 0, 0.05);
-            --font-mono:      'Courier New', Courier, monospace;
-            --transition:     0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            --max-w:          1280px;
+        :root {
+            --bg:          #f6f8f7;
+            --surface:     #ffffff;
+            --surface-alt: #eef2f0;
+            --primary:     #0f291e;
+            --accent:      #146c43;
+            --accent-hover:#0d5030;
+            --text:        #111c16;
+            --text-muted:  #4f6358;
+            --border:      #d5dfd9;
+            --border-focus:#146c43;
+            --error:       #b91c1c;
+            --success:     #146c43;
+            --shadow:      0 10px 30px rgba(15, 41, 30, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+            --radius:      6px;
+            --font-sans:   -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono:   ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         }
 
-        [data-theme="dark"] {
-            --bg:             #030805;
-            --bg-grid:        rgba(0, 255, 65, 0.04);
-            --surface:        rgba(6, 16, 9, 0.93);
-            --surface-solid:  #07130a;
-            --surface-alt:    #0a1b0f;
-            --surface-tint:   rgba(0, 255, 65, 0.11);
-            --terminal-bg:    #020603;
-            --terminal-text:  #00ff66;
-            --accent:         #00e63b;
-            --accent-hover:   #33ff66;
-            --accent-bright:  #00ff41;
-            --accent-soft:    rgba(0, 255, 65, 0.1);
-            --google-blue:    #66a3ff;
-            --google-soft:    rgba(102, 163, 255, 0.12);
-            --text:           #e4fcee;
-            --text-muted:     #7ba888;
-            --border:         rgba(0, 255, 65, 0.25);
-            --border-hot:     #00ff41;
-            --shadow-sm:      0 0 12px rgba(0, 255, 65, 0.15);
-            --shadow-md:      0 0 25px rgba(0, 255, 65, 0.25);
-            --shadow-lg:      0 24px 60px rgba(0, 0, 0, 0.85), 0 0 30px rgba(0, 255, 65, 0.1);
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        /* -- RESET & BASE ------------------------------------- */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
         html, body {
-            width: 100%; min-height: 100%;
-            background-color: var(--bg);
-            background-image:
-                linear-gradient(to right, var(--bg-grid) 1px, transparent 1px),
-                linear-gradient(to bottom, var(--bg-grid) 1px, transparent 1px);
-            background-size: 38px 38px;
-            color: var(--text);
-            font-family: var(--font-mono);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            line-height: 1.6;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        a { color: inherit; text-decoration: none; }
-        button { font-family: var(--font-mono); }
-
-        canvas.bg-canvas {
-            display: block;
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.42;
-        }
-
-        /* -- TOP SILICON TELEMETRY RIBBON --------------------- */
-        .telemetry-ribbon {
-            position: relative;
-            z-index: 101;
-            background: #051008;
-            color: #d0f5dc;
-            font-size: 0.68rem;
-            border-bottom: 1px solid var(--border);
-            padding: 8px 24px;
-        }
-        .ribbon-inner {
-            max-width: var(--max-w);
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 14px;
-        }
-        .ribbon-group {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            flex-wrap: wrap;
-        }
-        .ribbon-stat {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .ribbon-stat strong {
-            color: #00ff66;
-            font-weight: 700;
-        }
-        .ribbon-pill {
-            padding: 2px 8px;
-            background: rgba(0, 255, 102, 0.15);
-            border: 1px solid rgba(0, 255, 102, 0.45);
-            color: #00ff66;
-            font-weight: 700;
-            border-radius: 2px;
-        }
-
-        /* -- STICKY NAVIGATION BAR ---------------------------- */
-        .navbar {
-            position: sticky;
-            top: 0;
-            z-index: 100;
             width: 100%;
+            min-height: 100vh;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Header */
+        .site-header {
             background: var(--surface);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border);
         }
-        .nav-inner {
-            max-width: var(--max-w);
+
+        .header-inner {
+            max-width: 1120px;
             margin: 0 auto;
-            padding: 14px 24px;
+            padding: 18px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-wrap: wrap;
             gap: 16px;
         }
+
         .brand {
             display: flex;
-            align-items: center;
-            gap: 12px;
+            flex-direction: column;
         }
-        .status-dot {
-            width: 9px; height: 9px;
-            border-radius: 50%;
-            background: var(--accent-bright);
-            box-shadow: 0 0 10px var(--accent-bright);
-            animation: pulse-dot 2.2s ease-in-out infinite;
-            flex-shrink: 0;
-        }
+
         .brand-name {
-            font-size: 1.22rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            letter-spacing: 0.16em;
-            color: var(--text);
+            letter-spacing: 0.06em;
+            color: var(--primary);
+            text-transform: uppercase;
         }
-        .brand-tag {
-            font-size: 0.62rem;
-            padding: 2px 8px;
-            background: var(--accent-soft);
-            border: 1px solid var(--border);
-            color: var(--accent);
-            font-weight: 700;
-        }
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            font-size: 0.73rem;
-            font-weight: 700;
+
+        .brand-sub {
+            font-size: 0.78rem;
             color: var(--text-muted);
         }
-        .nav-links a:hover { color: var(--accent); }
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .cmd-palette-btn, .theme-toggle {
+
+        .reg-badge {
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            font-weight: 600;
+            color: var(--accent);
             background: var(--surface-alt);
-            color: var(--text);
             border: 1px solid var(--border);
-            padding: 8px 11px;
-            font-size: 0.67rem;
-            font-weight: 700;
-            cursor: pointer;
-            border-radius: 2px;
-            transition: var(--transition);
-        }
-        .cmd-palette-btn:hover, .theme-toggle:hover {
-            border-color: var(--border-hot);
-            color: var(--accent);
-        }
-        .btn-nav {
-            background: var(--accent);
-            color: #ffffff;
-            padding: 9px 15px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            border-radius: 2px;
-            border: 1px solid var(--accent);
-            transition: var(--transition);
-            white-space: nowrap;
-        }
-        [data-theme="dark"] .btn-nav { color: #030805; }
-        .btn-nav:hover {
-            background: var(--accent-hover);
-            box-shadow: var(--shadow-sm);
+            padding: 6px 12px;
+            border-radius: 4px;
         }
 
-        /* -- MAIN CONTAINER ----------------------------------- */
-        #app {
-            position: relative;
-            z-index: 10;
-            max-width: var(--max-w);
-            margin: 0 auto;
-            padding: 36px 24px 90px;
-            display: flex;
-            flex-direction: column;
-            gap: 68px;
-        }
-
-        .corner { position: absolute; width: 15px; height: 15px; pointer-events: none; }
-        .corner.tl { top: 10px; left: 10px; border-top: 2px solid var(--accent); border-left: 2px solid var(--accent); }
-        .corner.tr { top: 10px; right: 10px; border-top: 2px solid var(--accent); border-right: 2px solid var(--accent); }
-        .corner.bl { bottom: 10px; left: 10px; border-bottom: 2px solid var(--accent); border-left: 2px solid var(--accent); }
-        .corner.br { bottom: 10px; right: 10px; border-bottom: 2px solid var(--accent); border-right: 2px solid var(--accent); }
-
-        /* -- SECTION HEADERS ---------------------------------- */
-        .section-header {
-            margin-bottom: 22px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .section-tag {
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.18em;
-            color: var(--accent);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .section-tag::after {
-            content: '';
+        /* Main Two-Column Content Area */
+        .main-container {
             flex: 1;
-            height: 1px;
-            background: linear-gradient(to right, var(--border), transparent);
+            max-width: 1120px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 24px;
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 40px;
+            align-items: start;
         }
-        .section-title {
-            font-size: clamp(1.4rem, 2.8vw, 1.95rem);
+
+        /* Left Column: Company Profile & Services */
+        .company-info {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .hero-title {
+            font-size: clamp(1.75rem, 3.2vw, 2.35rem);
             font-weight: 700;
-            color: var(--text);
+            line-height: 1.22;
+            color: var(--primary);
         }
-        .section-desc {
+
+        .hero-lead {
+            margin-top: 14px;
+            font-size: 1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+
+        .service-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .service-card h2 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .service-card p {
             font-size: 0.88rem;
             color: var(--text-muted);
-            max-width: 880px;
+        }
+
+        .credentials-box {
+            background: var(--surface-alt);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            font-size: 0.82rem;
+        }
+
+        .cred-item span {
+            display: block;
+            font-size: 0.7rem;
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .cred-item strong {
+            color: var(--primary);
             font-weight: 600;
         }
 
-        /* -- LIVE GEMINI AGI NEURAL COMMAND ENGINE ------------ */
-        .agi-engine-shell {
+        /* Right Column: Hardened Contact Card */
+        .contact-card {
             background: var(--surface);
-            border: 2px solid var(--border-hot);
-            border-radius: 4px;
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
-            position: relative;
-        }
-        .agi-engine-header {
-            background: #06130a;
-            color: #d8f8e3;
-            padding: 14px 24px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            font-size: 0.72rem;
-            font-weight: 700;
-        }
-        .engine-badges {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        .e-badge {
-            padding: 3px 9px;
-            background: rgba(0, 255, 102, 0.12);
-            border: 1px solid rgba(0, 255, 102, 0.4);
-            color: #00ff66;
-            font-size: 0.64rem;
-            border-radius: 2px;
-        }
-        .e-badge.blue {
-            background: rgba(92, 157, 255, 0.15);
-            border-color: rgba(92, 157, 255, 0.5);
-            color: #7cb3ff;
-        }
-        .export-log-btn {
-            background: transparent;
-            color: #b8ffd0;
-            border: 1px solid rgba(0, 255, 102, 0.45);
-            padding: 3px 9px;
-            font-size: 0.64rem;
-            font-weight: 700;
-            cursor: pointer;
-            border-radius: 2px;
-        }
-        .export-log-btn:hover {
-            background: #00ff66;
-            color: #041007;
-        }
-
-        .agi-workspace {
-            display: grid;
-            grid-template-columns: 1.3fr 0.9fr;
-            border-bottom: 1px solid var(--border);
-        }
-
-        /* Left: Interactive Gemini AGI Prompt & Synthesis Stream */
-        .agi-console-pane {
-            background: var(--terminal-bg);
-            color: var(--terminal-text);
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid rgba(0, 255, 102, 0.22);
-        }
-        .agi-presets {
-            padding: 12px 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border-bottom: 1px solid rgba(0, 255, 102, 0.18);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 7px;
-            align-items: center;
-        }
-        .agi-presets span {
-            font-size: 0.65rem;
-            color: #84b595;
-            font-weight: 700;
-            margin-right: 4px;
-        }
-        .preset-btn {
-            background: rgba(0, 255, 102, 0.1);
-            color: #52ff91;
-            border: 1px solid rgba(0, 255, 102, 0.35);
-            padding: 5px 9px;
-            font-size: 0.66rem;
-            font-weight: 700;
-            cursor: pointer;
-            border-radius: 2px;
-            transition: var(--transition);
-        }
-        .preset-btn:hover {
-            background: #00ff66;
-            color: #030d06;
-        }
-
-        .agi-stream {
-            padding: 20px;
-            height: 440px;
-            overflow-y: auto;
-            font-size: 0.78rem;
-            line-height: 1.68;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .msg-block {
-            padding: 12px 14px;
-            border-left: 3px solid #00ff66;
-            background: rgba(0, 255, 102, 0.04);
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
-        .msg-block.user-query {
-            border-left-color: #66a3ff;
-            background: rgba(102, 163, 255, 0.07);
-            color: #ffffff;
-            font-weight: 700;
-        }
-        .msg-block .meta-line {
-            font-size: 0.65rem;
-            color: #7cb3ff;
-            margin-bottom: 5px;
-            display: block;
-            font-weight: 700;
-        }
-        .msg-block .highlight {
-            color: #ffffff;
-            font-weight: 700;
-        }
-        .msg-block .hash-sig {
-            margin-top: 8px;
-            padding-top: 6px;
-            border-top: 1px dashed rgba(0, 255, 102, 0.25);
-            font-size: 0.63rem;
-            color: #7ca889;
-            display: block;
-        }
-
-        .agi-input-bar {
-            display: flex;
-            align-items: center;
-            border-top: 1px solid rgba(0, 255, 102, 0.28);
-            background: #030905;
-            padding: 12px 18px;
-            gap: 12px;
-        }
-        .agi-prompt-label {
-            color: #00ff66;
-            font-weight: 700;
-            font-size: 0.8rem;
-            user-select: none;
-            white-space: nowrap;
-        }
-        .agi-input {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: #ffffff;
-            font-family: var(--font-mono);
-            font-size: 0.86rem;
-            font-weight: 700;
-            outline: none;
-        }
-        .agi-exec-btn {
-            background: #00ff66;
-            color: #030d06;
-            border: none;
-            padding: 9px 16px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            cursor: pointer;
-            border-radius: 2px;
-            letter-spacing: 0.08em;
-            transition: var(--transition);
-            white-space: nowrap;
-        }
-        .agi-exec-btn:hover {
-            background: #52ff91;
-            box-shadow: 0 0 14px rgba(0, 255, 102, 0.5);
-        }
-
-        /* Right: Live WebGPU/WebGL Shader & Multi-Core WebWorker Swarm Telemetry */
-        .agi-silicon-pane {
-            background: var(--surface-alt);
-            padding: 18px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .silicon-title {
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--accent);
-            letter-spacing: 0.1em;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 6px;
-        }
-        .shader-viewport {
-            position: relative;
-            width: 100%;
-            height: 150px;
-            background: #040c07;
-            border: 1px solid var(--border-hot);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-        #gpuTensorCanvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-        .shader-overlay {
-            position: absolute;
-            inset: 8px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            pointer-events: none;
-            font-size: 0.61rem;
-            font-weight: 700;
-            color: #b8ffd0;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
-        }
-        .shader-overlay-row {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        /* Multi-Core WebWorker Thread Matrix */
-        .core-matrix-wrap {
-            background: var(--surface-solid);
             border: 1px solid var(--border);
-            padding: 10px 12px;
-            border-radius: 2px;
+            border-radius: var(--radius);
+            padding: 28px;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-card h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .contact-sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .form {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 16px;
         }
-        .core-matrix-head {
+
+        .field {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.62rem;
-            font-weight: 700;
-            color: var(--text-muted);
-        }
-        .core-matrix-head strong { color: var(--accent); }
-        .core-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(74px, 1fr));
+            flex-direction: column;
             gap: 6px;
         }
-        .core-cell {
-            background: var(--surface-alt);
-            border: 1px solid var(--border);
-            padding: 5px 6px;
-            border-radius: 2px;
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-            transition: border-color 0.2s ease, background-color 0.2s ease;
-        }
-        .core-cell.active-burst {
-            border-color: var(--border-hot);
-            background: var(--surface-tint);
-        }
-        .core-cell-top {
+
+        .field-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--primary);
             display: flex;
             justify-content: space-between;
-            font-size: 0.58rem;
-            font-weight: 700;
-            color: var(--text);
         }
-        .core-cell-top span:last-child { color: var(--accent); }
-        .core-bar-bg {
+
+        .field-input {
             width: 100%;
-            height: 4px;
-            background: rgba(0, 122, 47, 0.12);
-            border-radius: 1px;
-            overflow: hidden;
-        }
-        .core-bar-fill {
-            height: 100%;
-            width: 18%;
-            background: var(--accent);
-            transition: width 0.25s ease;
-        }
-
-        .silicon-metrics-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-        .s-metric {
-            background: var(--surface-solid);
-            border: 1px solid var(--border);
-            padding: 8px 11px;
-            border-radius: 2px;
-        }
-        .s-metric span {
-            display: block;
-            font-size: 0.58rem;
-            font-weight: 700;
-            color: var(--text-muted);
-        }
-        .s-metric strong {
-            display: block;
-            font-size: 0.82rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-top: 2px;
-        }
-
-        .hdc-bar-wrap {
-            background: var(--surface-solid);
-            border: 1px solid var(--border);
-            padding: 9px 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .hdc-bar-head {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.6rem;
-            font-weight: 700;
-            color: var(--text-muted);
-        }
-        .hdc-spectrum {
-            display: grid;
-            grid-template-columns: repeat(16, 1fr);
-            gap: 3px;
-            height: 22px;
-            align-items: end;
-        }
-        .hdc-bin {
-            background: var(--accent);
-            width: 100%;
-            height: 40%;
-            transition: height 0.25s ease;
-            border-radius: 1px;
-        }
-
-        /* -- HERO COMMAND DECK WITH MULTI-MANIFOLD 3D/4D VISUALISER -- */
-        .hero-card {
-            position: relative;
-            background: var(--surface);
+            padding: 10px 12px;
             border: 1px solid var(--border);
             border-radius: 4px;
-            padding: clamp(28px, 4.5vw, 48px);
-            box-shadow: var(--shadow-lg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-        }
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 36px;
-            align-items: center;
-        }
-        .telemetry-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 5px 12px;
-            background: var(--accent-soft);
-            border: 1px solid var(--border);
-            font-size: 0.68rem;
-            font-weight: 700;
-            color: var(--accent);
-            letter-spacing: 0.12em;
-            margin-bottom: 16px;
-        }
-        .hero-title {
-            font-size: clamp(1.85rem, 3.8vw, 2.75rem);
-            font-weight: 700;
-            line-height: 1.16;
+            background: var(--surface);
             color: var(--text);
-        }
-        .hero-lead {
-            margin-top: 16px;
+            font-family: var(--font-sans);
             font-size: 0.92rem;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .field-input:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgba(20, 108, 67, 0.12);
+        }
+
+        textarea.field-input {
+            resize: vertical;
+            min-height: 95px;
+        }
+
+        .char-counter {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
             color: var(--text-muted);
-            font-weight: 600;
-            line-height: 1.75;
+            text-align: right;
         }
-        .hero-actions {
-            margin-top: 26px;
+
+        .hp-field {
+            position: absolute;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .recaptcha-wrap {
             display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
+            justify-content: center;
+            margin: 4px 0;
         }
-        .btn-primary {
+
+        .form-msg {
+            font-size: 0.82rem;
+            font-weight: 600;
+            min-height: 1.2em;
+        }
+        .form-msg.error   { color: var(--error); }
+        .form-msg.success { color: var(--success); }
+        .form-msg.info    { color: var(--text-muted); }
+
+        .submit-btn {
             background: var(--accent);
             color: #ffffff;
             border: 1px solid var(--accent);
-            padding: 13px 22px;
-            font-size: 0.76rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            border-radius: 2px;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-        [data-theme="dark"] .btn-primary { color: #030805; }
-        .btn-primary:hover {
-            background: var(--accent-hover);
-            box-shadow: var(--shadow-md);
-            transform: translateY(-1px);
-        }
-        .btn-secondary {
-            background: var(--surface-solid);
-            color: var(--text);
-            border: 1px solid var(--border-hot);
-            padding: 13px 22px;
-            font-size: 0.76rem;
-            font-weight: 700;
-            letter-spacing: 0.12em;
-            border-radius: 2px;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-        .btn-secondary:hover {
-            background: var(--surface-tint);
-            box-shadow: var(--shadow-sm);
-        }
-
-        /* Multi-Manifold 3D/4D Visualiser Deck */
-        .globe-deck {
-            background: var(--surface-alt);
-            border: 1px solid var(--border);
             border-radius: 4px;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .globe-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.66rem;
-            font-weight: 700;
-            color: var(--accent);
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 8px;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .manifold-Modes {
-            display: flex;
-            gap: 4px;
-        }
-        .m-mode-btn {
-            background: var(--surface-solid);
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            padding: 3px 8px;
-            font-size: 0.6rem;
-            font-weight: 700;
-            cursor: pointer;
-            border-radius: 2px;
-        }
-        .m-mode-btn.active {
-            background: var(--accent);
-            color: #ffffff;
-            border-color: var(--accent);
-        }
-        [data-theme="dark"] .m-mode-btn.active { color: #030805; }
-        .globe-wrap {
-            position: relative;
-            width: 100%;
-            height: 270px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        #globeCanvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-            cursor: crosshair;
-        }
-        .globe-footer {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            border-top: 1px solid var(--border);
-            padding-top: 10px;
-            font-size: 0.65rem;
-        }
-        .g-mini {
-            background: var(--surface-solid);
-            padding: 7px 10px;
-            border: 1px solid var(--border);
-        }
-        .g-mini span { display: block; color: var(--text-muted); font-size: 0.58rem; }
-        .g-mini strong { color: var(--accent); font-size: 0.75rem; }
-
-        /* -- GOOGLE ECOSYSTEM & CAPABILITIES CARDS ------------ */
-        .google-panel {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: clamp(24px, 4vw, 36px);
-            box-shadow: var(--shadow-lg);
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-        .google-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 5px 12px;
-            background: var(--google-soft);
-            border: 1px solid rgba(26, 115, 232, 0.35);
-            color: var(--google-blue);
-            font-size: 0.68rem;
-            font-weight: 700;
-            border-radius: 2px;
-        }
-        .grounding-box {
-            background: var(--surface-alt);
-            border: 1px solid var(--border);
-            padding: 20px;
-            border-radius: 3px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .grounding-form {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .grounding-input-wrap {
-            flex: 1;
-            min-width: 240px;
-            display: flex;
-            align-items: stretch;
-        }
-        .grounding-prefix {
-            display: flex;
-            align-items: center;
-            padding: 0 12px;
-            background: var(--google-soft);
-            border: 1px solid rgba(26, 115, 232, 0.35);
-            border-right: none;
-            color: var(--google-blue);
-            font-size: 0.75rem;
-            font-weight: 700;
-        }
-        .grounding-input {
-            flex: 1;
-            padding: 11px 14px;
-            border: 1px solid var(--border);
-            background: var(--surface-solid);
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
+            padding: 12px 18px;
+            font-family: var(--font-sans);
+            font-size: 0.92rem;
             font-weight: 600;
-            color: var(--text);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover,
+        .submit-btn:focus-visible {
+            background: var(--accent-hover);
             outline: none;
         }
-        .grounding-chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            align-items: center;
-            font-size: 0.68rem;
-        }
-        .chip-btn {
-            background: var(--surface-solid);
-            border: 1px solid var(--border);
-            padding: 5px 10px;
-            font-size: 0.67rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .chip-btn:hover {
-            border-color: var(--google-blue);
-            color: var(--google-blue);
-        }
-        .google-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 16px;
-        }
-        .g-card {
-            background: var(--surface-solid);
-            border: 1px solid var(--border);
-            padding: 18px;
-            border-top: 3px solid var(--google-blue);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .g-card h3 { font-size: 0.9rem; font-weight: 700; color: var(--text); }
-        .g-card p { font-size: 0.79rem; color: var(--text-muted); font-weight: 600; flex: 1; }
-        .g-meta { font-size: 0.63rem; font-weight: 700; color: var(--google-blue); }
 
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-            gap: 20px;
+        .submit-btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
         }
-        .tactical-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 24px;
-            box-shadow: var(--shadow-lg);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            transition: transform var(--transition), border-color var(--transition);
-        }
-        .tactical-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--border-hot);
-        }
-        .card-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .card-index {
-            font-size: 0.65rem;
-            font-weight: 700;
-            color: var(--accent);
-            background: var(--accent-soft);
-            padding: 3px 9px;
-            border: 1px solid var(--border);
-        }
-        .card-clearance { font-size: 0.63rem; font-weight: 700; color: var(--text-muted); }
-        .card-title { font-size: 1.02rem; font-weight: 700; color: var(--text); }
-        .card-desc { font-size: 0.82rem; color: var(--text-muted); font-weight: 600; flex: 1; }
-        .card-specs {
-            margin-top: 6px;
-            padding-top: 10px;
-            border-top: 1px dashed var(--border);
-            font-size: 0.69rem;
-            font-weight: 700;
-            color: var(--text);
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-        }
-        .card-specs span { color: var(--accent); }
 
-        /* -- CTA BANNER & FOOTER ------------------------------ */
-        .cta-banner {
-            background: var(--surface);
-            border: 2px solid var(--border-hot);
-            border-radius: 4px;
-            padding: clamp(24px, 4vw, 40px);
-            box-shadow: var(--shadow-lg);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 24px;
-            position: relative;
-        }
+        /* Statutory Footer */
         .site-footer {
-            border-top: 1px solid var(--border);
             background: var(--surface);
-            position: relative;
-            z-index: 10;
+            border-top: 1px solid var(--border);
+            font-size: 0.78rem;
+            color: var(--text-muted);
         }
+
         .footer-inner {
-            max-width: var(--max-w);
+            max-width: 1120px;
             margin: 0 auto;
-            padding: 26px 24px;
+            padding: 20px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 18px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--text-muted);
-        }
-        .footer-links { display: flex; gap: 20px; }
-        .footer-links a:hover { color: var(--accent); }
-
-        /* -- COMMAND PALETTE MODAL (CTRL+K) ------------------- */
-        .palette-backdrop {
-            position: fixed;
-            inset: 0;
-            background: rgba(3, 10, 5, 0.76);
-            backdrop-filter: blur(8px);
-            z-index: 2000;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 80px 20px 20px;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-        }
-        .palette-backdrop.open {
-            opacity: 1;
-            visibility: visible;
-        }
-        .palette-card {
-            width: 100%;
-            max-width: 580px;
-            background: var(--surface-solid);
-            border: 2px solid var(--border-hot);
-            border-radius: 4px;
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
-        }
-        .palette-head {
-            padding: 12px 18px;
-            background: var(--accent-soft);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.72rem;
-            font-weight: 700;
-            color: var(--accent);
-        }
-        .palette-list {
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .palette-item {
-            width: 100%;
-            text-align: left;
-            background: var(--surface-alt);
-            border: 1px solid var(--border);
-            padding: 10px 14px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: var(--text);
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 2px;
-            transition: var(--transition);
-        }
-        .palette-item:hover {
-            border-color: var(--border-hot);
-            background: var(--surface-tint);
-            color: var(--accent);
-        }
-        .palette-item small {
-            color: var(--text-muted);
-            font-size: 0.65rem;
+            gap: 12px;
         }
 
-        @keyframes pulse-dot {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 184, 72, 0.55); }
-            50%      { box-shadow: 0 0 0 6px rgba(0, 184, 72, 0); }
+        .footer-statutory {
+            line-height: 1.5;
         }
-        @media (prefers-reduced-motion: reduce) {
-            #particleCanvas { display: none; }
+
+        .footer-statutory strong {
+            color: var(--primary);
         }
-        @media (max-width: 980px) {
-            .agi-workspace, .hero-grid { grid-template-columns: 1fr; }
-            .agi-console-pane { border-right: none; border-bottom: 1px solid var(--border); }
-            .nav-links { display: none; }
+
+        @media (max-width: 860px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 28px 20px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Background spatial particle canvas -->
-    <canvas id="particleCanvas" class="bg-canvas" aria-hidden="true"></canvas>
-
-    <!-- Top Live Silicon & Hardware Telemetry Ribbon -->
-    <div class="telemetry-ribbon" role="region" aria-label="Silicon Compute Telemetry">
-        <div class="ribbon-inner">
-            <div class="ribbon-group">
-                <span class="ribbon-pill">GEMINI AGI QUANTUM CORE v7.0</span>
-                <span class="ribbon-stat">LOCAL GPU SILICON: <strong id="hwGpuName">PROBING ADAPTER...</strong></span>
-                <span class="ribbon-stat">WEBWORKER POOL: <strong id="hwCpuCores">SPAWNING THREADS...</strong></span>
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <span class="brand-name">Negarix Luminaire Limited</span>
+                <span class="brand-sub">Overland Passenger Transport &amp; Executive Travel</span>
             </div>
-            <div class="ribbon-group">
-                <span class="ribbon-stat">EPISODIC MEMORY: <strong id="memCountLabel">1 VECTOR INDEXED</strong></span>
-                <span class="ribbon-stat">UTC: <strong id="liveClock">SYNCHRONISING...</strong></span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Sticky Navigation -->
-    <header class="navbar">
-        <div class="nav-inner">
-            <a href="index.html" class="brand">
-                <div class="status-dot" aria-hidden="true"></div>
-                <span class="brand-name">MÉRIDIAN</span>
-                <span class="brand-tag">AGI CORE v7.0</span>
-            </a>
-
-            <nav class="nav-links" aria-label="Primary Navigation">
-                <a href="#gemini-agi-engine">Gemini AGI Prompt</a>
-                <a href="#overview">4D Topology</a>
-                <a href="#google-ecosystem">Google Grounding</a>
-                <a href="#capabilities">Neuro-Symbolic Core</a>
-                <a href="contact.html">Comms Relay</a>
-            </nav>
-
-            <div class="nav-right">
-                <button type="button" id="openPaletteBtn" class="cmd-palette-btn" title="Open Command Palette (Ctrl+K)">
-                    ⌘K COMMANDS
-                </button>
-                <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch colour theme">
-                    MODE: DAYLIGHT
-                </button>
-                <a href="contact.html" class="btn-nav">Encrypted Comms →</a>
-            </div>
+            <div class="reg-badge">UK Company No. 16073047</div>
         </div>
     </header>
 
-    <!-- Main Container -->
-    <main id="app" role="main">
+    <main class="main-container" role="main">
 
-        <!-- SECTION 01: LIVE GEMINI AGI WEBGPU + MULTI-THREADED CPU SWARM ENGINE -->
-        <section id="gemini-agi-engine" aria-labelledby="engine-heading">
-            <div class="section-header">
-                <div class="section-tag">01 // Client-Silicon Parallel Neuro-Symbolic Intelligence</div>
-                <h1 class="section-title" id="engine-heading">Live Gemini AGI Command Prompt, WebGPU Compute &amp; Associative Memory</h1>
-                <p class="section-desc">
-                    Executes genuine <strong>WebGPU WGSL compute shaders</strong>, <strong>WebGL2 relativistic wave-interference kernels</strong>, and a <strong>multi-core WebWorker CPU swarm</strong> directly on your machine. Discover exact laws behind number sequences, run Fourier spectral analysis, factorise large integers, encrypt payloads with WebCrypto AES-256-GCM, or recall past session directives from the 10,240-D associative vector memory.
-                </p>
-            </div>
-
-            <div class="agi-engine-shell">
-                <div class="agi-engine-header">
-                    <span>GEMINI-AGI://WEBGPU-SILICON-SWARM · ZERO-LATENCY CLIENT CPU + GPU EXECUTION</span>
-                    <div class="engine-badges">
-                        <span class="e-badge" id="gpuApiBadge">GPU: PROBING WEBGPU...</span>
-                        <span class="e-badge blue" id="workerBadge">CPU: MULTI-THREADED WEBWORKERS</span>
-                        <button type="button" id="exportLogBtn" class="export-log-btn">EXPORT SESSION JSON </button>
-                    </div>
-                </div>
-
-                <div class="agi-workspace">
-                    <!-- Left: Interactive Command Stream & Prompt -->
-                    <div class="agi-console-pane">
-                        <div class="agi-presets">
-                            <span>Execute Silicon Task:</span>
-                            <button type="button" class="preset-btn" data-prompt="predict: 2, 9, 28, 65, 126, 217">Cubic Polynomial Law</button>
-                            <button type="button" class="preset-btn" data-prompt="predict: 1, 1, 2, 3, 5, 8, 13, 21, 34">Fibonacci Attractor</button>
-                            <button type="button" class="preset-btn" data-prompt="factor: 9999991">Prime Factorisation</button>
-                            <button type="button" class="preset-btn" data-prompt="encrypt: Sovereign zero-trust payload verification active">AES-256-GCM Seal</button>
-                            <button type="button" class="preset-btn" data-prompt="recall: polynomial law">Associative Recall</button>
-                            <button type="button" class="preset-btn" data-prompt="benchmark: Execute full WebGPU WGSL compute + all-core WebWorker stress test">All-Silicon Stress Test</button>
-                            <button type="button" class="preset-btn" data-prompt="clear">Clear</button>
-                        </div>
-
-                        <div class="agi-stream" id="agiStream" role="log" aria-live="polite">
-                            <div class="msg-block">
-                                <span class="meta-line">[SYSTEM INITIALISED · WEBGPU COMPUTE + MULTI-CORE CPU SWARM + 10,240-D MEMORY ONLINE]</span>
-                                Welcome to the <strong>MÉRIDIAN Gemini AGI v7.0 Co-Processor</strong>. All mathematical, cryptographic, and tensor operations execute locally on your CPU cores and GPU shader pipelines.<br><br>
-                                • <strong>Sequence &amp; Fourier Extrapolation:</strong> Enter <span class="highlight">predict: 4, 18, 48, 100, 180</span> or any numerical series.<br>
-                                • <strong>Number Theory &amp; Factorisation:</strong> Enter <span class="highlight">factor: 9999991</span> to compute prime decomposition, Euler's totient φ(n), and primality proofs.<br>
-                                • <strong>Zero-Knowledge Encryption:</strong> Enter <span class="highlight">encrypt: your text</span> to run hardware-accelerated WebCrypto AES-256-GCM encryption.<br>
-                                • <strong>10,240-D Associative Memory Recall:</strong> Enter <span class="highlight">recall: your topic</span> to search past session vectors by cosine similarity.
-                            </div>
-                        </div>
-
-                        <form id="agiForm" class="agi-input-bar" autocomplete="off">
-                            <span class="agi-prompt-label">gemini-agi://v7:~$</span>
-                            <input type="text" id="agiInput" class="agi-input"
-                                   placeholder="Enter sequence, 'factor: N', 'encrypt: text', 'recall: query', or strategic directive..."
-                                   spellcheck="false" aria-label="Gemini AGI command prompt">
-                            <button type="submit" class="agi-exec-btn">DISPATCH TO SILICON ⚡</button>
-                        </form>
-                    </div>
-
-                    <!-- Right: Real-Time WebGPU/WebGL Shader & Multi-Core WebWorker Matrix -->
-                    <aside class="agi-silicon-pane" aria-label="Live GPU and Multi-Core CPU Silicon Telemetry">
-                        <div class="silicon-title">
-                            <span>LIVE GPU TENSOR FIELD (WEBGPU + GLSL)</span>
-                            <span id="shaderFps">60.0 FPS · VRAM ACTIVE</span>
-                        </div>
-
-                        <div class="shader-viewport">
-                            <canvas id="gpuTensorCanvas"></canvas>
-                            <div class="shader-overlay">
-                                <div class="shader-overlay-row">
-                                    <span id="shaderModeLabel">KERNEL: WEBGPU + GLSL TENSOR CONVOLUTION</span>
-                                    <span id="gpuExecTime">GPU PASS: 0.12 ms</span>
-                                </div>
-                                <div class="shader-overlay-row">
-                                    <span id="tensorEnergyLabel">TENSOR FIELD ENERGY: 0.842</span>
-                                    <span id="lyapunovLabel">LYAPUNOV λ: +0.014 (STABLE)</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Live Per-Core WebWorker Telemetry Grid -->
-                        <div class="core-matrix-wrap">
-                            <div class="core-matrix-head">
-                                <span>PARALLEL CPU WEBWORKER SWARM MATRIX</span>
-                                <strong id="swarmStatusText">ALL THREADS SYNCHRONISED</strong>
-                            </div>
-                            <div class="core-grid" id="cpuCoreGrid"></div>
-                        </div>
-
-                        <div class="silicon-metrics-grid">
-                            <div class="s-metric">
-                                <span>SWARM WALL-CLOCK LATENCY</span>
-                                <strong id="metricCpuTime">0.38 ms (PARALLEL)</strong>
-                            </div>
-                            <div class="s-metric">
-                                <span>SHANNON ENTROPY (H)</span>
-                                <strong id="metricEntropy">4.128 bits/sym</strong>
-                            </div>
-                            <div class="s-metric">
-                                <span>MCTS ROLLOUTS / DISPATCH</span>
-                                <strong id="metricRollouts">16,384 TRAJECTORIES</strong>
-                            </div>
-                            <div class="s-metric">
-                                <span>COMBINED SILICON THROUGHPUT</span>
-                                <strong id="metricFlops">112.4 GFLOPS (LOCAL)</strong>
-                            </div>
-                        </div>
-
-                        <div class="hdc-bar-wrap">
-                            <div class="hdc-bar-head">
-                                <span>10,240-D ORTHOGONAL EIGEN-SPECTRUM (FUSED WORKER REDUCTION)</span>
-                                <span id="hdcCosine">RESONANCE: 0.991</span>
-                            </div>
-                            <div class="hdc-spectrum" id="hdcSpectrum">
-                                <div class="hdc-bin"></div><div class="hdc-bin"></div><div class="hdc-bin"></div><div class="hdc-bin"></div>
-                                <div class="hdc-bin"></div><div class="hdc-bin"></div><div class="hdc-bin"></div><div class="hdc-bin"></div>
-                                <div class="hdc-bin"></div><div class="hdc-bin"></div><div class="hdc-bin"></div><div class="hdc-bin"></div>
-                                <div class="hdc-bin"></div><div class="hdc-bin"></div><div class="hdc-bin"></div><div class="hdc-bin"></div>
-                            </div>
-                        </div>
-                    </aside>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION 02: MULTI-MANIFOLD 3D / 4D MATHEMATICAL VISUALISER -->
-        <section id="overview" class="hero-card" aria-labelledby="hero-heading">
-            <div class="corner tl"></div>
-            <div class="corner tr"></div>
-            <div class="corner bl"></div>
-            <div class="corner br"></div>
-
-            <div class="hero-grid">
-                <div>
-                    <div class="telemetry-badge">
-                        <span>SOVEREIGN NEURO-SYMBOLIC ARCHITECTURE</span>
-                    </div>
-
-                    <h2 class="hero-title" id="hero-heading">Deterministic Mathematical &amp; Cognitive Infrastructure</h2>
-                    <p class="hero-lead">
-                        Standard language models approximate surface probabilities. MÉRIDIAN v7.0 combines multi-threaded client-side silicon execution, 10,240-dimensional associative hypervectors, and federated Google Cloud Trillium TPU supercomputing to deliver verifiable pattern discovery and post-quantum containment.
-                    </p>
-
-                    <div class="hero-actions">
-                        <a href="contact.html" class="btn-primary">
-                            <span>Open Encrypted Comms Channel</span>
-                            <span aria-hidden="true">→</span>
-                        </a>
-                        <a href="#google-ecosystem" class="btn-secondary">
-                            Inspect Google Cloud Federation
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Interactive 3D Geodesic / 4D Tesseract / Lorenz Attractor Deck -->
-                <aside class="globe-deck" aria-label="Interactive Multi-Manifold Mathematical Visualiser">
-                    <div class="globe-header">
-                        <span id="manifoldLabel">MANIFOLD: 3D GEODESIC SPHERE</span>
-                        <div class="manifold-Modes">
-                            <button type="button" class="m-mode-btn active" data-manifold="globe">3D GLOBE</button>
-                            <button type="button" class="m-mode-btn" data-manifold="tesseract">4D HYPERCUBE</button>
-                            <button type="button" class="m-mode-btn" data-manifold="lorenz">LORENZ RK4</button>
-                        </div>
-                    </div>
-
-                    <div class="globe-wrap">
-                        <canvas id="globeCanvas"></canvas>
-                    </div>
-
-                    <div class="globe-footer">
-                        <div class="g-mini">
-                            <span>COORDINATE STATE</span>
-                            <strong id="globeCoord">51.23°N · 0.57°W</strong>
-                        </div>
-                        <div class="g-mini">
-                            <span>CONTEXT HORIZON</span>
-                            <strong>10M TOKENS</strong>
-                        </div>
-                        <div class="g-mini">
-                            <span>FORMAL VERIFIER</span>
-                            <strong>LEAN-4 PROOF</strong>
-                        </div>
-                    </div>
-                </aside>
-            </div>
-        </section>
-
-        <!-- SECTION 03: GOOGLE ECOSYSTEM & EPISTEMIC GROUNDING -->
-        <section id="google-ecosystem" aria-labelledby="google-heading">
-            <div class="section-header">
-                <div class="section-tag">02 // Hyperscale Federation &amp; Live Grounding</div>
-                <h2 class="section-title" id="google-heading">Google Cloud TPU Fabric &amp; Epistemic Grounding</h2>
-                <p class="section-desc">
-                    Cross-check autonomous hypotheses and mathematical syntheses against live Google Search indices and Google Scholar peer-reviewed corpora.
-                </p>
-            </div>
-
-            <div class="google-panel">
-                <div>
-                    <span class="google-badge">GOOGLE CLOUD &amp; RESEARCH INTERCONNECT · ACTIVE</span>
-                    <h3 style="margin-top:10px; font-size:1.15rem;">Interactive Epistemic Grounding Terminal</h3>
-                </div>
-
-                <div class="grounding-box">
-                    <form id="googleGroundingForm" class="grounding-form" action="https://www.google.com/search" method="GET" target="_blank" rel="noopener noreferrer">
-                        <div class="grounding-input-wrap">
-                            <span class="grounding-prefix">GOOGLE://</span>
-                            <input type="text" id="groundingQuery" name="q" class="grounding-input"
-                                   placeholder="Query hyperdimensional computing, DeepMind interpretability, or TPU specifications..."
-                                   required>
-                        </div>
-                        <button type="submit" class="btn-primary" style="background:var(--google-blue); border-color:var(--google-blue); color:#fff;">
-                            Grounded Search ↗
-                        </button>
-                        <button type="button" id="scholarBtn" class="btn-secondary">
-                            Google Scholar ↗
-                        </button>
-                    </form>
-
-                    <div class="grounding-chips">
-                        <strong>Research presets:</strong>
-                        <button type="button" class="chip-btn" data-query="Hyperdimensional computing vector symbolic architectures neuro-symbolic AI">Hyperdimensional Computing</button>
-                        <button type="button" class="chip-btn" data-query="Google DeepMind mechanistic interpretability sparse autoencoders">Mechanistic Interpretability</button>
-                        <button type="button" class="chip-btn" data-query="Google Cloud TPU Trillium v6e optical interconnect architecture">Google TPU v6e Architecture</button>
-                        <button type="button" class="chip-btn" data-query="WebGPU WGSL compute shaders client-side neural network acceleration">WebGPU WGSL Acceleration</button>
-                    </div>
-                </div>
-
-                <div class="google-grid">
-                    <article class="g-card">
-                        <span class="g-meta">EXASCALE FABRIC</span>
-                        <h3>Google Cloud TPU v6e Pods</h3>
-                        <p>Optical inter-chip interconnects delivering massive distributed bandwidth for multi-trillion parameter deliberative inference.</p>
-                    </article>
-                    <article class="g-card">
-                        <span class="g-meta">HYBRID ORCHESTRATION</span>
-                        <h3>Edge-to-Vertex AI Routing</h3>
-                        <p>Combines local client-side WebGPU/WebWorker execution with sovereign Google Vertex AI enclaves under zero data retention.</p>
-                    </article>
-                    <article class="g-card">
-                        <span class="g-meta">HARDWARE ATTESTATION</span>
-                        <h3>Confidential GKE Nodes</h3>
-                        <p>Real-time RAM encryption via AMD SEV-SNP and Intel TDX so model weights and operator prompts never exist in plaintext.</p>
-                    </article>
-                    <article class="g-card">
-                        <span class="g-meta">FACTUAL CONSENSUS</span>
-                        <h3>Live Search Grounding</h3>
-                        <p>Cross-checks internal reasoning chains against live Google indices and scholarly literature before emitting responses.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECTION 04: SIX-PILLAR NEURO-SYMBOLIC ARCHITECTURE -->
-        <section id="capabilities" aria-labelledby="cap-heading">
-            <div class="section-header">
-                <div class="section-tag">03 // Core Cognitive Architecture</div>
-                <h2 class="section-title" id="cap-heading">Six Pillars of Sovereign General Intelligence</h2>
-            </div>
-
-            <div class="grid-3">
-                <article class="tactical-card">
-                    <div class="card-top">
-                        <span class="card-index">AGI-MOD 01</span>
-                        <span class="card-clearance">MULTI-CORE SWARM</span>
-                    </div>
-                    <h3 class="card-title">Parallel WebWorker Thread Pool</h3>
-                    <p class="card-desc">Spawns dedicated background compute threads across every logical CPU core to execute simultaneous Monte Carlo Tree Search rollouts and vector reductions without blocking UI rendering.</p>
-                    <div class="card-specs">
-                        <div>Concurrency: <span>Up to 16 Hardware Worker Threads</span></div>
-                        <div>Reduction: <span>Lock-Free Asynchronous MapReduce</span></div>
-                    </div>
-                </article>
-
-                <article class="tactical-card">
-                    <div class="card-top">
-                        <span class="card-index">AGI-MOD 02</span>
-                        <span class="card-clearance">WEBGPU COMPUTE</span>
-                    </div>
-                    <h3 class="card-title">Native WebGPU WGSL &amp; GLSL Kernels</h3>
-                    <p class="card-desc">Executes hardware `@compute` matrix-vector contractions and parallel wave-interference kernels directly on the visitor's GPU silicon with zero network latency.</p>
-                    <div class="card-specs">
-                        <div>Pipeline: <span>WebGPU WGSL + WebGL2 Shaders</span></div>
-                        <div>Readback: <span>Sub-Millisecond VRAM Buffer Sync</span></div>
-                    </div>
-                </article>
-
-                <article class="tactical-card">
-                    <div class="card-top">
-                        <span class="card-index">AGI-MOD 03</span>
-                        <span class="card-clearance">EXACT CALCULUS</span>
-                    </div>
-                    <h3 class="card-title">Finite-Difference &amp; Spectral Solver</h3>
-                    <p class="card-desc">Constructs $N$-th order discrete derivative tables, prime factorisations, and Discrete Fourier Transforms across worker threads to extract exact laws from raw observations.</p>
-                    <div class="card-specs">
-                        <div>Solver: <span>Newton Forward-Difference &amp; DFT</span></div>
-                        <div>Precision: <span>Deterministic Symbolic Extrapolation</span></div>
-                    </div>
-                </article>
-
-                <article class="tactical-card">
-                    <div class="card-top">
-                        <span class="card-index">AGI-MOD 04</span>
-                        <span class="card-clearance">VECTOR MEMORY</span>
-                    </div>
-                    <h3 class="card-title">10,240-D Associative Episodic Graph</h3>
-                    <p class="card-desc">Binds every session directive into an orthogonal 10,240-dimensional hypervector graph, enabling instant algebraic similarity recall and exportable audit logs.</p>
-                    <div class="card-specs">
-                        <div>Retrieval: <span>Exact Cosine Similarity Search</span></div>
-                        <div>Audit: <span>WebCrypto SHA-256 State Proofs</span></div>
-                    </div>
-                </article>
-
-                <article class="tactical-card">
-                    <div class="card-top">
-                        <span class="card-index">AGI-MOD 05</span>
-                        <span class="card-clearance">CRYPTOGRAPHIC</span>
-                    </div>
-                    <h3 class="card-title">Post-Quantum &amp; AES-256-GCM Defence</h3>
-                    <p class="card-desc">Protects inference channels with NIST FIPS 203/204 hybrid key encapsulation, native browser AES-256-GCM authenticated encryption, and strict CSP isolation.</p>
-                    <div class="card-specs">
-                        <div>Cipher: <span>WebCrypto AES-256-GCM + ML-KEM</span></div>
-                        <div>Policy: <span>Strict CSP Level-3 Enforced</span></div>
-                    </div>
-                </article>
-
-                <article class="tactical-card">
-                    <div class="card-top">
-                        <span class="card-index">AGI-MOD 06</span>
-                        <span class="card-clearance">SOVEREIGN</span>
-                    </div>
-                    <h3 class="card-title">Zero-Retention Sovereign Enclaves</h3>
-                    <p class="card-desc">Operates across UK-South and European sovereign enclaves with zero persistent storage of client prompts and full statutory compliance.</p>
-                    <div class="card-specs">
-                        <div>Compliance: <span>UK GDPR · NCSC Aligned</span></div>
-                        <div>Architecture: <span>Client-First Ephemeral Compute</span></div>
-                    </div>
-                </article>
-            </div>
-        </section>
-
-        <!-- Call to Action -->
-        <section class="cta-banner" aria-labelledby="cta-heading">
-            <div class="corner tl"></div>
-            <div class="corner tr"></div>
-            <div class="corner bl"></div>
-            <div class="corner br"></div>
-
+        <!-- Left Column: Business Overview & Services -->
+        <section class="company-info" aria-labelledby="main-heading">
             <div>
-                <h2 style="font-size:clamp(1.3rem, 2.5vw, 1.75rem); font-weight:700;" id="cta-heading">Ready to Initialise a Sovereign Engagement?</h2>
-                <p style="font-size:0.88rem; color:var(--text-muted); font-weight:600; margin-top:6px;">
-                    Route your transmission through our protected, client-encrypted communications terminal.
+                <span class="eyebrow">SIC 49390 · Passenger Land Transport</span>
+                <h1 class="hero-title" id="main-heading">Dependable Overland Passenger Transport Across London, Surrey &amp; the UK</h1>
+                <p class="hero-lead">
+                    Negarix Luminaire Limited provides professional overland passenger transport, private hire, and scheduled corporate travel. We combine modern plug-in hybrid vehicles with punctual, discreet door-to-door service.
                 </p>
             </div>
 
-            <a href="contact.html" class="btn-primary">
-                <span>Launch Secure Contact Terminal</span>
-                <span aria-hidden="true">→</span>
-            </a>
+            <div class="services-grid">
+                <article class="service-card">
+                    <h2>Executive Private Hire &amp; Chauffeur Services</h2>
+                    <p>Point-to-point passenger transport in executive saloons and multi-passenger hybrid vehicles, maintained to main-dealer safety standards.</p>
+                </article>
+
+                <article class="service-card">
+                    <h2>Airport &amp; Intercity Overland Transfers</h2>
+                    <p>Direct, flight-monitored transfers connecting Heathrow, Gatwick, Farnborough, Central London, Surrey, and destinations nationwide.</p>
+                </article>
+
+                <article class="service-card">
+                    <h2>Corporate &amp; Contract Transport</h2>
+                    <p>Dedicated account travel and tailored overland scheduling for businesses, visiting clients, and family transport requirements.</p>
+                </article>
+            </div>
+
+            <div class="credentials-box" aria-label="Company Registration Details">
+                <div class="cred-item">
+                    <span>Registered Entity</span>
+                    <strong>Negarix Luminaire Limited</strong>
+                </div>
+                <div class="cred-item">
+                    <span>Companies House No.</span>
+                    <strong>16073047 (England &amp; Wales)</strong>
+                </div>
+                <div class="cred-item">
+                    <span>VAT Registration</span>
+                    <strong>GB 483755256</strong>
+                </div>
+            </div>
         </section>
+
+        <!-- Right Column: Secure Enquiry Form -->
+        <aside class="contact-card" aria-labelledby="form-heading">
+            <h2 id="form-heading">Booking &amp; General Enquiries</h2>
+            <p class="contact-sub">Send your journey requirements or account enquiry directly to our operations desk.</p>
+
+            <form id="contactForm" class="form"
+                  action="https://formspree.io/f/xdavzgko"
+                  method="POST" novalidate>
+
+                <!-- Anti-bot Honeypot -->
+                <label class="hp-field" aria-hidden="true">
+                    Leave empty
+                    <input type="text" id="inp-gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
+                </label>
+
+                <div class="field">
+                    <label class="field-label" for="inp-name">Your Name or Company</label>
+                    <input class="field-input" type="text" id="inp-name" name="name"
+                           required minlength="2" maxlength="100"
+                           autocomplete="name"
+                           placeholder="Full name or organisation">
+                </div>
+
+                <div class="field">
+                    <label class="field-label" for="inp-email">Email Address</label>
+                    <input class="field-input" type="email" id="inp-email" name="email"
+                           required maxlength="200"
+                           autocomplete="email"
+                           placeholder="name@domain.co.uk">
+                </div>
+
+                <div class="field">
+                    <label class="field-label" for="inp-message">
+                        <span>Journey or Enquiry Details</span>
+                        <span class="char-counter" id="charCounter">0 / 2000</span>
+                    </label>
+                    <textarea class="field-input" id="inp-message" name="message"
+                              required minlength="10" maxlength="2000"
+                              placeholder="Please include dates, pickup/drop-off locations, or general enquiry details..."></textarea>
+                </div>
+
+                <div class="recaptcha-wrap">
+                    <div class="g-recaptcha"
+                         data-sitekey="6LfesBotAAAAAG_Guq1ZKS5977I7_omstqT_YDE8"
+                         data-theme="light"></div>
+                </div>
+
+                <p id="formMsg" class="form-msg" role="alert" aria-live="polite"></p>
+
+                <button type="submit" id="submitBtn" class="submit-btn">
+                    Send Enquiry
+                </button>
+            </form>
+        </aside>
 
     </main>
 
-    <!-- Tactical Command Palette Modal (Ctrl+K / Cmd+K) -->
-    <div class="palette-backdrop" id="cmdPalette" role="dialog" aria-modal="true" aria-labelledby="paletteTitle">
-        <div class="palette-card">
-            <div class="palette-head">
-                <span id="paletteTitle">MÉRIDIAN TACTICAL COMMAND PALETTE (⌘K / CTRL+K)</span>
-                <button type="button" id="closePaletteBtn" style="background:transparent;border:none;color:var(--accent);font-weight:700;cursor:pointer;">ESC ✕</button>
-            </div>
-            <div class="palette-list">
-                <button type="button" class="palette-item" data-action="stress">
-                    <span>⚡ Execute All-Core WebWorker + WebGPU Stress Benchmark</span>
-                    <small>SILICON</small>
-                </button>
-                <button type="button" class="palette-item" data-action="theme">
-                    <span>◐ Toggle Daylight Lab / Quantum Dark Mode</span>
-                    <small>THEME</small>
-                </button>
-                <button type="button" class="palette-item" data-action="tesseract">
-                    <span>❖ Switch Topology Visualiser to 4D Hypercube (Tesseract)</span>
-                    <small>4D MATH</small>
-                </button>
-                <button type="button" class="palette-item" data-action="lorenz">
-                    <span>∞ Switch Topology Visualiser to Lorenz Strange Attractor</span>
-                    <small>CHAOS RK4</small>
-                </button>
-                <button type="button" class="palette-item" data-action="export">
-                    <span> Export Signed Session Telemetry Audit Log (JSON)</span>
-                    <small>AUDIT</small>
-                </button>
-                <button type="button" class="palette-item" data-action="contact">
-                    <span>→ Open Encrypted Communications Terminal (contact.html)</span>
-                    <small>RELAY</small>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-inner">
-            <div>MÉRIDIAN AGI SYSTEMS &copy; <span id="footerYear"></span> · SOVEREIGN NEURO-SYMBOLIC CORE v7.0</div>
-            <div class="footer-links">
-                <a href="#gemini-agi-engine">Gemini AGI Prompt</a>
-                <a href="#overview">4D Topology</a>
-                <a href="#google-ecosystem">Google Federation</a>
-                <a href="contact.html">Secure Contact</a>
+            <div class="footer-statutory">
+                <strong>Negarix Luminaire Limited</strong> · Registered in England and Wales (No. 16073047) · VAT No. GB 483755256<br>
+                Registered Office: 4th Floor, Silverstream House, 45 Fitzroy Street, Fitzrovia, London, England, W1T 6EB
             </div>
-            <div style="color:var(--accent);">TLS 1.3 · ML-KEM-1024 · WEBGPU · AES-256-GCM</div>
+            <div>&copy; <span id="footerYear">2026</span> Negarix Luminaire Limited</div>
         </div>
     </footer>
 
     <script>
     'use strict';
 
-    const TWO_PI = Math.PI * 2;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-    /* ===========================================================
-       1. THEME SWITCHER (DAYLIGHT LAB / QUANTUM DARK)
-    =========================================================== */
-    const ThemeController = (function () {
-        const htmlEl = document.documentElement;
-        const btn    = document.getElementById('themeToggle');
-
-        function applyTheme(theme) {
-            htmlEl.setAttribute('data-theme', theme);
-            if (btn) btn.textContent = theme === 'dark' ? 'MODE: QUANTUM DARK' : 'MODE: DAYLIGHT';
-            try { localStorage.setItem('meridian_theme', theme); } catch (e) {}
-        }
-
-        let saved = 'light';
-        try { saved = localStorage.getItem('meridian_theme') || 'light'; } catch (e) {}
-        applyTheme(saved);
-
-        if (btn) {
-            btn.addEventListener('click', () => {
-                const next = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-                applyTheme(next);
-            });
-        }
-
-        return {
-            toggle: () => {
-                const next = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-                applyTheme(next);
-            }
-        };
-    })();
-
-    /* ===========================================================
-       2. WEBGPU COMPUTE KERNEL + WEBWORKER SWARM + AGI ENGINE
-    =========================================================== */
-    const AgiEngine = (function () {
-        const elGpuName     = document.getElementById('hwGpuName');
-        const elCpuCores    = document.getElementById('hwCpuCores');
-        const elGpuBadge    = document.getElementById('gpuApiBadge');
-        const elWorkerBadge = document.getElementById('workerBadge');
-        const elClock       = document.getElementById('liveClock');
-        const elYear        = document.getElementById('footerYear');
-        const coreGridEl    = document.getElementById('cpuCoreGrid');
-        const swarmStatus   = document.getElementById('swarmStatusText');
-        const memCountLabel = document.getElementById('memCountLabel');
-
-        const numThreads = Math.min(Math.max(navigator.hardwareConcurrency || 8, 4), 16);
-        if (elCpuCores) elCpuCores.textContent = numThreads + ' PARALLEL WEBWORKERS ACTIVE';
-        if (elWorkerBadge) elWorkerBadge.textContent = `CPU: ${numThreads}x WEBWORKER SWARM`;
-
-        function updateClock() {
-            const now = new Date();
-            if (elClock) elClock.textContent = now.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
-            if (elYear)  elYear.textContent  = String(now.getUTCFullYear());
-        }
-        updateClock();
-        setInterval(updateClock, 1000);
-
-        // Build visual CPU Core Matrix cells
-        const coreCells = [];
-        for (let i = 0; i < numThreads; i++) {
-            const cell = document.createElement('div');
-            cell.className = 'core-cell';
-            const labelId = i < 10 ? 'C0' + i : 'C' + i;
-            cell.innerHTML =
-                `<div class="core-cell-top"><span>${labelId}</span><span class="c-ms">IDLE</span></div>` +
-                `<div class="core-bar-bg"><div class="core-bar-fill"></div></div>`;
-            coreGridEl.appendChild(cell);
-            coreCells.push({
-                root: cell,
-                msText: cell.querySelector('.c-ms'),
-                bar: cell.querySelector('.core-bar-fill')
-            });
-        }
-
-        // True WebGPU Compute Shader Pipeline Initialisation
-        let webgpuDevice = null;
-        async function initWebGPU() {
-            if (!navigator.gpu) {
-                if (elGpuBadge) elGpuBadge.textContent = 'GPU: WEBGL2 TENSOR SHADER';
-                return;
-            }
-            try {
-                const adapter = await navigator.gpu.requestAdapter();
-                if (adapter) {
-                    webgpuDevice = await adapter.requestDevice();
-                    if (elGpuBadge) elGpuBadge.textContent = 'GPU: WEBGPU WGSL + WEBGL2 ACTIVE';
-                }
-            } catch (e) {
-                if (elGpuBadge) elGpuBadge.textContent = 'GPU: WEBGL2 TENSOR SHADER';
-            }
-        }
-        initWebGPU();
-
-        async function runWebGpuComputeShader(seedScalar) {
-            if (!webgpuDevice) return null;
-            try {
-                const t0 = performance.now();
-                const wgslCode = `
-                    @group(0) @binding(0) var<storage, read_write> data: array<f32>;
-                    @compute @workgroup_size(64)
-                    fn main(@builtin(global_invocation_id) id: vec3<u32>) {
-                        let i = id.x;
-                        let x = f32(i) * 0.015 + ${seedScalar.toFixed(4)};
-                        data[i] = sin(x) * cos(x * 0.73) + tanh(sin(x * 1.9));
-                    }
-                `;
-                const module = webgpuDevice.createShaderModule({ code: wgslCode });
-                const pipeline = webgpuDevice.createComputePipeline({
-                    layout: 'auto',
-                    compute: { module, entryPoint: 'main' }
-                });
-                const bufSize = 256 * 4;
-                const storageBuf = webgpuDevice.createBuffer({
-                    size: bufSize,
-                    usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_SRC
-                });
-                const bindGroup = webgpuDevice.createBindGroup({
-                    layout: pipeline.getBindGroupLayout(0),
-                    entries: [{ binding: 0, resource: { buffer: storageBuf } }]
-                });
-                const encoder = webgpuDevice.createCommandEncoder();
-                const pass = encoder.beginComputePass();
-                pass.setPipeline(pipeline);
-                pass.setBindGroup(0, bindGroup);
-                pass.dispatchWorkgroups(4);
-                pass.end();
-                webgpuDevice.queue.submit([encoder.finish()]);
-                await webgpuDevice.queue.onSubmittedWorkDone();
-                return Math.max(0.06, performance.now() - t0);
-            } catch (e) {
-                return null;
-            }
-        }
-
-        // Inline WebWorker source code for true multi-core parallel execution
-        const workerCode = `
-            'use strict';
-            function mulberry32(a) {
-                return function() {
-                    let t = a += 0x6D2B79F5;
-                    t = Math.imul(t ^ t >>> 15, t | 1);
-                    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
-                    return ((t ^ t >>> 14) >>> 0) / 4294967296;
-                };
-            }
-
-            self.onmessage = function(e) {
-                const t0 = performance.now();
-                const { taskId, workerId, prompt, sliceStart, sliceEnd, mctsIterations, stressMode } = e.data;
-                const sliceLen = sliceEnd - sliceStart;
-                const partialBins = new Float32Array(16);
-                const clean = (prompt || 'meridian').toLowerCase();
-                const loops = stressMode ? 190 : 36;
-                let fmaOps = 0;
-                let energyAcc = 0;
-
-                for (let iter = 0; iter < loops; iter++) {
-                    const rng = mulberry32((workerId + 1) * 7919 + iter * 1013 + clean.length * 31);
-                    for (let d = sliceStart; d < sliceEnd; d++) {
-                        const charCode = clean.charCodeAt(d % clean.length) || 77;
-                        const val = Math.sin(d * 0.013 + charCode * 0.1 + rng()) * Math.cos(d * 0.007 - iter * 0.05);
-                        energyAcc += Math.abs(val);
-                        partialBins[(d >> 6) & 15] += Math.abs(val);
-                        fmaOps += 4;
-                    }
-                }
-
-                const rngMcts = mulberry32(workerId * 99991 + clean.length * 4099);
-                let bestUtility = -1e9;
-                let stabilitySum = 0;
-                for (let r = 0; r < mctsIterations; r++) {
-                    const ucb1 = Math.sqrt(2 * Math.log(r + 2) / (1 + (r % 16)));
-                    const rolloutReward = Math.cos(rngMcts() * 3.14159 - 0.4) * 0.85 + ucb1 * 0.15;
-                    if (rolloutReward > bestUtility) bestUtility = rolloutReward;
-                    stabilitySum += Math.abs(rolloutReward);
-                    fmaOps += 6;
-                }
-
-                const elapsedMs = Math.max(0.08, performance.now() - t0);
-                self.postMessage({
-                    taskId,
-                    workerId,
-                    elapsedMs,
-                    fmaOps,
-                    energyAcc: energyAcc / (loops * sliceLen),
-                    bestUtility,
-                    stabilityMean: stabilitySum / mctsIterations,
-                    partialBins: Array.from(partialBins)
-                });
-            };
-        `;
-
-        const workerPool = [];
-        let workersAvailable = false;
-        const activeCallbacks = new Map();
-        let nextTaskId = 1;
-
-        try {
-            const blob = new Blob([workerCode], { type: 'application/javascript' });
-            const blobUrl = URL.createObjectURL(blob);
-            for (let i = 0; i < numThreads; i++) {
-                const w = new Worker(blobUrl);
-                w.onmessage = function (e) {
-                    const data = e.data;
-                    const cb = activeCallbacks.get(data.taskId + '_' + data.workerId);
-                    if (cb) {
-                        activeCallbacks.delete(data.taskId + '_' + data.workerId);
-                        cb(data);
-                    }
-                };
-                workerPool.push(w);
-            }
-            workersAvailable = true;
-        } catch (err) {
-            workersAvailable = false;
-        }
-
-        function dispatchSwarmCompute(prompt, stressMode) {
-            const taskId = nextTaskId++;
-            const chunkSize = Math.floor(10240 / numThreads);
-            const mctsPerCore = stressMode ? 8192 : 2048;
-
-            if (!workersAvailable) {
-                return Promise.all(Array.from({ length: numThreads }, (_, wId) => {
-                    return new Promise(resolve => {
-                        const t0 = performance.now();
-                        const bins = Array.from({ length: 16 }, (_, b) => Math.abs(Math.sin(wId + b + prompt.length)) * 12);
-                        const elapsedMs = Math.max(0.15, performance.now() - t0 + Math.random() * 0.45);
-                        resolve({
-                            taskId,
-                            workerId: wId,
-                            elapsedMs,
-                            fmaOps: 250000,
-                            energyAcc: 0.62,
-                            bestUtility: 0.94,
-                            stabilityMean: 0.89,
-                            partialBins: bins
-                        });
-                    });
-                }));
-            }
-
-            return Promise.all(workerPool.map((worker, wId) => {
-                return new Promise(resolve => {
-                    activeCallbacks.set(taskId + '_' + wId, resolve);
-                    worker.postMessage({
-                        taskId,
-                        workerId: wId,
-                        numWorkers: numThreads,
-                        prompt,
-                        sliceStart: wId * chunkSize,
-                        sliceEnd: (wId === numThreads - 1) ? 10240 : (wId + 1) * chunkSize,
-                        mctsIterations: mctsPerCore,
-                        stressMode: Boolean(stressMode)
-                    });
-                });
-            }));
-        }
-
-        // Setup Live GPU WebGL Tensor Shader Canvas
-        const gpuCanvas = document.getElementById('gpuTensorCanvas');
-        const gl = gpuCanvas.getContext('webgl2', { preserveDrawingBuffer: true }) ||
-                   gpuCanvas.getContext('webgl',  { preserveDrawingBuffer: true });
-
-        let gpuRendererName = 'INTEGRATED GPU CORES';
-        if (gl) {
-            const dbg = gl.getExtension('WEBGL_debug_renderer_info');
-            if (dbg) {
-                const rawRenderer = gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL);
-                if (rawRenderer) {
-                    gpuRendererName = rawRenderer.replace(/ANGLE \((.+)\)/, '$1').substring(0, 36).toUpperCase();
-                }
-            }
-        }
-        if (elGpuName) elGpuName.textContent = gpuRendererName;
-
-        let program = null;
-        let uTimeLoc = null, uSeedLoc = null, uFreqLoc = null, uChaosLoc = null;
-        const shaderState = { seed: 1.37, freq: 4.2, chaos: 0.65 };
-
-        if (gl) {
-            const vsSource = `
-                attribute vec2 aPos;
-                varying vec2 vUv;
-                void main() {
-                    vUv = aPos * 0.5 + 0.5;
-                    gl_Position = vec4(aPos, 0.0, 1.0);
-                }
-            `;
-            const fsSource = `
-                precision highp float;
-                varying vec2 vUv;
-                uniform float uTime;
-                uniform float uSeed;
-                uniform float uFreq;
-                uniform float uChaos;
-
-                void main() {
-                    vec2 p = (vUv - 0.5) * uFreq;
-                    float t = uTime * 0.65;
-                    for (int i = 1; i < 6; i++) {
-                        float fi = float(i);
-                        p.x += uChaos / fi * sin(fi * p.y + t + uSeed);
-                        p.y += uChaos / fi * cos(fi * p.x - t * 0.8 + uSeed * 1.3);
-                    }
-                    float energy = 0.5 + 0.5 * sin(p.x * 2.2 + p.y * 2.2);
-                    float grid = smoothstep(0.92, 0.98, cos(vUv.x * 40.0) * cos(vUv.y * 20.0));
-                    vec3 col = mix(vec3(0.01, 0.06, 0.03), vec3(0.0, 0.92, 0.38), pow(energy, 1.6));
-                    col += vec3(0.2, 0.65, 1.0) * grid * 0.35;
-                    gl_FragColor = vec4(col, 1.0);
-                }
-            `;
-
-            function compileShader(type, src) {
-                const s = gl.createShader(type);
-                gl.shaderSource(s, src);
-                gl.compileShader(s);
-                return s;
-            }
-            const vs = compileShader(gl.VERTEX_SHADER, vsSource);
-            const fs = compileShader(gl.FRAGMENT_SHADER, fsSource);
-            program = gl.createProgram();
-            gl.attachShader(program, vs);
-            gl.attachShader(program, fs);
-            gl.linkProgram(program);
-            gl.useProgram(program);
-
-            const buf = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
-            const aPos = gl.getAttribLocation(program, 'aPos');
-            gl.enableVertexAttribArray(aPos);
-            gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-
-            uTimeLoc  = gl.getUniformLocation(program, 'uTime');
-            uSeedLoc  = gl.getUniformLocation(program, 'uSeed');
-            uFreqLoc  = gl.getUniformLocation(program, 'uFreq');
-            uChaosLoc = gl.getUniformLocation(program, 'uChaos');
-        }
-
-        function resizeGpuCanvas() {
-            if (!gpuCanvas || !gl) return;
-            const rect = gpuCanvas.parentElement.getBoundingClientRect();
-            gpuCanvas.width  = Math.max(1, Math.floor(rect.width * dpr));
-            gpuCanvas.height = Math.max(1, Math.floor(rect.height * dpr));
-            gl.viewport(0, 0, gpuCanvas.width, gpuCanvas.height);
-        }
-        resizeGpuCanvas();
-        window.addEventListener('resize', resizeGpuCanvas, { passive: true });
-
-        function renderShaderLoop(ts) {
-            if (gl && program) {
-                gl.useProgram(program);
-                gl.uniform1f(uTimeLoc, ts * 0.001);
-                gl.uniform1f(uSeedLoc, shaderState.seed);
-                gl.uniform1f(uFreqLoc, shaderState.freq);
-                gl.uniform1f(uChaosLoc, shaderState.chaos);
-                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-            }
-            requestAnimationFrame(renderShaderLoop);
-        }
-        requestAnimationFrame(renderShaderLoop);
-
-        function executeGpuTensorPass(seedVal, freqVal, chaosVal) {
-            shaderState.seed  = seedVal;
-            shaderState.freq  = freqVal;
-            shaderState.chaos = chaosVal;
-
-            if (!gl || !program) {
-                return { gpuMs: 0.14, fieldEnergy: 0.85, spectralVariance: 0.12 };
-            }
-            const t0 = performance.now();
-            gl.useProgram(program);
-            gl.uniform1f(uTimeLoc, t0 * 0.001);
-            gl.uniform1f(uTimeLoc, seedVal);
-            gl.uniform1f(uFreqLoc, freqVal);
-            gl.uniform1f(uChaosLoc, chaosVal);
-            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-
-            const pixelBuf = new Uint8Array(16 * 16 * 4);
-            gl.readPixels(0, 0, 16, 16, gl.RGBA, gl.UNSIGNED_BYTE, pixelBuf);
-            const t1 = performance.now();
-
-            let sumGreen = 0;
-            let sumSq = 0;
-            const n = 256;
-            for (let i = 0; i < pixelBuf.length; i += 4) {
-                const g = pixelBuf[i + 1] / 255.0;
-                sumGreen += g;
-                sumSq += g * g;
-            }
-            const mean = sumGreen / n;
-            const variance = Math.max(0, (sumSq / n) - (mean * mean));
-            return {
-                gpuMs: Math.max(0.07, t1 - t0),
-                fieldEnergy: mean,
-                spectralVariance: Math.sqrt(variance)
-            };
-        }
-
-        /* ===========================================================
-           10,240-D HYPERVECTOR MEMORY, NUMBER THEORY & AES-256-GCM
-        =========================================================== */
-        const HD_DIM = 10240;
-        const episodicMemory = [];
-        const sessionLogs = [];
-
-        function encodeHypervector(text) {
-            const vec = new Float32Array(HD_DIM);
-            const clean = (text || 'meridian').toLowerCase().trim();
-            for (let i = 0; i < clean.length; i++) {
-                const c1 = clean.charCodeAt(i);
-                const c2 = clean.charCodeAt((i + 1) % clean.length);
-                let seed = (c1 * 31337) ^ (c2 * 1013) ^ (i * 17);
-                for (let d = 0; d < HD_DIM; d += 16) {
-                    seed = (seed * 1664525 + 1013904223) | 0;
-                    vec[d + (i & 15)] += (seed > 0 ? 1 : -1);
-                }
-            }
-            let norm = 0;
-            for (let d = 0; d < HD_DIM; d++) norm += vec[d] * vec[d];
-            const inv = norm > 0 ? 1 / Math.sqrt(norm) : 1;
-            for (let d = 0; d < HD_DIM; d++) vec[d] *= inv;
-            return vec;
-        }
-
-        function cosineSimilarity(a, b) {
-            let dot = 0;
-            for (let i = 0; i < HD_DIM; i++) dot += a[i] * b[i];
-            return dot;
-        }
-
-        // Seed initial episodic memory entry
-        episodicMemory.push({
-            timestamp: new Date().toISOString(),
-            prompt: 'System initialisation: polynomial law discovery and post-quantum lattice containment ML-KEM-1024',
-            summary: 'Initialised sovereign 10,240-D associative vector manifold.',
-            vec: encodeHypervector('polynomial law discovery post-quantum lattice containment ML-KEM-1024')
-        });
-
-        function computeShannonEntropy(str) {
-            if (!str || !str.length) return 0;
-            const freq = new Map();
-            for (let i = 0; i < str.length; i++) {
-                const ch = str[i];
-                freq.set(ch, (freq.get(ch) || 0) + 1);
-            }
-            let h = 0;
-            freq.forEach(count => {
-                const p = count / str.length;
-                h -= p * Math.log2(p);
-            });
-            return h;
-        }
-
-        // Prime Factorisation & Euler Totient Solver
-        function solveNumberTheory(rawNum) {
-            const n = Math.abs(Math.trunc(rawNum));
-            if (n < 2 || n > 999999999999) return null;
-            let temp = n;
-            const factors = new Map();
-            let d = 2;
-            while (d * d <= temp) {
-                while (temp % d === 0) {
-                    factors.set(d, (factors.get(d) || 0) + 1);
-                    temp = Math.trunc(temp / d);
-                }
-                d += (d === 2 ? 1 : 2);
-            }
-            if (temp > 1) factors.set(temp, (factors.get(temp) || 0) + 1);
-
-            let phi = n;
-            const parts = [];
-            factors.forEach((exp, prime) => {
-                phi = Math.trunc((phi / prime) * (prime - 1));
-                parts.push(exp > 1 ? `${prime}^${exp}` : `${prime}`);
-            });
-            const isPrime = factors.size === 1 && factors.get(n) === 1;
-            return {
-                n,
-                isPrime,
-                factorStr: parts.join(' × '),
-                phi,
-                binaryWeight: n.toString(2).split('1').length - 1
-            };
-        }
-
-        // WebCrypto AES-256-GCM Live Zero-Knowledge Encryption
-        async function encryptPayloadAesGcm(plaintext) {
-            if (!window.crypto || !window.crypto.subtle) return null;
-            const enc = new TextEncoder();
-            const key = await window.crypto.subtle.generateKey({ name: 'AES-GCM', length: 256 }, true, ['encrypt']);
-            const iv  = window.crypto.getRandomValues(new Uint8Array(12));
-            const cipherBuf = await window.crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, enc.encode(plaintext));
-            const rawKey    = await window.crypto.subtle.exportKey('raw', key);
-
-            const toHex = buf => Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-            return {
-                cipherHex: toHex(cipherBuf),
-                ivHex: toHex(iv),
-                keyFingerprint: toHex(rawKey).substring(0, 16)
-            };
-        }
-
-        function solveNumericalSequence(nums) {
-            const n = nums.length;
-            if (n < 3) return null;
-
-            // 1. Check Geometric Progression
-            let isGeom = true;
-            const ratio = nums[0] !== 0 ? nums[1] / nums[0] : 0;
-            if (ratio !== 0 && Number.isFinite(ratio)) {
-                for (let i = 2; i < n; i++) {
-                    if (Math.abs(nums[i] - nums[i - 1] * ratio) > 1e-6) {
-                        isGeom = false;
-                        break;
-                    }
-                }
-                if (isGeom && Math.abs(ratio - 1) > 1e-6) {
-                    const nextTerms = [];
-                    let cur = nums[n - 1];
-                    for (let k = 0; k < 5; k++) {
-                        cur = cur * ratio;
-                        nextTerms.push(Number(cur.toFixed(4)));
-                    }
-                    return {
-                        law: `Exact Geometric Progression (Ratio r = ${Number(ratio.toFixed(4))})`,
-                        formula: `a(n) = ${nums[0]} × (${Number(ratio.toFixed(4))})^(n-1)`,
-                        nextTerms,
-                        confidence: '100.0% (Closed-Form Geometric Invariant)'
-                    };
-                }
-            }
-
-            // 2. Check Second-Order Linear Recurrence: a(n) = a(n-1) + a(n-2)
-            if (n >= 5) {
-                let isFiboLike = true;
-                for (let i = 2; i < n; i++) {
-                    if (Math.abs(nums[i] - (nums[i - 1] + nums[i - 2])) > 1e-6) {
-                        isFiboLike = false;
-                        break;
-                    }
-                }
-                if (isFiboLike) {
-                    const nextTerms = [];
-                    let a = nums[n - 2], b = nums[n - 1];
-                    for (let k = 0; k < 5; k++) {
-                        const nxt = a + b;
-                        nextTerms.push(nxt);
-                        a = b;
-                        b = nxt;
-                    }
-                    return {
-                        law: 'Second-Order Golden Recurrence Attractor (a_n = a_{n-1} + a_{n-2})',
-                        formula: 'Eigenvalue Asymptote φ = (1 + √5)/2 ≈ 1.6180339887',
-                        nextTerms,
-                        confidence: '100.0% (Exact Recurrence Invariant)'
-                    };
-                }
-            }
-
-            // 3. Construct Newton Finite Difference Table up to degree n-1
-            const diffTable = [nums.slice()];
-            let constantDepth = -1;
-
-            for (let d = 1; d < n; d++) {
-                const prev = diffTable[d - 1];
-                const curr = [];
-                for (let i = 0; i < prev.length - 1; i++) {
-                    curr.push(Number((prev[i + 1] - prev[i]).toFixed(8)));
-                }
-                diffTable.push(curr);
-
-                if (curr.length >= 2) {
-                    const firstVal = curr[0];
-                    const allSame = curr.every(v => Math.abs(v - firstVal) < 1e-5);
-                    if (allSame) {
-                        constantDepth = d;
-                        break;
-                    }
-                }
-            }
-
-            const activeDepth = constantDepth !== -1 ? constantDepth : diffTable.length - 1;
-            const workTable = diffTable.slice(0, activeDepth + 1).map(row => row.slice());
-            const nextTerms = [];
-
-            for (let step = 0; step < 5; step++) {
-                const lastRow = workTable[activeDepth];
-                lastRow.push(lastRow[lastRow.length - 1]);
-                for (let d = activeDepth - 1; d >= 0; d--) {
-                    const row = workTable[d];
-                    const below = workTable[d + 1];
-                    row.push(Number((row[row.length - 1] + below[below.length - 1]).toFixed(4)));
-                }
-                nextTerms.push(workTable[0][workTable[0].length - 1]);
-            }
-
-            const degreeNames = ['Constant', 'Linear (1st Order)', 'Quadratic (2nd Order)', 'Cubic (3rd Order)', 'Quartic (4th Order)', 'Quintic (5th Order)'];
-            const degLabel = degreeNames[activeDepth] || `${activeDepth}-th Order Polynomial`;
-
-            return {
-                law: `${degLabel} Differential Manifold (Δ^${activeDepth} = ${workTable[activeDepth][0]})`,
-                formula: `Newton Forward-Difference Basis [Δ⁰=${nums[0]}, Δ¹=${diffTable[1][0]}${diffTable[2] ? ', Δ²=' + diffTable[2][0] : ''}]`,
-                nextTerms,
-                confidence: constantDepth !== -1 ? '99.98% (Exact Polynomial Convergence)' : '93.2% (High-Order Taylor + DFT Extrapolation)'
-            };
-        }
-
-        // UI Elements
-        const elStream       = document.getElementById('agiStream');
-        const elForm         = document.getElementById('agiForm');
-        const elInput        = document.getElementById('agiInput');
-        const elCpuTime      = document.getElementById('metricCpuTime');
-        const elEntropy      = document.getElementById('metricEntropy');
-        const elRollouts     = document.getElementById('metricRollouts');
-        const elFlops        = document.getElementById('metricFlops');
-        const elGpuTime      = document.getElementById('gpuExecTime');
-        const elTensorEnergy = document.getElementById('tensorEnergyLabel');
-        const elLyapunov     = document.getElementById('lyapunovLabel');
-        const elCosine       = document.getElementById('hdcCosine');
-        const hdcBins        = document.querySelectorAll('#hdcSpectrum .hdc-bin');
-
-        async function sha256Hex(message) {
-            if (!window.crypto || !window.crypto.subtle) {
-                return 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
-            }
-            const msgBuffer = new TextEncoder().encode(message);
-            const hashBuffer = await window.crypto.subtle.digest('SHA-256', msgBuffer);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
-        async function processAgiDirective(rawPrompt) {
-            const prompt = (rawPrompt || '').trim();
-            if (!prompt) return;
-
-            if (prompt.toLowerCase() === 'clear') {
-                elStream.innerHTML = '';
-                return;
-            }
-
-            const userDiv = document.createElement('div');
-            userDiv.className = 'msg-block user-query';
-            userDiv.textContent = '> DIRECTIVE: ' + prompt;
-            elStream.appendChild(userDiv);
-            elStream.scrollTop = elStream.scrollHeight;
-
-            const isBenchmark = /benchmark|stress|silicon|gflops/i.test(prompt);
-            const isFactor    = /^factor:/i.test(prompt);
-            const isEncrypt   = /^encrypt:/i.test(prompt);
-            const isRecall    = /^recall:/i.test(prompt);
-            const entropy     = computeShannonEntropy(prompt);
-
-            if (swarmStatus) swarmStatus.textContent = `DISPATCHING TO ${numThreads} CORES...`;
-
-            // 1. Dispatch parallel workload across all WebWorker CPU threads + WebGPU Compute Shader
-            const wallStart = performance.now();
-            const [workerResults, webgpuMs] = await Promise.all([
-                dispatchSwarmCompute(prompt, isBenchmark),
-                runWebGpuComputeShader(entropy)
-            ]);
-            const wallElapsed = Math.max(0.18, performance.now() - wallStart);
-
-            // 2. Execute synchronous WebGL2 Tensor Shader Pass + VRAM readback
-            const seedVal  = entropy * 13.37 + prompt.length;
-            const freqVal  = 3.2 + (entropy % 4.2);
-            const chaosVal = 0.48 + (workerResults[0].energyAcc % 0.45);
-            const gpuRes   = executeGpuTensorPass(seedVal, freqVal, chaosVal);
-            const combinedGpuMs = webgpuMs ? (webgpuMs + gpuRes.gpuMs) * 0.5 : gpuRes.gpuMs;
-
-            // 3. Reduce telemetry across all CPU Worker threads
-            let totalFmaOps = 0;
-            let maxUtility = -1e9;
-            let avgStability = 0;
-            const fusedBins = new Float32Array(16);
-
-            workerResults.forEach((res, idx) => {
-                totalFmaOps += res.fmaOps;
-                if (res.bestUtility > maxUtility) maxUtility = res.bestUtility;
-                avgStability += res.stabilityMean;
-                for (let b = 0; b < 16; b++) fusedBins[b] += res.partialBins[b];
-
-                if (coreCells[idx]) {
-                    const cell = coreCells[idx];
-                    cell.root.classList.add('active-burst');
-                    cell.msText.textContent = res.elapsedMs.toFixed(1) + 'ms';
-                    const loadPct = Math.min(100, Math.max(35, Math.round(60 + (res.energyAcc * 45) % 40)));
-                    cell.bar.style.width = loadPct + '%';
-                    setTimeout(() => cell.root.classList.remove('active-burst'), 650);
-                }
-            });
-
-            avgStability /= workerResults.length;
-            const totalRollouts = numThreads * (isBenchmark ? 8192 : 2048);
-
-            let maxBin = 0.001;
-            for (let b = 0; b < 16; b++) if (fusedBins[b] > maxBin) maxBin = fusedBins[b];
-            hdcBins.forEach((bin, idx) => {
-                const pct = Math.min(100, Math.max(18, Math.round((fusedBins[idx] / maxBin) * 100)));
-                bin.style.height = pct + '%';
-            });
-
-            const totalTimeSec = (wallElapsed + combinedGpuMs) / 1000;
-            const gflops = ((totalFmaOps * 240) / Math.max(0.0001, totalTimeSec) / 1e9).toFixed(1);
-            const lyapunov = ((gpuRes.spectralVariance - 0.16) * 0.22).toFixed(4);
-            const resonance = Math.min(0.9996, 0.92 + (avgStability * 0.075)).toFixed(4);
-
-            if (swarmStatus)    swarmStatus.textContent    = `${numThreads} CORES LOCKED (${wallElapsed.toFixed(2)}ms)`;
-            if (elCpuTime)      elCpuTime.textContent      = `${wallElapsed.toFixed(2)} ms (${numThreads} THREADS)`;
-            if (elEntropy)      elEntropy.textContent      = `${entropy.toFixed(3)} bits/sym`;
-            if (elRollouts)     elRollouts.textContent     = `${totalRollouts.toLocaleString()} TRAJECTORIES`;
-            if (elFlops)        elFlops.textContent        = `${gflops} GFLOPS (SWARM+GPU)`;
-            if (elGpuTime)      elGpuTime.textContent      = `GPU PASS: ${combinedGpuMs.toFixed(2)} ms`;
-            if (elTensorEnergy) elTensorEnergy.textContent = `TENSOR FIELD ENERGY: ${gpuRes.fieldEnergy.toFixed(4)}`;
-            if (elLyapunov)     elLyapunov.textContent     = `LYAPUNOV λ: ${lyapunov >= 0 ? '+' : ''}${lyapunov} (CONVERGENT)`;
-            if (elCosine)       elCosine.textContent       = `RESONANCE: ${resonance}`;
-
-            const coreTimingsStr = workerResults.slice(0, 6).map(r => `C0${r.workerId}:${r.elapsedMs.toFixed(1)}ms`).join(' · ') +
-                                   (numThreads > 6 ? ` ... (+${numThreads - 6} cores)` : '');
-
-            const numberMatches = prompt.match(/-?\d+(\.\d+)?/g);
-            const parsedNums = numberMatches ? numberMatches.map(Number) : [];
-            const queryVec = encodeHypervector(prompt);
-
-            let synthesisBody = '';
-
-            if (isRecall) {
-                const target = prompt.replace(/^recall:/i, '').trim();
-                const targetVec = encodeHypervector(target);
-                let bestEntry = episodicMemory[0];
-                let bestSim = -1;
-                episodicMemory.forEach(item => {
-                    const sim = Math.abs(cosineSimilarity(targetVec, item.vec));
-                    if (sim > bestSim) {
-                        bestSim = sim;
-                        bestEntry = item;
-                    }
-                });
-                const scaledSim = Math.min(0.998, 0.85 + bestSim * 2.2).toFixed(4);
-                synthesisBody =
-                    `[10,240-D ASSOCIATIVE EPISODIC MEMORY RECALL]\n` +
-                    `• Search Query Vector     : "${target}"\n` +
-                    `• Indexed Memory Bank     : ${episodicMemory.length} Hypervectors Searched in ${wallElapsed.toFixed(2)} ms\n` +
-                    `• Highest Cosine Match    : ${scaledSim} Orthogonal Resonance (${bestEntry.timestamp})\n` +
-                    `• Retrieved Memory Trace  : "${bestEntry.prompt}"\n` +
-                    `• Associative Summary     : ${bestEntry.summary}`;
-            } else if (isEncrypt) {
-                const cleartext = prompt.replace(/^encrypt:/i, '').trim() || 'MÉRIDIAN SOVEREIGN PAYLOAD';
-                const encRes = await encryptPayloadAesGcm(cleartext);
-                if (encRes) {
-                    synthesisBody =
-                        `[WEBCRYPTO HARDWARE AES-256-GCM AUTHENTICATED ENCRYPTION]\n` +
-                        `• Input Plaintext Length  : ${cleartext.length} bytes (Shannon H = ${entropy.toFixed(3)} bits/sym)\n` +
-                        `• Ephemeral Key ID        : 0x${encRes.keyFingerprint}... (256-bit Non-Extractable Enclave)\n` +
-                        `• 96-Bit Initialisation IV: 0x${encRes.ivHex}\n` +
-                        `• Authenticated Ciphertext: 0x${encRes.cipherHex.substring(0, 72)}${encRes.cipherHex.length > 72 ? '...' : ''}\n` +
-                        `• Verification            : 128-bit Galois/Counter Mode authentication tag sealed.`;
-                }
-            } else if (isFactor || (parsedNums.length === 1 && parsedNums[0] >= 2)) {
-                const nt = solveNumberTheory(parsedNums[0] || 9999991);
-                if (nt) {
-                    synthesisBody =
-                        `[NUMBER THEORY & PRIME DECOMPOSITION ENGINE]\n` +
-                        `• Target Integer (N)      : ${nt.n.toLocaleString()}\n` +
-                        `• Primality Verdict       : ${nt.isPrime ? 'VERIFIED PRIME INTEGER (AKS / Trial Division)' : 'COMPOSITE INTEGER'}\n` +
-                        `• Prime Factorisation     : ${nt.factorStr}\n` +
-                        `• Euler's Totient φ(N)    : ${nt.phi.toLocaleString()} coprime residues\n` +
-                        `• Hamming Weight          : ${nt.binaryWeight} active bits in base-2 representation.`;
-                }
-            } else if (isBenchmark) {
-                synthesisBody =
-                    `[ALL-SILICON WEBGPU + MULTI-CORE WEBWORKER STRESS BENCHMARK]\n` +
-                    `• Detected GPU Silicon    : ${gpuRendererName} (${webgpuDevice ? 'Native WebGPU WGSL + WebGL2' : 'WebGL2 Fragment Pipeline'})\n` +
-                    `• Parallel CPU Swarm      : ${numThreads} Dedicated Worker Threads (${coreTimingsStr})\n` +
-                    `• Parallel MCTS Rollouts  : ${totalRollouts.toLocaleString()} trajectories evaluated in ${wallElapsed.toFixed(2)} ms\n` +
-                    `• GPU Tensor Execution    : ${combinedGpuMs.toFixed(2)} ms (VRAM Field Energy = ${gpuRes.fieldEnergy.toFixed(4)})\n` +
-                    `• Combined Throughput     : ${gflops} GFLOPS verified on local client hardware.`;
-            } else if (parsedNums.length >= 3) {
-                const seqResult = solveNumericalSequence(parsedNums);
-                if (seqResult) {
-                    synthesisBody =
-                        `[PARALLEL SYMBOLIC REGRESSION & PATTERN EXTRAPOLATION]\n` +
-                        `• Observed Input Sequence : [ ${parsedNums.join(', ')} ]\n` +
-                        `• Discovered Governing Law: ${seqResult.law}\n` +
-                        `• Analytical Basis        : ${seqResult.formula}\n` +
-                        `• Extrapolated Horizon    : ➜ [ ${seqResult.nextTerms.join(', ')} ]\n` +
-                        `• Multi-Core Verification : Confirmed across ${numThreads} CPU threads (${coreTimingsStr}) · ${seqResult.confidence}`;
-                }
-            } else {
-                const horizonStability = (100 - Math.min(18, Math.abs(lyapunov) * 140)).toFixed(2);
-                synthesisBody =
-                    `[GEMINI AGI v7.0 PARALLEL NEURO-SYMBOLIC SYNTHESIS]\n` +
-                    `• Multi-Core MCTS Quorum  : ${totalRollouts.toLocaleString()} counterfactual branches evaluated across ${numThreads} CPU threads (UCB1 Utility = ${maxUtility.toFixed(4)}).\n` +
-                    `• 10,240-D Vector Binding : Distributed circular convolution converged with ${resonance} cosine resonance (${coreTimingsStr}).\n` +
-                    `• Information & GPU State : Shannon Entropy H = ${entropy.toFixed(3)} bits/sym · GPU Tensor Energy E = ${gpuRes.fieldEnergy.toFixed(4)}.\n` +
-                    `• Emergent Trajectory     : Phase-space attractor confirms ${horizonStability}% structural stability across a 5-stage decision horizon, sealed via post-quantum ML-KEM-1024 containment.`;
-            }
-
-            // Store in 10,240-D Episodic Memory (unless it was a recall query)
-            if (!isRecall) {
-                episodicMemory.push({
-                    timestamp: new Date().toISOString().substring(11, 19) + ' UTC',
-                    prompt,
-                    summary: synthesisBody.split('\n')[1] || 'Indexed in 10,240-D vector space.',
-                    vec: queryVec
-                });
-                if (memCountLabel) memCountLabel.textContent = `${episodicMemory.length} VECTORS INDEXED`;
-            }
-
-            const hashHex = await sha256Hex(prompt + '|' + wallElapsed + '|' + gpuRes.fieldEnergy + '|' + totalFmaOps);
-            sessionLogs.push({
-                timestamp: new Date().toISOString(),
-                directive: prompt,
-                cpuSwarmMs: wallElapsed,
-                gpuPassMs: combinedGpuMs,
-                shannonEntropy: entropy,
-                sha256Seal: '0x' + hashHex
-            });
-
-            const outDiv = document.createElement('div');
-            outDiv.className = 'msg-block';
-            outDiv.innerHTML =
-                `<span class="meta-line">[SWARM: ${numThreads} CORES (${wallElapsed.toFixed(2)}ms) · GPU: ${combinedGpuMs.toFixed(2)}ms · MEMORY: ${episodicMemory.length} VECS]</span>` +
-                `<div class="body-txt"></div>` +
-                `<span class="hash-sig">WEBCRYPTO SHA-256 SILICON ATTESTATION: 0x${hashHex.substring(0, 48)}...</span>`;
-            outDiv.querySelector('.body-txt').textContent = synthesisBody;
-
-            elStream.appendChild(outDiv);
-            elStream.scrollTop = elStream.scrollHeight;
-        }
-
-        elForm.addEventListener('submit', e => {
-            e.preventDefault();
-            const val = elInput.value;
-            elInput.value = '';
-            processAgiDirective(val);
-        });
-
-        document.querySelectorAll('.preset-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                processAgiDirective(btn.getAttribute('data-prompt'));
-            });
-        });
-
-        // Export Session JSON Audit Log
-        const exportBtn = document.getElementById('exportLogBtn');
-        if (exportBtn) {
-            exportBtn.addEventListener('click', () => {
-                const payload = JSON.stringify({
-                    system: 'MÉRIDIAN Gemini AGI v7.0 Sovereign Telemetry Log',
-                    exportedAt: new Date().toISOString(),
-                    gpuAdapter: gpuRendererName,
-                    cpuWorkerThreads: numThreads,
-                    episodicVectorsCount: episodicMemory.length,
-                    events: sessionLogs
-                }, null, 2);
-                const blob = new Blob([payload], { type: 'application/json' });
-                const url  = URL.createObjectURL(blob);
-                const a    = document.createElement('a');
-                a.href     = url;
-                a.download = 'meridian-agi-telemetry-audit.json';
-                a.click();
-                URL.revokeObjectURL(url);
-            });
-        }
-
-        // Initial warmup
-        setTimeout(() => {
-            dispatchSwarmCompute('warmup_init_vector', false).then(results => {
-                results.forEach((res, idx) => {
-                    if (coreCells[idx]) {
-                        coreCells[idx].msText.textContent = res.elapsedMs.toFixed(1) + 'ms';
-                        coreCells[idx].bar.style.width = '32%';
-                    }
-                });
-            });
-        }, 300);
-
-        return {
-            runDirective: processAgiDirective,
-            exportAudit: () => exportBtn && exportBtn.click()
-        };
-    })();
-
-    /* ===========================================================
-       3. MULTI-MANIFOLD 3D / 4D MATHEMATICAL VISUALISER
-          (3D Geodesic Sphere · 4D Hypercube Tesseract · Lorenz RK4)
-    =========================================================== */
-    const ManifoldVisualizer = (function () {
-        const canvas  = document.getElementById('globeCanvas');
-        if (!canvas) return {};
-        const ctx     = canvas.getContext('2d');
-        const coordEl = document.getElementById('globeCoord');
-        const labelEl = document.getElementById('manifoldLabel');
-        const modeBtns= document.querySelectorAll('.m-mode-btn');
-
-        let mode = 'globe';
-        let width = 320, height = 270;
-
-        function resizeCanvas() {
-            const rect = canvas.parentElement.getBoundingClientRect();
-            width  = rect.width || 320;
-            height = rect.height || 270;
-            canvas.width  = width * dpr;
-            canvas.height = height * dpr;
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas, { passive: true });
-
-        // 1. Fibonacci Sphere Nodes
-        const NUM_PTS = 105;
-        const sphereNodes = [];
-        const goldenRatio = (1 + Math.sqrt(5)) / 2;
-        for (let i = 0; i < NUM_PTS; i++) {
-            const theta = TWO_PI * i / goldenRatio;
-            const phi   = Math.acos(1 - 2 * (i + 0.5) / NUM_PTS);
-            sphereNodes.push({
-                x: Math.cos(theta) * Math.sin(phi),
-                y: Math.cos(phi),
-                z: Math.sin(theta) * Math.sin(phi),
-                hub: i % 16 === 0
-            });
-        }
-
-        // 2. 4D Tesseract (Hypercube) 16 Vertices & 32 Edges
-        const tesseractVerts = [];
-        for (let i = 0; i < 16; i++) {
-            tesseractVerts.push([
-                (i & 1) ? 1 : -1,
-                (i & 2) ? 1 : -1,
-                (i & 4) ? 1 : -1,
-                (i & 8) ? 1 : -1
-            ]);
-        }
-        const tesseractEdges = [];
-        for (let i = 0; i < 16; i++) {
-            for (let j = i + 1; j < 16; j++) {
-                const diff = i ^ j;
-                if ((diff & (diff - 1)) === 0) tesseractEdges.push([i, j]);
-            }
-        }
-
-        // 3. Lorenz Strange Attractor RK4 Trajectory
-        const lorenzPts = [];
-        let lx = 0.1, ly = 0, lz = 0;
-        const sigma = 10, rho = 28, beta = 8 / 3, dt = 0.008;
-        for (let i = 0; i < 550; i++) {
-            const dx = sigma * (ly - lx);
-            const dy = lx * (rho - lz) - ly;
-            const dz = lx * ly - beta * lz;
-            lx += dx * dt;
-            ly += dy * dt;
-            lz += dz * dt;
-            lorenzPts.push({ x: lx / 26, y: ly / 26, z: (lz - 25) / 26 });
-        }
-
-        let rotY = 0, rotX = 0.25, rotW = 0;
-        let targetSpeedY = 0.007;
-
-        canvas.addEventListener('mousemove', e => {
-            const rect = canvas.getBoundingClientRect();
-            const nx = ((e.clientX - rect.left) / width - 0.5) * 2;
-            const ny = ((e.clientY - rect.top) / height - 0.5) * 2;
-            targetSpeedY = nx * 0.025;
-            rotX = 0.25 + ny * 0.45;
-            if (coordEl) {
-                const lat = (51.23 - ny * 40).toFixed(1);
-                const lon = (0.57 + nx * 90).toFixed(1);
-                coordEl.textContent = `${lat}°N · ${lon}°E`;
-            }
-        }, { passive: true });
-
-        function setManifold(newMode) {
-            mode = newMode;
-            modeBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-manifold') === newMode));
-            if (labelEl) {
-                if (newMode === 'globe')     labelEl.textContent = 'MANIFOLD: 3D GEODESIC SPHERE';
-                if (newMode === 'tesseract') labelEl.textContent = 'MANIFOLD: 4D HYPERCUBE (TESSERACT)';
-                if (newMode === 'lorenz')    labelEl.textContent = 'MANIFOLD: LORENZ CHAOTIC ATTRACTOR';
-            }
-        }
-
-        modeBtns.forEach(b => {
-            b.addEventListener('click', () => setManifold(b.getAttribute('data-manifold')));
-        });
-
-        function render() {
-            ctx.clearRect(0, 0, width, height);
-            const isDark  = document.documentElement.getAttribute('data-theme') === 'dark';
-            const colNode = isDark ? '#00ff41' : '#007a2f';
-            const colMesh = isDark ? 'rgba(0, 255, 65, 0.28)' : 'rgba(0, 122, 47, 0.25)';
-            const colHub  = isDark ? '#00e5ff' : '#1a73e8';
-
-            rotY += targetSpeedY;
-            rotW += 0.012;
-            const radius = Math.min(width, height) * 0.39;
-            const cx = width / 2;
-            const cy = height / 2;
-            const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
-            const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
-
-            if (mode === 'globe') {
-                ctx.beginPath();
-                ctx.ellipse(cx, cy, radius * 1.18, radius * 0.36, -0.28, 0, TWO_PI);
-                ctx.strokeStyle = colMesh;
-                ctx.lineWidth = 1;
-                ctx.stroke();
-
-                const projected = [];
-                for (let i = 0; i < sphereNodes.length; i++) {
-                    const n = sphereNodes[i];
-                    const x1 = n.x * cosY - n.z * sinY;
-                    const z1 = n.z * cosY + n.x * sinY;
-                    const y2 = n.y * cosX - z1 * sinX;
-                    const z2 = z1 * cosX + n.y * sinX;
-                    const scale = 2.4 / (2.4 - z2 * 0.6);
-                    projected.push({
-                        px: cx + x1 * radius * scale * 0.72,
-                        py: cy + y2 * radius * scale * 0.72,
-                        z: z2,
-                        hub: n.hub
-                    });
-                }
-
-                ctx.beginPath();
-                ctx.strokeStyle = colMesh;
-                ctx.lineWidth = 0.65;
-                for (let i = 0; i < projected.length; i++) {
-                    const a = projected[i];
-                    if (a.z < -0.25) continue;
-                    for (let j = i + 1; j < projected.length; j++) {
-                        const b = projected[j];
-                        if (b.z < -0.25) continue;
-                        const dx = a.px - b.px, dy = a.py - b.py;
-                        if (dx * dx + dy * dy < 1450) {
-                            ctx.moveTo(a.px, a.py);
-                            ctx.lineTo(b.px, b.py);
-                        }
-                    }
-                }
-                ctx.stroke();
-
-                for (let i = 0; i < projected.length; i++) {
-                    const p = projected[i];
-                    ctx.beginPath();
-                    ctx.arc(p.px, p.py, p.hub ? 3.4 : 1.8, 0, TWO_PI);
-                    ctx.fillStyle = p.hub ? colHub : colNode;
-                    ctx.globalAlpha = Math.max(0.15, (p.z + 1) / 2);
-                    ctx.fill();
-                }
-                ctx.globalAlpha = 1;
-            } else if (mode === 'tesseract') {
-                const cosW = Math.cos(rotW), sinW = Math.sin(rotW);
-                const proj2D = tesseractVerts.map(v => {
-                    // Rotate in 4D XW and ZW planes
-                    const xw = v[0] * cosW - v[3] * sinW;
-                    const zw = v[0] * sinW + v[3] * cosW;
-                    const yw = v[1] * Math.cos(rotW * 0.7) - v[2] * Math.sin(rotW * 0.7);
-                    const z0 = v[1] * Math.sin(rotW * 0.7) + v[2] * Math.cos(rotW * 0.7);
-
-                    const wDist = 2.6 / (2.6 - zw * 0.65);
-                    const x3 = xw * wDist * 0.55;
-                    const y3 = yw * wDist * 0.55;
-                    const z3 = z0 * wDist * 0.55;
-
-                    const rx = x3 * cosY - z3 * sinY;
-                    const rz = z3 * cosY + x3 * sinY;
-                    const ry = y3 * cosX - rz * sinX;
-
-                    return {
-                        px: cx + rx * radius * 0.78,
-                        py: cy + ry * radius * 0.78,
-                        inner: zw > 0
-                    };
-                });
-
-                ctx.beginPath();
-                ctx.strokeStyle = colNode;
-                ctx.lineWidth = 1.15;
-                tesseractEdges.forEach(([i, j]) => {
-                    ctx.moveTo(proj2D[i].px, proj2D[i].py);
-                    ctx.lineTo(proj2D[j].px, proj2D[j].py);
-                });
-                ctx.stroke();
-
-                proj2D.forEach(p => {
-                    ctx.beginPath();
-                    ctx.arc(p.px, p.py, p.inner ? 3.5 : 2.3, 0, TWO_PI);
-                    ctx.fillStyle = p.inner ? colHub : colNode;
-                    ctx.fill();
-                });
-            } else if (mode === 'lorenz') {
-                // Advance Lorenz attractor by 1 RK4 step per frame
-                const last = lorenzPts[lorenzPts.length - 1];
-                const dx = sigma * (ly - lx);
-                const dy = lx * (rho - lz) - ly;
-                const dz = lx * ly - beta * lz;
-                lx += dx * dt; ly += dy * dt; lz += dz * dt;
-                lorenzPts.shift();
-                lorenzPts.push({ x: lx / 26, y: ly / 26, z: (lz - 25) / 26 });
-
-                ctx.beginPath();
-                ctx.strokeStyle = colNode;
-                ctx.lineWidth = 1.3;
-                for (let i = 0; i < lorenzPts.length; i++) {
-                    const p = lorenzPts[i];
-                    const x1 = p.x * cosY - p.z * sinY;
-                    const z1 = p.z * cosY + p.x * sinY;
-                    const y2 = p.y * cosX - z1 * sinX;
-                    const px = cx + x1 * radius * 1.05;
-                    const py = cy + y2 * radius * 1.05;
-                    if (i === 0) ctx.moveTo(px, py);
-                    else ctx.lineTo(px, py);
-                }
-                ctx.stroke();
-            }
-
-            requestAnimationFrame(render);
-        }
-        requestAnimationFrame(render);
-
-        return { setManifold };
-    })();
-
-    /* ===========================================================
-       4. COMMAND PALETTE (CTRL+K / CMD+K), GROUNDING & PARTICLES
-    =========================================================== */
     (function () {
-        const palette     = document.getElementById('cmdPalette');
-        const openBtn     = document.getElementById('openPaletteBtn');
-        const closeBtn    = document.getElementById('closePaletteBtn');
-        const paletteBtns = document.querySelectorAll('.palette-item');
+        const bootTimestamp = performance.now();
+        const yrEl = document.getElementById('footerYear');
+        if (yrEl) yrEl.textContent = String(new Date().getUTCFullYear());
 
-        function togglePalette(forceState) {
-            const isOpen = typeof forceState === 'boolean' ? forceState : !palette.classList.contains('open');
-            palette.classList.toggle('open', isOpen);
+        const form       = document.getElementById('contactForm');
+        const inpName    = document.getElementById('inp-name');
+        const inpEmail   = document.getElementById('inp-email');
+        const inpMessage = document.getElementById('inp-message');
+        const inpGotcha  = document.getElementById('inp-gotcha');
+        const submitBtn  = document.getElementById('submitBtn');
+        const msgEl      = document.getElementById('formMsg');
+        const counterEl  = document.getElementById('charCounter');
+        const MAX_CHARS  = 2000;
+
+        const emailRx = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+        let cooldownUntil = 0;
+
+        inpMessage.addEventListener('input', () => {
+            counterEl.textContent = inpMessage.value.length + ' / ' + MAX_CHARS;
+        });
+
+        function sanitiseText(str) {
+            return str.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '').trim();
         }
 
-        if (openBtn)  openBtn.addEventListener('click', () => togglePalette(true));
-        if (closeBtn) closeBtn.addEventListener('click', () => togglePalette(false));
+        function setStatus(text, type) {
+            msgEl.textContent = text;
+            msgEl.className = 'form-msg' + (type ? ' ' + type : '');
+        }
 
-        window.addEventListener('keydown', e => {
-            if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-                e.preventDefault();
-                togglePalette();
-            } else if (e.key === 'Escape') {
-                togglePalette(false);
+        function completeSubmission() {
+            setStatus('Thank you. Your enquiry has been received.', 'success');
+            form.reset();
+            counterEl.textContent = '0 / ' + MAX_CHARS;
+            if (typeof grecaptcha !== 'undefined' && typeof grecaptcha.reset === 'function') {
+                grecaptcha.reset();
             }
-        });
-
-        paletteBtns.forEach(item => {
-            item.addEventListener('click', () => {
-                const act = item.getAttribute('data-action');
-                togglePalette(false);
-                if (act === 'stress')    AgiEngine.runDirective('benchmark: Execute full WebGPU WGSL compute + all-core WebWorker stress test');
-                if (act === 'theme')     ThemeController.toggle();
-                if (act === 'tesseract') ManifoldVisualizer.setManifold('tesseract');
-                if (act === 'lorenz')    ManifoldVisualizer.setManifold('lorenz');
-                if (act === 'export')    AgiEngine.exportAudit();
-                if (act === 'contact')   window.location.href = 'contact.html';
-            });
-        });
-
-        const queryInput = document.getElementById('groundingQuery');
-        const scholarBtn = document.getElementById('scholarBtn');
-        document.querySelectorAll('.chip-btn').forEach(chip => {
-            chip.addEventListener('click', () => {
-                queryInput.value = chip.getAttribute('data-query');
-                queryInput.focus();
-            });
-        });
-        if (scholarBtn) {
-            scholarBtn.addEventListener('click', () => {
-                const q = queryInput.value.trim() || 'Hyperdimensional computing neuro-symbolic AI';
-                window.open('https://scholar.google.com/scholar?q=' + encodeURIComponent(q), '_blank', 'noopener,noreferrer');
-            });
         }
 
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            setStatus('', '');
 
-        const pCanvas = document.getElementById('particleCanvas');
-        const pCtx    = pCanvas.getContext('2d');
-        let logicalWidth  = window.innerWidth;
-        let logicalHeight = window.innerHeight;
-
-        function sizeCanvases() {
-            logicalWidth  = window.innerWidth;
-            logicalHeight = window.innerHeight;
-            pCanvas.width  = logicalWidth * dpr;
-            pCanvas.height = logicalHeight * dpr;
-            pCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        }
-        sizeCanvases();
-        window.addEventListener('resize', sizeCanvases, { passive: true });
-
-        const count = Math.min(Math.floor(logicalWidth * logicalHeight / 22000), 60);
-        const pts = Array.from({ length: count }, () => ({
-            x: Math.random() * logicalWidth,
-            y: Math.random() * logicalHeight,
-            vx: (Math.random() - 0.5) * 0.22,
-            vy: (Math.random() - 0.5) * 0.22,
-            r: Math.random() * 1.5 + 0.5
-        }));
-
-        function loop() {
-            pCtx.clearRect(0, 0, logicalWidth, logicalHeight);
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            pCtx.fillStyle   = isDark ? 'rgba(0, 255, 65, 0.42)' : 'rgba(0, 122, 47, 0.35)';
-            pCtx.strokeStyle = isDark ? 'rgba(0, 255, 65, 0.12)' : 'rgba(0, 122, 47, 0.12)';
-            pCtx.lineWidth   = 0.5;
-
-            pCtx.beginPath();
-            for (let i = 0; i < pts.length; i++) {
-                const p = pts[i];
-                p.x += p.vx; p.y += p.vy;
-                if (p.x < 0) p.x = logicalWidth;
-                if (p.x > logicalWidth) p.x = 0;
-                if (p.y < 0) p.y = logicalHeight;
-                if (p.y > logicalHeight) p.y = 0;
-                pCtx.moveTo(p.x + p.r, p.y);
-                pCtx.arc(p.x, p.y, p.r, 0, TWO_PI);
+            const now = performance.now();
+            if (now < cooldownUntil) {
+                const waitSec = Math.ceil((cooldownUntil - now) / 1000);
+                setStatus('Please wait ' + waitSec + ' seconds before sending another message.', 'error');
+                return;
             }
-            pCtx.fill();
 
-            pCtx.beginPath();
-            for (let i = 0; i < pts.length; i++) {
-                for (let j = i + 1; j < pts.length; j++) {
-                    const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
-                    if (dx * dx + dy * dy < 11000) {
-                        pCtx.moveTo(pts[i].x, pts[i].y);
-                        pCtx.lineTo(pts[j].x, pts[j].y);
-                    }
+            const name     = sanitiseText(inpName.value);
+            const email    = sanitiseText(inpEmail.value);
+            const message  = sanitiseText(inpMessage.value);
+            const honeypot = inpGotcha.value;
+
+            // Silent trap for automated bots
+            if (honeypot.length > 0 || (now - bootTimestamp) < 2500) {
+                completeSubmission();
+                return;
+            }
+
+            if (name.length < 2 || name.length > 100) {
+                setStatus('Please enter your name or organisation (2 to 100 characters).', 'error');
+                inpName.focus();
+                return;
+            }
+            if (email.length > 200 || !emailRx.test(email)) {
+                setStatus('Please enter a valid email address.', 'error');
+                inpEmail.focus();
+                return;
+            }
+            if (message.length < 10) {
+                setStatus('Please enter at least 10 characters in your message.', 'error');
+                inpMessage.focus();
+                return;
+            }
+            if (message.length > MAX_CHARS) {
+                setStatus('Message exceeds the 2,000 character limit.', 'error');
+                inpMessage.focus();
+                return;
+            }
+
+            if (typeof grecaptcha === 'undefined' || typeof grecaptcha.getResponse !== 'function') {
+                setStatus('reCAPTCHA failed to load. Please check your connection or ad-blocker.', 'error');
+                return;
+            }
+            const captchaToken = grecaptcha.getResponse();
+            if (!captchaToken || captchaToken.length === 0) {
+                setStatus('Please complete the reCAPTCHA tickbox.', 'error');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            setStatus('Sending your enquiry...', 'info');
+
+            const payload = new FormData();
+            payload.append('name', name);
+            payload.append('email', email);
+            payload.append('message', message);
+            payload.append('g-recaptcha-response', captchaToken);
+
+            const controller = new AbortController();
+            const timeoutId  = setTimeout(() => controller.abort(), 10000);
+
+            try {
+                const res = await fetch(form.action, {
+                    method: 'POST',
+                    body: payload,
+                    headers: { 'Accept': 'application/json' },
+                    signal: controller.signal,
+                    referrerPolicy: 'strict-origin-when-cross-origin'
+                });
+
+                if (res.ok) {
+                    cooldownUntil = performance.now() + 30000;
+                    completeSubmission();
+                } else {
+                    setStatus('Could not send enquiry (error ' + res.status + '). Please try again shortly.', 'error');
                 }
+            } catch (err) {
+                if (err && err.name === 'AbortError') {
+                    setStatus('Request timed out. Please check your connection and try again.', 'error');
+                } else {
+                    setStatus('Network error. Please check your connection and try again.', 'error');
+                }
+            } finally {
+                clearTimeout(timeoutId);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Enquiry';
             }
-            pCtx.stroke();
-            requestAnimationFrame(loop);
-        }
-        requestAnimationFrame(loop);
+        });
     })();
     </script>
 </body>
