@@ -9,11 +9,14 @@
     <title>Contact | Executive Chauffeur &amp; Overland Passenger Transport | London &amp; Surrey</title>
     <meta name="description" content="Get in touch for private chauffeur bookings, airport transfers, and overland passenger transport across London, Surrey, and the United Kingdom.">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <meta name="theme-color" content="#f8f6f2">
+    <meta name="theme-color" content="#f4f1ea">
     <link rel="canonical" href="https://www.negarix.uk/">
     <link rel="alternate" hreflang="en-gb" href="https://www.negarix.uk/">
     <link rel="alternate" hreflang="en" href="https://www.negarix.uk/">
     <link rel="alternate" hreflang="x-default" href="https://www.negarix.uk/">
+
+    <!-- Zero-Latency Inline SVG Monogram Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23111211'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%23997a3d' font-family='Georgia, serif' font-size='34'%3EN%3C/text%3E%3C/svg%3E">
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:type" content="website">
@@ -51,7 +54,7 @@
       "foundingDate": "2024-11-10",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "4th Floor, Silverstream House, 45 Fitzroy Street, Fitzrovia",
+        "streetAddress": "Silverstream House, 45 Fitzroy Street, Fitzrovia",
         "addressLocality": "London",
         "postalCode": "W1T 6EB",
         "addressCountry": "GB"
@@ -74,20 +77,21 @@
 
     <style>
         :root {
-            --bg:         #f8f6f2;
-            --surface:    #ffffff;
-            --obsidian:   #141514;
-            --charcoal:   #262826;
-            --gold:       #9a7b42;
-            --gold-light: rgba(154, 123, 66, 0.22);
-            --text:       #1c1e1c;
-            --text-muted: #5e615e;
-            --border:     #e4dfd7;
-            --error:      #a82020;
-            --success:    #1e5e3a;
-            --shadow:     0 18px 45px rgba(20, 21, 20, 0.05), 0 1px 3px rgba(20, 21, 20, 0.03);
-            --font-serif: "Georgia", "Times New Roman", Times, serif;
-            --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --bg:           #f4f1ea;
+            --bg-accent:    #ebe6dc;
+            --surface:      #ffffff;
+            --obsidian:     #111211;
+            --charcoal:     #242624;
+            --gold:         #997a3d;
+            --gold-tint:    rgba(153, 122, 61, 0.14);
+            --text:         #191b19;
+            --text-muted:   #636562;
+            --border:       #e0dad0;
+            --error:        #a11d1d;
+            --success:      #1a5936;
+            --shadow-card:  0 28px 64px rgba(17, 18, 17, 0.08), 0 2px 6px rgba(17, 18, 17, 0.04);
+            --font-serif:   "Georgia", "Times New Roman", Times, serif;
+            --font-sans:    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         *, *::before, *::after {
@@ -99,7 +103,7 @@
         html, body {
             width: 100%;
             min-height: 100vh;
-            background-color: var(--bg);
+            background: radial-gradient(circle at 50% 0%, #faf8f4 0%, var(--bg) 65%, var(--bg-accent) 100%);
             color: var(--text);
             font-family: var(--font-sans);
             line-height: 1.65;
@@ -111,87 +115,149 @@
         .main-container {
             flex: 1;
             width: 100%;
-            max-width: 560px;
+            max-width: 600px;
             margin: 0 auto;
-            padding: 48px 20px;
+            padding: 56px 20px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
+        /* Luxury Double-Framed Contact Card */
         .contact-card {
+            position: relative;
             width: 100%;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-top: 3px solid var(--gold);
-            padding: 36px 32px;
-            box-shadow: var(--shadow);
+            padding: 46px 44px;
+            box-shadow: var(--shadow-card);
+        }
+
+        /* Inner Champagne Hairline Border */
+        .contact-card::before {
+            content: "";
+            position: absolute;
+            inset: 8px;
+            border: 1px solid rgba(153, 122, 61, 0.25);
+            pointer-events: none;
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+
+        .card-header::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 48px;
+            height: 3px;
+            background: var(--gold);
+        }
+
+        .card-eyebrow {
+            display: block;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.26em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 10px;
         }
 
         .contact-card h1 {
             font-family: var(--font-serif);
-            font-size: 1.45rem;
+            font-size: 1.75rem;
             font-weight: 400;
+            letter-spacing: 0.03em;
             color: var(--obsidian);
-            margin-bottom: 6px;
-        }
-
-        .contact-sub {
-            font-size: 0.86rem;
-            color: var(--text-muted);
-            margin-bottom: 24px;
-            padding-bottom: 18px;
-            border-bottom: 1px solid var(--border);
         }
 
         .form {
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 22px;
+            position: relative;
+            z-index: 1;
         }
 
         .field {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 7px;
         }
 
         .field-label {
-            font-size: 0.74rem;
+            font-size: 0.7rem;
             font-weight: 600;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
             color: var(--charcoal);
             display: flex;
             justify-content: space-between;
+            align-items: center;
+        }
+
+        .input-shell {
+            position: relative;
         }
 
         .field-input {
             width: 100%;
-            padding: 11px 14px;
+            padding: 13px 16px;
             border: 1px solid var(--border);
-            background: #faf9f7;
+            background: #fcfbf9;
             color: var(--text);
             font-family: var(--font-sans);
-            font-size: 0.92rem;
+            font-size: 0.94rem;
             outline: none;
-            transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+            transition: border-color 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .field-input::placeholder {
+            color: #9e9b95;
+            font-weight: 400;
         }
 
         .field-input:focus {
             background: var(--surface);
             border-color: var(--gold);
-            box-shadow: 0 0 0 3px var(--gold-light);
+            box-shadow: 0 4px 16px var(--gold-tint);
+        }
+
+        /* Animated Gold Underline Accent on Focus */
+        .input-bar {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease, left 0.3s ease;
+            pointer-events: none;
+        }
+
+        .field-input:focus + .input-bar {
+            width: 100%;
+            left: 0;
         }
 
         textarea.field-input {
             resize: vertical;
-            min-height: 104px;
+            min-height: 118px;
+            line-height: 1.65;
         }
 
         .char-counter {
-            font-size: 0.7rem;
-            font-weight: 400;
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
             color: var(--text-muted);
         }
 
@@ -207,12 +273,13 @@
         .recaptcha-wrap {
             display: flex;
             justify-content: center;
-            margin: 4px 0;
+            padding: 4px 0;
         }
 
         .form-msg {
             font-size: 0.82rem;
             font-weight: 500;
+            text-align: center;
             min-height: 1.2em;
         }
         .form-msg.error   { color: var(--error); }
@@ -220,17 +287,19 @@
         .form-msg.info    { color: var(--text-muted); }
 
         .submit-btn {
+            position: relative;
+            overflow: hidden;
             background: var(--obsidian);
             color: #ffffff;
             border: 1px solid var(--obsidian);
-            padding: 13px 20px;
+            padding: 15px 24px;
             font-family: var(--font-sans);
-            font-size: 0.82rem;
+            font-size: 0.78rem;
             font-weight: 600;
-            letter-spacing: 0.14em;
+            letter-spacing: 0.22em;
             text-transform: uppercase;
             cursor: pointer;
-            transition: background-color 0.2s ease, border-color 0.2s ease;
+            transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.15s ease;
             width: 100%;
         }
 
@@ -241,11 +310,16 @@
             outline: none;
         }
 
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+
         .submit-btn:disabled {
             opacity: 0.55;
             cursor: not-allowed;
         }
 
+        /* Clean, Organised Footer */
         .site-footer {
             background: var(--obsidian);
             color: #d8d5ce;
@@ -301,12 +375,12 @@
             }
         }
 
-        @media (max-width: 540px) {
+        @media (max-width: 580px) {
             .main-container {
-                padding: 28px 16px;
+                padding: 32px 16px;
             }
             .contact-card {
-                padding: 26px 20px;
+                padding: 34px 24px;
             }
         }
     </style>
@@ -315,8 +389,10 @@
 
     <main class="main-container" role="main">
         <section class="contact-card" aria-labelledby="form-heading">
-            <h1 id="form-heading">Contact Us</h1>
-            <p class="contact-sub">Submit your journey details or general enquiry below.</p>
+            <header class="card-header">
+                <span class="card-eyebrow">Private Carriage &amp; Enquiries</span>
+                <h1 id="form-heading">Contact Us</h1>
+            </header>
 
             <form id="contactForm" class="form"
                   action="https://formspree.io/f/xdavzgko"
@@ -329,18 +405,24 @@
 
                 <div class="field">
                     <label class="field-label" for="inp-name">Name or Organisation</label>
-                    <input class="field-input" type="text" id="inp-name" name="name"
-                           required minlength="2" maxlength="100"
-                           autocomplete="name"
-                           placeholder="Full name or company">
+                    <div class="input-shell">
+                        <input class="field-input" type="text" id="inp-name" name="name"
+                               required minlength="2" maxlength="100"
+                               autocomplete="name"
+                               placeholder="Full name or company">
+                        <span class="input-bar" aria-hidden="true"></span>
+                    </div>
                 </div>
 
                 <div class="field">
                     <label class="field-label" for="inp-email">Email Address</label>
-                    <input class="field-input" type="email" id="inp-email" name="email"
-                           required maxlength="200"
-                           autocomplete="email"
-                           placeholder="name@domain.co.uk">
+                    <div class="input-shell">
+                        <input class="field-input" type="email" id="inp-email" name="email"
+                               required maxlength="200"
+                               autocomplete="email"
+                               placeholder="name@domain.co.uk">
+                        <span class="input-bar" aria-hidden="true"></span>
+                    </div>
                 </div>
 
                 <div class="field">
@@ -348,9 +430,11 @@
                         <span>Message</span>
                         <span class="char-counter" id="charCounter">0 / 2000</span>
                     </label>
-                    <textarea class="field-input" id="inp-message" name="message"
-                              required minlength="10" maxlength="2000"
-                              placeholder="Dates, collection and destination points, or enquiry details..."></textarea>
+                    <div class="input-shell">
+                        <textarea class="field-input" id="inp-message" name="message"
+                                  required minlength="10" maxlength="2000"></textarea>
+                        <span class="input-bar" aria-hidden="true"></span>
+                    </div>
                 </div>
 
                 <div class="recaptcha-wrap">
@@ -374,7 +458,7 @@
                 <div class="footer-col">
                     <h2>Registered Office</h2>
                     <p>
-                        4th Floor, Silverstream House<br>
+                        Silverstream House<br>
                         45 Fitzroy Street, Fitzrovia<br>
                         London, W1T 6EB
                     </p>
