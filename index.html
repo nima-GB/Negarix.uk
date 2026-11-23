@@ -6,17 +6,22 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
 
     <!-- Primary SEO Meta Tags -->
-    <title>Executive Chauffeur &amp; Overland Passenger Transport | London &amp; Surrey</title>
-    <meta name="description" content="Bespoke overland passenger transport, executive chauffeur services, and private airport transfers across Central London, Surrey, and the United Kingdom.">
-    <meta name="robots" content="index, follow">
+    <title>Contact | Executive Chauffeur &amp; Overland Passenger Transport | London &amp; Surrey</title>
+    <meta name="description" content="Get in touch for private chauffeur bookings, airport transfers, and overland passenger transport across London, Surrey, and the United Kingdom.">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="theme-color" content="#f8f6f2">
     <link rel="canonical" href="https://www.negarix.uk/">
+    <link rel="alternate" hreflang="en-gb" href="https://www.negarix.uk/">
+    <link rel="alternate" hreflang="en" href="https://www.negarix.uk/">
+    <link rel="alternate" hreflang="x-default" href="https://www.negarix.uk/">
 
-    <!-- Open Graph / Social Meta Tags -->
+    <!-- Open Graph Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_GB">
     <meta property="og:url" content="https://www.negarix.uk/">
-    <meta property="og:title" content="Executive Chauffeur &amp; Overland Passenger Transport | London &amp; Surrey">
-    <meta property="og:description" content="Discreet, punctual overland passenger transport, airport transfers, and private hire across London, Surrey, and the UK.">
+    <meta property="og:site_name" content="Negarix Luminaire Limited">
+    <meta property="og:title" content="Contact | Executive Chauffeur &amp; Overland Passenger Transport">
+    <meta property="og:description" content="Submit journey details or enquiries for executive passenger transport across London, Surrey, and the UK.">
 
     <!-- Hardened Content Security Policy -->
     <meta http-equiv="Content-Security-Policy" content="
@@ -32,11 +37,11 @@
         upgrade-insecure-requests;
     ">
 
-    <!-- Schema.org Structured Data for Search Engines -->
+    <!-- Schema.org Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
+      "@type": "LimousineService",
       "name": "Negarix Luminaire Limited",
       "legalName": "NEGARIX LUMINAIRE LIMITED",
       "url": "https://www.negarix.uk/",
@@ -55,7 +60,13 @@
         { "@type": "City", "name": "London" },
         { "@type": "AdministrativeArea", "name": "Surrey" },
         { "@type": "Country", "name": "United Kingdom" }
-      ]
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "url": "https://www.negarix.uk/",
+        "availableLanguage": ["English"]
+      }
     }
     </script>
 
@@ -63,22 +74,20 @@
 
     <style>
         :root {
-            --bg:           #f8f6f2;
-            --surface:      #ffffff;
-            --surface-warm: #f2efe9;
-            --obsidian:     #141514;
-            --charcoal:     #262826;
-            --gold:         #9a7b42;
-            --gold-hover:   #7d6231;
-            --gold-light:   rgba(154, 123, 66, 0.22);
-            --text:         #1c1e1c;
-            --text-muted:   #5e615e;
-            --border:       #e4dfd7;
-            --error:        #a82020;
-            --success:      #1e5e3a;
-            --shadow:       0 18px 45px rgba(20, 21, 20, 0.05), 0 1px 3px rgba(20, 21, 20, 0.03);
-            --font-serif:   "Georgia", "Times New Roman", Times, serif;
-            --font-sans:    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --bg:         #f8f6f2;
+            --surface:    #ffffff;
+            --obsidian:   #141514;
+            --charcoal:   #262826;
+            --gold:       #9a7b42;
+            --gold-light: rgba(154, 123, 66, 0.22);
+            --text:       #1c1e1c;
+            --text-muted: #5e615e;
+            --border:     #e4dfd7;
+            --error:      #a82020;
+            --success:    #1e5e3a;
+            --shadow:     0 18px 45px rgba(20, 21, 20, 0.05), 0 1px 3px rgba(20, 21, 20, 0.03);
+            --font-serif: "Georgia", "Times New Roman", Times, serif;
+            --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         *, *::before, *::after {
@@ -99,138 +108,36 @@
             flex-direction: column;
         }
 
-        /* Minimalist Luxury Top Bar */
-        .site-header {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .header-inner {
-            max-width: 1140px;
-            margin: 0 auto;
-            padding: 18px 28px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .header-monogram {
-            font-family: var(--font-serif);
-            font-size: 0.85rem;
-            letter-spacing: 0.24em;
-            text-transform: uppercase;
-            color: var(--obsidian);
-        }
-
-        .header-locations {
-            font-size: 0.72rem;
-            font-weight: 500;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--gold);
-        }
-
-        /* Main Two-Column Content Area */
         .main-container {
             flex: 1;
-            max-width: 1140px;
             width: 100%;
-            margin: 0 auto;
-            padding: 48px 28px;
-            display: grid;
-            grid-template-columns: 1.15fr 0.85fr;
-            gap: 52px;
-            align-items: center;
-        }
-
-        /* Left Column: Luxury Editorial & Services */
-        .company-info {
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-        }
-
-        .eyebrow {
-            display: inline-block;
-            font-size: 0.72rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--gold);
-            margin-bottom: 12px;
-        }
-
-        .hero-title {
-            font-family: var(--font-serif);
-            font-size: clamp(1.95rem, 3.4vw, 2.65rem);
-            font-weight: 400;
-            line-height: 1.2;
-            color: var(--obsidian);
-            letter-spacing: -0.01em;
-        }
-
-        .hero-lead {
-            margin-top: 16px;
-            font-size: 0.98rem;
-            color: var(--text-muted);
             max-width: 560px;
-            line-height: 1.75;
+            margin: 0 auto;
+            padding: 48px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .services-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 16px;
-        }
-
-        .service-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-left: 3px solid var(--gold);
-            padding: 20px 24px;
-            box-shadow: var(--shadow);
-            transition: transform 0.2s ease, border-color 0.2s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .service-card h2 {
-            font-family: var(--font-serif);
-            font-size: 1.08rem;
-            font-weight: 400;
-            color: var(--obsidian);
-            margin-bottom: 6px;
-        }
-
-        .service-card p {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-        }
-
-        /* Right Column: Bespoke Enquiry Card */
         .contact-card {
+            width: 100%;
             background: var(--surface);
             border: 1px solid var(--border);
             border-top: 3px solid var(--gold);
-            padding: 34px 32px;
+            padding: 36px 32px;
             box-shadow: var(--shadow);
         }
 
-        .contact-card h2 {
+        .contact-card h1 {
             font-family: var(--font-serif);
-            font-size: 1.35rem;
+            font-size: 1.45rem;
             font-weight: 400;
             color: var(--obsidian);
             margin-bottom: 6px;
         }
 
         .contact-sub {
-            font-size: 0.85rem;
+            font-size: 0.86rem;
             color: var(--text-muted);
             margin-bottom: 24px;
             padding-bottom: 18px;
@@ -279,7 +186,7 @@
 
         textarea.field-input {
             resize: vertical;
-            min-height: 96px;
+            min-height: 104px;
         }
 
         .char-counter {
@@ -339,7 +246,6 @@
             cursor: not-allowed;
         }
 
-        /* Clean, Organised Multi-Column Footer */
         .site-footer {
             background: var(--obsidian);
             color: #d8d5ce;
@@ -361,7 +267,7 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .footer-col h3 {
+        .footer-col h2 {
             font-family: var(--font-serif);
             font-size: 0.76rem;
             font-weight: 400;
@@ -389,67 +295,33 @@
         }
 
         @media (max-width: 880px) {
-            .main-container {
-                grid-template-columns: 1fr;
-                padding: 32px 20px;
-                gap: 36px;
-            }
             .footer-grid {
                 grid-template-columns: 1fr;
                 gap: 24px;
+            }
+        }
+
+        @media (max-width: 540px) {
+            .main-container {
+                padding: 28px 16px;
+            }
+            .contact-card {
+                padding: 26px 20px;
             }
         }
     </style>
 </head>
 <body>
 
-    <header class="site-header">
-        <div class="header-inner">
-            <div class="header-monogram">Private Carriage &amp; Executive Travel</div>
-            <div class="header-locations">London · Surrey · United Kingdom</div>
-        </div>
-    </header>
-
     <main class="main-container" role="main">
-
-        <!-- Left Column: Luxury Profile & Core Services -->
-        <section class="company-info" aria-labelledby="main-heading">
-            <div>
-                <span class="eyebrow">Bespoke Overland Passenger Transport</span>
-                <h1 class="hero-title" id="main-heading">Discreet, First-Class Overland Travel</h1>
-                <p class="hero-lead">
-                    We provide tailored door-to-door passenger transport, private chauffeur services, and scheduled corporate travel. Every journey is conducted in flagship hybrid luxury vehicles maintained to exacting main-dealer standards.
-                </p>
-            </div>
-
-            <div class="services-grid">
-                <article class="service-card">
-                    <h2>Executive Chauffeur &amp; Private Hire</h2>
-                    <p>Refined point-to-point carriage in long-wheelbase executive saloons and luxury multi-passenger vehicles, driven by experienced professionals.</p>
-                </article>
-
-                <article class="service-card">
-                    <h2>Private Aviation &amp; Airport Transfers</h2>
-                    <p>Flight-monitored arrivals and departures serving Heathrow, Gatwick, Farnborough, Biggin Hill, and private terminals nationwide.</p>
-                </article>
-
-                <article class="service-card">
-                    <h2>Corporate &amp; Retained Accounts</h2>
-                    <p>Dedicated overland scheduling for diplomatic missions, executive roadshows, visiting principals, and private family offices.</p>
-                </article>
-            </div>
-        </section>
-
-        <!-- Right Column: Secure Reservation & Enquiry Card -->
-        <aside class="contact-card" aria-labelledby="form-heading">
-            <h2 id="form-heading">Reservations &amp; Enquiries</h2>
-            <p class="contact-sub">Submit your itinerary or account enquiry for a prompt, confidential response.</p>
+        <section class="contact-card" aria-labelledby="form-heading">
+            <h1 id="form-heading">Contact Us</h1>
+            <p class="contact-sub">Submit your journey details or general enquiry below.</p>
 
             <form id="contactForm" class="form"
                   action="https://formspree.io/f/xdavzgko"
                   method="POST" novalidate>
 
-                <!-- Anti-bot Honeypot -->
                 <label class="hp-field" aria-hidden="true">
                     Leave empty
                     <input type="text" id="inp-gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
@@ -473,12 +345,12 @@
 
                 <div class="field">
                     <label class="field-label" for="inp-message">
-                        <span>Itinerary or Enquiry</span>
+                        <span>Message</span>
                         <span class="char-counter" id="charCounter">0 / 2000</span>
                     </label>
                     <textarea class="field-input" id="inp-message" name="message"
                               required minlength="10" maxlength="2000"
-                              placeholder="Preferred dates, collection and destination points, or account requirements..."></textarea>
+                              placeholder="Dates, collection and destination points, or enquiry details..."></textarea>
                 </div>
 
                 <div class="recaptcha-wrap">
@@ -490,19 +362,17 @@
                 <p id="formMsg" class="form-msg" role="alert" aria-live="polite"></p>
 
                 <button type="submit" id="submitBtn" class="submit-btn">
-                    Request Consultation
+                    Send Enquiry
                 </button>
             </form>
-        </aside>
-
+        </section>
     </main>
 
-    <!-- Organised Multi-Column Footer -->
     <footer class="site-footer">
         <div class="footer-inner">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <h3>Registered Office</h3>
+                    <h2>Registered Office</h2>
                     <p>
                         4th Floor, Silverstream House<br>
                         45 Fitzroy Street, Fitzrovia<br>
@@ -511,7 +381,7 @@
                 </div>
 
                 <div class="footer-col">
-                    <h3>Service Coverage</h3>
+                    <h2>Service Coverage</h2>
                     <p>
                         Central London &amp; Surrey<br>
                         Heathrow, Gatwick &amp; Farnborough<br>
@@ -520,7 +390,7 @@
                 </div>
 
                 <div class="footer-col">
-                    <h3>Corporate Registration</h3>
+                    <h2>Corporate Registration</h2>
                     <p>
                         Negarix Luminaire Limited<br>
                         Registered in England &amp; Wales: 16073047<br>
@@ -570,7 +440,7 @@
         }
 
         function completeSubmission() {
-            setStatus('Thank you. Your enquiry has been received by our reservations desk.', 'success');
+            setStatus('Thank you. Your enquiry has been received.', 'success');
             form.reset();
             counterEl.textContent = '0 / ' + MAX_CHARS;
             if (typeof grecaptcha !== 'undefined' && typeof grecaptcha.reset === 'function') {
@@ -585,7 +455,7 @@
             const now = performance.now();
             if (now < cooldownUntil) {
                 const waitSec = Math.ceil((cooldownUntil - now) / 1000);
-                setStatus('Please wait ' + waitSec + ' seconds before submitting another request.', 'error');
+                setStatus('Please wait ' + waitSec + ' seconds before submitting another enquiry.', 'error');
                 return;
             }
 
@@ -610,7 +480,7 @@
                 return;
             }
             if (message.length < 10) {
-                setStatus('Please provide at least 10 characters of itinerary details.', 'error');
+                setStatus('Please provide at least 10 characters in your message.', 'error');
                 inpMessage.focus();
                 return;
             }
@@ -631,8 +501,8 @@
             }
 
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Transmitting...';
-            setStatus('Sending your request...', 'info');
+            submitBtn.textContent = 'Sending...';
+            setStatus('Sending your enquiry...', 'info');
 
             const payload = new FormData();
             payload.append('name', name);
@@ -656,18 +526,18 @@
                     cooldownUntil = performance.now() + 30000;
                     completeSubmission();
                 } else {
-                    setStatus('Unable to send request (error ' + res.status + '). Please try again shortly.', 'error');
+                    setStatus('Unable to send enquiry (error ' + res.status + '). Please try again shortly.', 'error');
                 }
             } catch (err) {
                 if (err && err.name === 'AbortError') {
-                    setStatus('Request timed out. Please verify your connection and retry.', 'error');
+                    setStatus('Request timed out. Please check your connection and retry.', 'error');
                 } else {
-                    setStatus('Network error. Please verify your connection and retry.', 'error');
+                    setStatus('Network error. Please check your connection and retry.', 'error');
                 }
             } finally {
                 clearTimeout(timeoutId);
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Request Consultation';
+                submitBtn.textContent = 'Send Enquiry';
             }
         });
     })();
